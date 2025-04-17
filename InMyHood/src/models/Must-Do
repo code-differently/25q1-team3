@@ -1,0 +1,5 @@
+Models → represent data
+
+Defines the Program class/model, likely representing a database entity.
+
+Defines the User class/model, which includes a list like savedPrograms.
