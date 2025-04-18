@@ -1,0 +1,17 @@
+{
+  "name": "inmyhood",
+  "version": "1.0.0",
+  "description": "In My Hood MVP",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "typescript": "^4.x",
+    "jest": "^29.x",
+    "ts-jest": "^29.x",
+    "@types/jest": "^29.x"
+  }
+}
