@@ -2,6 +2,8 @@
 
 
 export interface Program {
+    name: any;
+    isExpired: any;
 
     id: number;
     title: string;
