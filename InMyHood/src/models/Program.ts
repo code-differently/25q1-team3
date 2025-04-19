@@ -2,6 +2,7 @@
 
 
 export interface Program {
+    isFull: any;
     name: any;
     isExpired: any;
 
