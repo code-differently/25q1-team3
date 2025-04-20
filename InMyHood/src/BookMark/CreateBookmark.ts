@@ -1,5 +1,5 @@
-import { Role } from "./Role";
-import { User } from "./User";
+import { Role } from "../UsersRoles/Role";
+import { User } from "../UsersRoles/User";
 
 // This function creates a bookmark for a user.
 export function createBookmark(user: User, data: any) {

@@ -1,6 +1,6 @@
 // RoleManager.ts
-import { Role } from "./Role";
-import { User } from "./User";
+import { Role } from "../UsersRoles/Role";
+import { User } from "../UsersRoles/User";
 
 export class RoleManager {
   // Use a Set for fast lookup
@@ -23,4 +23,6 @@ export class RoleManager {
   static validateRole(role: Role): boolean {
     return RoleManager.roles.has(role); // Check if role exists in Set
   }
+
+
 }

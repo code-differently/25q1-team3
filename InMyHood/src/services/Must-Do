@@ -1,4 +1,0 @@
-Services → contain logic
-
-Contains business logic — how the app searches, creates, and bookmarks programs.
-(This is where the "work" happens behind the scenes.)

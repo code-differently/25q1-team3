@@ -1,6 +1,6 @@
 import { createBookmark } from "./CreateBookmark";
-import { Role } from "./Role";
-import { User } from "./User";
+import { Role } from "../UsersRoles/Role";
+import { User } from "../UsersRoles/User";
 
 // Example usage
 const kid = new User("Timmy", Role.YOUTH);

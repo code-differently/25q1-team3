@@ -1,6 +1,7 @@
 export interface Program {
   id: number;
   title: string;
+  name: string;
   description: string;
   startDate: Date;
   endDate: Date;
@@ -8,12 +9,8 @@ export interface Program {
   category: string;
   organizer: string;
   contact: string;
-
-  name: string;
   isFull: boolean;
   isExpired: boolean;
-}
-
 }
 
 import { ProgramSeed } from "./ProgramSeed";

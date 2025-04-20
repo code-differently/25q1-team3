@@ -1,4 +1,4 @@
-import { User } from "../models/User";
+import { User } from "../UsersRoles/User";
 import { Program } from "../models/Program";
 import {
   BookmarkAlreadyExistsException,

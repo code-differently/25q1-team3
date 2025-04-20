@@ -1,6 +1,6 @@
 import { BookmarkService } from "./BookmarkService";
-import { User } from "../models/User";
-import { Role } from "../models/Role";
+import { User } from "../UsersRoles/User";
+import { Role } from "../UsersRoles/Role";
 import { Program } from "../models/Program";
 import {
   BookmarkAlreadyExistsException,
@@ -14,7 +14,7 @@ describe("BookmarkService", () => {
 
   // Set up the user and programs before each test
   beforeEach(() => {
-    user = new User("Test User", Role.YOUTH);
+    user = new User(2, "Test User", Role.YOUTH);
     program1 = {
       id: 1,
       title: "Basketball Camp",
@@ -62,4 +62,5 @@ describe("BookmarkService", () => {
       BookmarkService.removeBookmark(user, program1.id);
     }).toThrow(ProgramNotFoundException);
   });
+});
 

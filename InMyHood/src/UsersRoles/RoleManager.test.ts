@@ -1,6 +1,6 @@
 // Test for RoleManager
 import { RoleManager } from "./RoleManager";
-import { Role } from "./Role";
+import { Role } from "../UsersRoles/Role";
 
 describe("RoleManager", () => {
   let roleManager: RoleManager;
