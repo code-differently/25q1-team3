@@ -1,0 +1,22 @@
+[
+    {
+      "username": "Timmy",
+      "role": "YOUTH",
+      "bookmarks": [
+        "program_1"
+      ]
+    },
+    {
+      "username": "Mom",
+      "role": "PARENT",
+      "bookmarks": [
+        "program_2"
+      ]
+    },
+    {
+      "username": "Helper",
+      "role": "LIAISON",
+      "bookmarks": []
+    }
+  ]
+  
