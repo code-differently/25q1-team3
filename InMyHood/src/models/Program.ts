@@ -8,6 +8,9 @@ export interface Program {
   category: string;
   organizer: string;
   contact: string;
+    isFull: any;
+    name: any;
+    isExpired: any;
 }
 
 import { ProgramSeed } from "./ProgramSeed";
