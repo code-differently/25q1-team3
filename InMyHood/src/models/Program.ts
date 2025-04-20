@@ -1,5 +1,6 @@
 
 
+import { ProgramSeed } from './ProgramSeed';
 
 export interface Program {
     isFull: boolean;
@@ -19,37 +20,33 @@ export interface Program {
 
 }
 
-import { ProgramSeed } from './ProgramSeed';
 
-// The functions below are used to get programs by different criteria
-export function getProgramById(id: number): Program | undefined {
-    return ProgramSeed.find(program => program.id === id);
-}
+
+
 
 // This function returns all programs
 export function getAllPrograms(): Program[] {
     return ProgramSeed;
 }
 
-// The functions below are used to get programs by different criteria
-export function getProgramByCategory(category: string): Program[] {
-    return ProgramSeed.filter(program => program.category.toLowerCase() === category.toLowerCase());
-}
 
-// The functions below are used to get programs by different criteria
-export function getProgramsByDateRange(startDate: Date, endDate: Date): Program[] {
+export function getFilteredPrograms(filter: Partial<Program>): Program[] {
     return ProgramSeed.filter(program => {
-        const programStartDate = new Date(program.startDate);
-        const programEndDate = new Date(program.endDate);
-        return (programStartDate >= startDate && programStartDate <= endDate) || (programEndDate >= startDate && programEndDate <= endDate);
+        return Object.entries(filter).every(([key, value]) => {
+            if (key === 'startDate' || key === 'endDate') {
+                return new Date(program[key as keyof Program] as string) >= new Date(value as string);
+            }
+            if (key === 'isExpired' || key === 'isFull') {
+                return program[key as keyof Program] === value;
+            }
+            if (key === 'id') {
+                return program[key as keyof Program] === Number(value);
+            }
+            if (key === 'name' || key === 'title' || key === 'description' || key === 'location' || key === 'category' || key === 'organizer' || key === 'contact') {
+                return (program[key as keyof Program] as string).toLowerCase().includes((value as string).toLowerCase());
+            }
+            return program[key as keyof Program] === value;
+        });
     });
 }
-// The functions below are used to get programs by different criteria
-export function getProgramsByLocation(location: string): Program[] {
-    return ProgramSeed.filter(program => program.location.toLowerCase() === location.toLowerCase());
-}
 
-// The functions below are used to get programs by different criteria
-export function getProgramsByOrganizer(organizer: string): Program[] {
-    return ProgramSeed.filter(program => program.organizer.toLowerCase() === organizer.toLowerCase());
-}
