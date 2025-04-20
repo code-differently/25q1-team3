@@ -49,6 +49,8 @@ export class User {
   }
   
   removeBookmark(program: Program): void {
-    this.bookmarks = this.bookmarks.filter(p => p !== program);
+    this.bookmarks = this.bookmarks.filter(
+      (p: { id: any; }) => p.id !== program.id
+    );
   }
 }

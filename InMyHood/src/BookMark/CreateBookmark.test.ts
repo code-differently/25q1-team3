@@ -1,25 +1,51 @@
 import { createBookmark } from "./CreateBookmark";
 import { Role } from "../UsersRoles/Role";
 import { User } from "../UsersRoles/User";
+import { Program } from "models/Program";
 
 describe("createBookmark", () => {
     let user: User;
     
     beforeEach(() => {
         user = {
-        id: 1,
-        name: "John Doe",
-        role: Role.YOUTH,
-        bookmarks: [],
-        savedPrograms: [],
-        getBookmarks: function () {
-            return this.bookmarks;
-        },
-        addBookmark: function (bookmark) {
-            this.bookmarks.push(bookmark);
-        }
+            id: 1,
+            name: "John Doe",
+            role: Role.YOUTH,
+            bookmarks: [],
+            savedPrograms: [],
+    
+            getId() {
+                return this.id;
+            },
+            setId(value: number) {
+                this.id = value;
+            },
+            getName() {
+                return this.name;
+            },
+            setName(value: string) {
+                this.name = value;
+            },
+            getRole() {
+                return this.role;
+            },
+            setRole(value: Role) {
+                this.role = value;
+            },
+            getBookmarks() {
+                return this.bookmarks;
+            },
+            addBookmark(program: Program) {
+                this.bookmarks.push(program);
+            },
+            removeBookmark(program: Program) {
+                this.bookmarks = this.bookmarks.filter(
+                    (p) => p.id !== program.id
+                );
+            }
         };
     });
+    
     
     it("should create a bookmark for a user", () => {
         const data = { url: "https://example.com" };

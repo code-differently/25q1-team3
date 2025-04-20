@@ -1,9 +1,9 @@
 // User.test.ts
-import { User } from "./User";
+import { User } from "../UsersRoles/User";
 import { Role } from "./Role";
 import { Program } from "../models/Program";
 
-describe("User YOUTH", () => {
+describe("User", () => {
   it("should initialize with a username and role", () => {
     const user = new User(1, "khayla", Role.YOUTH);
     expect(user.name).toBe("khayla");
@@ -20,6 +20,14 @@ describe("User YOUTH", () => {
     name: "Program One",
     title: "Intro to TS",
     isExpired: false,
+    isFull: false,
+    description: "",
+    startDate: new Date,
+    endDate: new Date,
+    location: "",
+    category: "",
+    organizer: "",
+    contact: ""
   };
   
   const program2: Program = {
@@ -27,6 +35,14 @@ describe("User YOUTH", () => {
     name: "Program Two",
     title: "Advanced TS",
     isExpired: true,
+    isFull: false,
+    description: "",
+    startDate: new Date,
+    endDate: new Date,
+    location: "",
+    category: "",
+    organizer: "",
+    contact: ""
   };
   
   describe("User Class Tests", () => {
