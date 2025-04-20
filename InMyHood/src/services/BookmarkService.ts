@@ -1,31 +1,19 @@
 import { User } from "../models/User";
 import { Program } from "../models/Program";
-import {
-  BookmarkAlreadyExistsException,
-  ProgramNotFoundException,
-} from "../utils/CustomExceptions";
 
 export class BookmarkService {
-  static addBookmark(user: User, program: Program): void {
-    const alreadyBookmarked = user
-      .getBookmarks()
-      .some((p) => p.id === program.id);
-    if (alreadyBookmarked) {
-      throw new BookmarkAlreadyExistsException(
-        `Program '${program.title}' is already bookmarked.`,
-      );
-    }
-    user.getBookmarks().push(program);
+  static getBookmarks(user: User): Program[] {
+    return user.savedPrograms;
   }
 
-  static removeBookmark(user: User, programId: number): void {
-    const bookmarks = user.getBookmarks();
-    const index = bookmarks.findIndex((p) => p.id === programId);
-    if (index === -1) {
-      throw new ProgramNotFoundException(
-        `Program with ID '${programId}' not found in bookmarks.`,
-      );
+  static addBookmark(user: User, program: Program): void {
+    const existingBookmark = user.savedPrograms.find(p => String(p.id) === String(program.id));
+    if (!existingBookmark) {
+      user.savedPrograms.push(program);
     }
-    bookmarks.splice(index, 1);
+  }
+
+  static removeBookmark(user: User, programId: string): void {
+    user.savedPrograms = user.savedPrograms.filter(p => String(p.id) !== programId);
   }
 }

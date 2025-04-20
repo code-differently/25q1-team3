@@ -4,13 +4,13 @@ import { Role } from "../models/Role";
 
 describe("User", () => {
   it("should initialize with a username and role", () => {
-    const user = new User("khayla", Role.YOUTH);
-    expect(user.username).toBe("khayla");
+    const user = new User(1, "khayla", Role.YOUTH);
+    expect(user.name).toBe("khayla");
     expect(user.role).toBe(Role.YOUTH);
   });
 
   it("should return an empty bookmarks array initially", () => {
-    const user = new User("khayla", Role.YOUTH);
+    const user = new User(1, "khayla", Role.YOUTH);
     expect(user.getBookmarks()).toEqual([]);
   });
 
