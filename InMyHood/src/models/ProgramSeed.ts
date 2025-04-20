@@ -6,6 +6,9 @@ import {Program} from './Program';
 export const ProgramSeed: Program[] = [
 
     {
+        isFull: false,
+        name: 'Dance Class',
+        isExpired: false,
         id: 1234,
         title: 'Dance Class',
         description: 'Learn how to dance in a live studio session.',
@@ -17,6 +20,9 @@ export const ProgramSeed: Program[] = [
         contact: 'ezra@dance.org'
     },
     {
+        isFull: false,
+        name: 'Cooking Class',
+        isExpired: false,
         id: 1235,
         title: 'Golfing Class',
         description: 'Learn how to golf with a hands-on golfing session.',
@@ -28,6 +34,9 @@ export const ProgramSeed: Program[] = [
         contact: 'davisgolfer@golf.com'
     },
     {
+        isFull: false,
+        name: 'Rollerskating Class',
+        isExpired: false,
         id: 1236,
         title: 'Rollerskating Class',
         description: 'Learn how to rollerskate with a hands-on session and be a pro at the skating ring.',

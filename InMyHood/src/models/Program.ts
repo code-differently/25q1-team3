@@ -2,9 +2,9 @@
 
 
 export interface Program {
-    isFull: any;
-    name: any;
-    isExpired: any;
+    isFull: boolean;
+    name: string;
+    isExpired: boolean;
 
     id: number;
     title: string;
