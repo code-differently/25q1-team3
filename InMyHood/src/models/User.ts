@@ -2,16 +2,22 @@ import { Role } from "./Role";
 import { Program } from "./Program";
 
 export class User {
-  username: string;
+  id: number;
+  name: string;
   role: Role;
   private bookmarks: Program[] = [];
 
-  constructor(username: string, role: Role) {
-    this.username = username;
+  constructor(id: number, name: string, role: Role) {
+    this.id = id;
+    this.name = name;
     this.role = role;
   }
+
   getBookmarks(): Program[] {
     return this.bookmarks;
   }
 
+  addBookmark(program: Program): void {
+    this.bookmarks.push(program);
+  }
 }
