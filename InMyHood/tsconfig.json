@@ -8,7 +8,8 @@
     "outDir": "./dist", // Output directory for compiled JavaScript files
     "baseUrl": "./src", // Base directory for relative imports
     "resolveJsonModule": true, // Allows importing JSON files as modules
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "types": ["jest"]
   },
   "include": [
     "src/**/*.ts", // Includes all TypeScript files under the 'src' folder
