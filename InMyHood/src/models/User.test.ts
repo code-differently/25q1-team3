@@ -1,6 +1,6 @@
 // User.test.ts
-import { User } from "../models/User";
-import { Role } from "../models/Role";
+import { User } from "../UsersRoles/User";
+import { Role } from "../UsersRoles/Role";
 
 describe("User", () => {
   it("should initialize with a username and role", () => {

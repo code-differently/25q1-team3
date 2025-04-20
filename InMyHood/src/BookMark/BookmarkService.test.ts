@@ -68,4 +68,3 @@ describe("BookmarkService", () => {
 
     expect(user.savedPrograms).toHaveLength(0);
   });
-});
