@@ -8,21 +8,28 @@ describe("BookmarkService", () => {
   let program: Program;
 
   beforeEach(() => {
-    user = new User(1, "Ezra", Role.YOUTH);
-
-    program = {
-      id: 1001,
-      name: "Coding Bootcamp",
-      title: "Full Stack Bootcamp",
-      description: "Learn full stack development",
-      startDate: new Date("2025-06-01"),
-      endDate: new Date("2025-06-30"),
-      location: "Newark, DE",
-      category: "Tech",
-      organizer: "Code Differently",
-      contact: "cd@codediff.com",
-      isExpired: false,
-      isFull: false,
+    user = new User(2, "Test User", Role.YOUTH);
+    program1 = {
+      id: 1,
+      title: "Basketball Camp",
+      description: "Learn how to play basketball!",
+      category: "Sports",
+      startDate: new Date(),
+      endDate: new Date(),
+      location: "Philly",
+      organizer: "Coach K",
+      contact: "coachk@email.com",
+    };
+    program2 = {
+      id: 2,
+      title: "Coding Bootcamp",
+      description: "Learn how to code!",
+      category: "Technology",
+      startDate: new Date(),
+      endDate: new Date(),
+      location: "Online",
+      organizer: "Tech Co.",
+      contact: "techco@email.com",
     };
   });
 
@@ -54,6 +61,7 @@ describe("BookmarkService", () => {
 
     expect(user.savedPrograms).toHaveLength(0);
   });
+});
 
   it("should do nothing if trying to remove a non-existent bookmark", () => {
     BookmarkService.removeBookmark(user, "9999");
