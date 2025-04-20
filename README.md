@@ -1,33 +1,56 @@
 # 25q1-team3
+# 🌟 In My Hood: Empowering Inner-City Youth
 
-# Youth Program App
+## 🎯 Mission
 
-## Overview
+To empower inner-city youth by connecting them with enriching local programs that nurture their potential while strengthening their communities.
 
-This app connects inner-city youth with local programs that align with their interests, providing a platform for parents, community liaisons, and youth to search, add, and save programs. The goal is to help inner-city kids discover and participate in programs that nurture their potential and support their development.
+---
 
-## Target Audience
 
-- **Inner-city youth** looking for opportunities in their local community.
-- **Parents/Guardians** seeking educational, recreational, and developmental programs for their children.
-- **Community Liaisons and organizations** offering local youth programs.
+## 🧩 The Problem
 
-## User Stories
+Inner-city youth often face systemic barriers—such as underfunded schools, community violence, and limited access to extracurricular opportunities—that limit their ability to thrive. These challenges aren’t rooted in a lack of ambition or ability, but rather in a historic lack of equitable access and consistent investment.
 
-### 📚 User Story 1 – Parent/Guardian
+---
 
-As a **parent or guardian** of an inner-city youth,  
-I want to **search for local youth programs** by location, age, and interest,  
-So that my child can **join programs that help them grow and succeed**.
+## 💡 Our Solution
 
-### 📚 User Story 2 – Community Liaison
+This app provides a central platform for discovering and sharing youth-focused programs within local communities. It is designed to:
 
-As a **community liaison** working with inner-city youth,  
-I want to **add and manage youth programs**,  
-So that I can ensure **local opportunities are available and accessible** to kids in need.
+- Connect youth with opportunities aligned to their interests.
+- Help parents, guardians, and mentors discover and recommend programs.
+- Empower community liaisons and organizations to promote their initiatives.
 
-### 📚 User Story 3 – Youth Participant
+Importantly, our approach is not about removing youth from their neighborhoods—as with past desegregation busing efforts—but about **building stronger communities from within**, in the spirit of *for us, by us*.
 
-As an **inner-city youth participant**,  
-I want to **bookmark and save programs** I’m interested in,  
-So that I can **revisit them later and join when I’m ready**.
+---
+
+## 🤝 Why It Matters
+
+Much like the founding of HBCUs, this platform recognizes the power of investing in systems that support youth locally. This app is not about serving one race or group—it’s about **centering inner-city youth**, full stop.
+
+We believe **change only comes through partnership**—with youth, families, educators, community leaders, and organizations working side by side to uplift the next generation.
+
+---
+
+## 🚀 Future Improvements
+
+- 🔐 User account creation and authentication
+- 📍 Location-based program filtering
+- 👥 Role-based user accounts (e.g. Parent, Organization, Youth)
+- ⭐ Community ratings and reviews
+- 🔔 Notifications for new or ending programs
+- 📊 Analytics dashboard for organizations to track engagement
+
+---
+
+## 🛠 Built With
+
+- HTML, CSS, JavaScript / TypeScript
+
+---
+
+## 🤲 Get Involved
+
+Whether you're a community member, developer, educator, or youth advocate—**we'd love to collaborate**. Together, we can build something that not only serves the next generation but empowers them to lead.
