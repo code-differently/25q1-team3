@@ -2,7 +2,7 @@ import { describe, it, beforeEach } from '@jest/globals';
 import { expect } from '@jest/globals';
 import { bookmarkProgram } from './YouthBookmark';
 import { User, Role } from './YouthBookmark';
-import { Program } from './Program';
+import { Program } from '../models/Program';
 
 describe('bookmarkProgram', () => {
   let user: User;
