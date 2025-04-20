@@ -17,16 +17,13 @@ export interface Program {
     organizer: string;
     contact: string;
 
-
 }
-
-
 
 
 
 // This function returns all programs
 export function getAllPrograms(): Program[] {
-    return ProgramSeed;
+  return ProgramSeed;
 }
 
 

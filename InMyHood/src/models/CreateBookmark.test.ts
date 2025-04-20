@@ -9,7 +9,15 @@ describe("createBookmark", () => {
         user = {
         id: 1,
         name: "John Doe",
-        role: Role.YOUTH
+        role: Role.YOUTH,
+        bookmarks: [],
+        savedPrograms: [],
+        getBookmarks: function () {
+            return this.bookmarks;
+        },
+        addBookmark: function (bookmark) {
+            this.bookmarks.push(bookmark);
+        }
         };
     });
     

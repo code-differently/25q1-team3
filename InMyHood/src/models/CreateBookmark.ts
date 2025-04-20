@@ -1,9 +1,7 @@
-
 import { Role } from "./Role";
 import { User } from "./User";
 
 // This function creates a bookmark for a user.
-
 export function createBookmark(user: User, data: any) {
   if (user.role === Role.LIAISON) {
     throw new Error("Unauthorized: Liaisons can’t create bookmarks!");
