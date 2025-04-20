@@ -1,6 +1,6 @@
 import { BookmarkService } from "./BookmarkService";
 import { User } from "../models/User";
-import { Role } from "../models/Role";
+import { Role } from "../UsersRoles/Role";
 import { Program } from "../models/Program";
 
 describe("BookmarkService", () => {
