@@ -1,7 +1,7 @@
 import { User } from "../models/User";
 import { Program } from "../models/Program";
 import {
-  BookmarkAlreadyExistsException,
+  BookmarkAlreadyExistsExcgiteption,
   ProgramNotFoundException,
 } from "../utils/CustomExceptions";
 
