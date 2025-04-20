@@ -7,7 +7,6 @@ To empower inner-city youth by connecting them with enriching local programs tha
 
 ---
 
-
 ## 🧩 The Problem
 
 Inner-city youth often face systemic barriers—such as underfunded schools, community violence, and limited access to extracurricular opportunities—that limit their ability to thrive. These challenges aren’t rooted in a lack of ambition or ability, but rather in a historic lack of equitable access and consistent investment.
