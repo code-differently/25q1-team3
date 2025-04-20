@@ -7,7 +7,8 @@
     "skipLibCheck": true,          // Skips type checking of declaration files (speed up compilation)
     "outDir": "./dist",            // Output directory for compiled JavaScript files
     "baseUrl": "./src",            // Base directory for relative imports
-    "resolveJsonModule": true      // Allows importing JSON files as modules
+    "resolveJsonModule": true,      // Allows importing JSON files as modules
+    "typeRoots": ["node_modules/@types"]
   },
   "include": [
     "src/**/*.ts",                 // Includes all TypeScript files under the 'src' folder
