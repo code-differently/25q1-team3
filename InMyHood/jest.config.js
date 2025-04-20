@@ -14,7 +14,13 @@ module.exports = {
   moduleFileExtensions: ["ts", "js", "json", "node"],
 
   // automatically transform .ts files via ts-jest
-  transform: {
-    "^.+\\.ts$": "ts-jest",
-  },
-};
+ "transform": {
+  "^.+\\.(ts|tsx)$": "ts-jest"
+},
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.json',  // ensure it knows where your tsconfig is
+    },
+  
+}
+}
