@@ -1,11 +1,13 @@
 import { Role } from "./Role";
 
 export class User {
-  username: string;
-  role: Role;
+    id: number;
+    name: string;
+    role: Role;
 
-  constructor(username: string, role: Role) {
-    this.username = username;
+  constructor(id: number, name: string, role: Role) {
+    this.id = id;
+    this.name = name;
     this.role = role;
   }
 }
