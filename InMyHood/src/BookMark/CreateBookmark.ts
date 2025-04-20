@@ -12,7 +12,7 @@ export function createBookmark(user: User, data: any) {
   return data;
 }
 
-// This function will save the bookmark to the database.
+// This funtion will save the bookmark to the database.
 function saveBookmarkToDatabase(data: any) {  
   console.log("Bookmark saved to database:", data);
 }
