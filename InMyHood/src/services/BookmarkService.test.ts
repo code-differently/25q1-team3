@@ -1,11 +1,13 @@
-import { BookmarkService } from './BookmarkService';
+import { BookmarkService } from "./BookmarkService";
 import { User } from "../models/User";
 import { Role } from "../models/Role";
 import { Program } from "../models/Program";
-import { BookmarkAlreadyExistsException, ProgramNotFoundException } from "../utils/CustomExceptions";
+import {
+  BookmarkAlreadyExistsException,
+  ProgramNotFoundException,
+} from "../utils/CustomExceptions";
 
 describe("BookmarkService", () => {
-  
   let user: User;
   let program1: Program;
   let program2: Program;
@@ -22,7 +24,7 @@ describe("BookmarkService", () => {
       endDate: new Date(),
       location: "Philly",
       organizer: "Coach K",
-      contact: "coachk@email.com"
+      contact: "coachk@email.com",
     };
     program2 = {
       id: 2,
@@ -33,7 +35,7 @@ describe("BookmarkService", () => {
       endDate: new Date(),
       location: "Online",
       organizer: "Tech Co.",
-      contact: "techco@email.com"
+      contact: "techco@email.com",
     };
   });
 
@@ -63,4 +65,3 @@ describe("BookmarkService", () => {
 
   // You can add more tests as needed
 });
-

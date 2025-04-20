@@ -13,5 +13,3 @@ export class ProgramNotFoundException extends Error {
     Object.setPrototypeOf(this, ProgramNotFoundException.prototype); // Important for instanceof checks
   }
 }
-
-  

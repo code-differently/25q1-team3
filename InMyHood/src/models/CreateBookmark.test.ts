@@ -9,6 +9,6 @@ createBookmark(kid, { title: "Cool Program" }); // works!
 createBookmark(parent, { title: "Another One" }); // works!
 createBookmark(liaison, { title: "Oops" }); // ❌ will throw an error!
 
-function createBookmark(kid: User, arg1: { title: string; }) {
-    throw new Error("Function not implemented.");
+function createBookmark(kid: User, arg1: { title: string }) {
+  throw new Error("Function not implemented.");
 }

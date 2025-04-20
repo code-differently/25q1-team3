@@ -1,7 +1,9 @@
 import { Role } from "./Role";
 import { Program } from "./Program";
-import { ProgramNotFoundException, BookmarkAlreadyExistsException } from "../utils/CustomExceptions";
-
+import {
+  ProgramNotFoundException,
+  BookmarkAlreadyExistsException,
+} from "../utils/CustomExceptions";
 
 export class User {
   username: string;
