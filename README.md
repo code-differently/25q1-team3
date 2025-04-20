@@ -47,9 +47,9 @@ We believe **change only comes through partnership**—with youth, families, edu
 ## 🛠 Built With
 
 - HTML, CSS, JavaScript / TypeScript
+
 ---
 
 ## 🤲 Get Involved
 
 Whether you're a community member, developer, educator, or youth advocate—**we'd love to collaborate**. Together, we can build something that not only serves the next generation but empowers them to lead.
-
