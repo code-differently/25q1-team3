@@ -1,5 +1,5 @@
 import { BookmarkService } from "./BookmarkService";
-import { User } from "../models/User";
+import { User } from "../UsersRoles/User";
 import { Role } from "../UsersRoles/Role";
 import { Program } from "../models/Program";
 
