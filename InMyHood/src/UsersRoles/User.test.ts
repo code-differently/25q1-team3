@@ -1,81 +1,69 @@
-// User.test.ts
 import { User } from "../UsersRoles/User";
 import { Role } from "./Role";
 import { Program } from "../models/Program";
 
-describe("User", () => {
-  it("should initialize with a username and role", () => {
-    const user = new User(1, "khayla", Role.YOUTH);
-    expect(user.name).toBe("khayla");
-    expect(user.role).toBe(Role.YOUTH);
-  });
-
-  it("should return an empty bookmarks array initially", () => {
-    const user = new User(1, "khayla", Role.YOUTH);
-    expect(user.bookmarks).toEqual([]);
-  });
-
-  const program1: Program = {
+describe("User Class - Getters and Setters", () => {
+  let user: User;
+  const sampleProgram: Program = {
     id: 1,
-    name: "Program One",
-    title: "Intro to TS",
+    name: "Sample Program",
+    title: "Test",
     isExpired: false,
     isFull: false,
     description: "",
-    startDate: new Date,
-    endDate: new Date,
+    startDate: new Date(),
+    endDate: new Date(),
     location: "",
     category: "",
     organizer: "",
     contact: ""
   };
-  
-  const program2: Program = {
-    id: 2,
-    name: "Program Two",
-    title: "Advanced TS",
-    isExpired: true,
-    isFull: false,
-    description: "",
-    startDate: new Date,
-    endDate: new Date,
-    location: "",
-    category: "",
-    organizer: "",
-    contact: ""
-  };
-  
-  describe("User Class Tests", () => {
-    it("should allow getting and setting id, name, and role", () => {
-      const user = new User(101, "Alice", Role.LIAISON);
-  
-      expect(user.id).toBe(101);
-      expect(user.name).toBe("Alice");
-      expect(user.role).toBe(Role.LIAISON);
-  
-      // Update values
-      user.id = 202;
-      user.name = "Bob";
-      user.role = Role.PARENT;
-  
-      expect(user.id).toBe(202);
-      expect(user.name).toBe("Bob");
-      expect(user.role).toBe(Role.PARENT);
-    });
-  
-    it("should add and remove bookmarks correctly", () => {
-      const user = new User(1, "TestUser", Role.YOUTH);
-  
-      expect(user.bookmarks).toEqual([]);
-  
-      user.addBookmark(program1);
-      user.addBookmark(program2);
-  
-      expect(user.bookmarks).toEqual([program1, program2]);
-  
-      user.removeBookmark(program1);
-  
-      expect(user.bookmarks).toEqual([program2]);
+
+  beforeEach(() => {
+    user = new User(101, "InitialName", Role.YOUTH);
+  });
+
+  it("should get and set id using methods", () => {
+    expect(user.getId()).toBe(101);
+    user.setId(202);
+    expect(user.getId()).toBe(202);
+  });
+
+  it("should get and set name using methods", () => {
+    expect(user.getName()).toBe("InitialName");
+    user.setName("UpdatedName");
+    expect(user.getName()).toBe("UpdatedName");
+  });
+
+  it("should get and set role using methods", () => {
+    expect(user.getRole()).toBe(Role.YOUTH);
+    user.setRole(Role.PARENT);
+    expect(user.getRole()).toBe(Role.PARENT);
+  });
+
+  it("should return empty bookmarks initially", () => {
+    expect(user.getBookmarks()).toEqual([]);
+  });
+
+  it("should add bookmarks correctly", () => {
+    user.addBookmark(sampleProgram);
+    expect(user.getBookmarks()).toHaveLength(1);
+    expect(user.getBookmarks()[0]).toEqual(sampleProgram);
+  });
+
+  it("should remove a specific bookmark", () => {
+    user.addBookmark(sampleProgram);
+    expect(user.getBookmarks()).toContain(sampleProgram);
+
+    user.removeBookmark(sampleProgram);
+    expect(user.getBookmarks()).not.toContain(sampleProgram);
+    expect(user.getBookmarks().length).toBe(0);
+  });
+
+  it("should not fail when removing a bookmark that doesn't exist", () => {
+    // Just making sure the method doesn't crash
+    expect(() => user.removeBookmark(sampleProgram)).not.toThrow();
+    expect(user.getBookmarks()).toEqual([]);
   });
 });
-});
+
