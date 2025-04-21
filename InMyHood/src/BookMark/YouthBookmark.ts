@@ -1,4 +1,4 @@
-import { Program } from "./Program";
+import { Program } from "../models/Program";
 
 export enum Role {
   YOUTH = "YOUTH",
