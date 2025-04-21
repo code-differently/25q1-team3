@@ -1,18 +1,28 @@
-import { Role } from "../UsersRoles/Role";
-import { User } from "../UsersRoles/User";
+import { YouthBookmark } from './YouthBookmark';
+import { Program } from '../models/Program';
+import { Role } from '../UsersRoles/Role';
+import { User } from '../UsersRoles/User';
 
-// This function creates a bookmark for a user.
-export function createBookmark(user: User, data: any) {
-  if (user.role === Role.LIAISON) {
-    throw new Error("Unauthorized: Liaisons can’t create bookmarks!");
+export function createBookmark(user: User, program: Program): YouthBookmark {
+  if (user.role !== Role.YOUTH) {
+    throw new Error("Only youth users can bookmark programs.");
   }
 
-  // Otherwise go ahead!
-  console.log("Bookmark created:", data);
-  return data;
-}
+  if (program.isExpired) {
+    throw new Error("Cannot bookmark an expired program.");
+  }
 
-// This funtion will save the bookmark to the database.
-function saveBookmarkToDatabase(data: any) {  
-  console.log("Bookmark saved to database:", data);
+  if (program.isFull) {
+    throw new Error("Cannot bookmark a full program.");
+  }
+
+  const bookmark: YouthBookmark = {
+    ...program,
+    userId: String(user.id),         
+    programId: String(program.id),   
+    bookmarkedAt: new Date(),        
+  };
+
+  console.log("Bookmark created:", bookmark);
+  return bookmark;
 }

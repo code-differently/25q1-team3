@@ -9,6 +9,10 @@ module.exports = {
 
   // test environment (Node.js)
   testEnvironment: "node",
+  
+  moduleNameMapper: {
+    '^UserRoles/(.*)$': '<rootDir>/src/models/UserRoles/$1',
+  },
 
   // treat .ts and .js as modules
   moduleFileExtensions: ["ts", "js", "json", "node"],
