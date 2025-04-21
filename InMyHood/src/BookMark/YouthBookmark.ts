@@ -4,10 +4,9 @@ export enum Role {
   YOUTH = "YOUTH",
   PARENT = "PARENT",
   LIAISON = "LIAISON"
-  }
+}
 
-
-export interface YouthBookmark extends Program {
+export class YouthBookmark implements Program {
   bookmarkedAt: Date;
   id: number;
   name: string;
@@ -17,13 +16,41 @@ export interface YouthBookmark extends Program {
   category: string;
   isExpired: boolean;
   isFull: boolean;
+
+  constructor(data: {
+    bookmarkedAt: Date;
+    id: number;
+    name: string;
+    programId: string;
+    title: string;
+    userId: string;
+    category: string;
+    isExpired: boolean;
+    isFull: boolean;
+  }) {
+    this.bookmarkedAt = data.bookmarkedAt;
+    this.id = data.id;
+    this.name = data.name;
+    this.programId = data.programId;
+    this.title = data.title;
+    this.userId = data.userId;
+    this.category = data.category;
+    this.isExpired = data.isExpired;
+    this.isFull = data.isFull;
+  }
+  description!: string;
+  startDate!: Date;
+  endDate!: Date;
+  location!: string;
+  organizer!: string;
+  contact!: string;
 }
 
-export class User { 
+export class User {
   id: string;
   name: string;
   savedPrograms: Program[];
-  role?: Role; // Use optional property instead of index signature
+  role?: Role;
 
   constructor(id: string, name: string) {
     this.id = id;
@@ -31,37 +58,38 @@ export class User {
     this.savedPrograms = [];
   }
 
-  // Check if a program is already bookmarked
   isProgramBookmarked(programId: string): boolean {
     return this.savedPrograms.some(p => String(p.id) === programId);
   }
 
-  // Save a program if not already saved
   saveProgram(program: Program): void {
     if (!this.isProgramBookmarked(String(program.id))) {
       this.savedPrograms.push(program);
-    
     }
   }
 }
-export function bookmarkProgram({ user, program }: { user: User; program: Program }): void {
-    // Log user role status
-    if (user.role === Role.YOUTH) {
-      console.log("This user is a youth.");
-    } else {
-      console.log("This user is not a youth.");
-      throw new Error("Only youth users can bookmark programs.");
-    }
-    
-    // Validate program status
-    if (program.isExpired) {
-      throw new Error("Cannot bookmark an expired program.");
-    }
-    
-    if (program.isFull) {
-      throw new Error("Cannot bookmark a full program.");
-    }
-    
-    // If we reach here, bookmark the program
-    user.saveProgram(program);
+
+export function bookmarkProgram({
+  user,
+  program
+}: {
+  user: User;
+  program: Program;
+}): void {
+  if (user.role === Role.YOUTH) {
+    console.log("This user is a youth.");
+  } else {
+    console.log("This user is not a youth.");
+    throw new Error("Only youth users can bookmark programs.");
+  }
+
+  if (program.isExpired) {
+    throw new Error("Cannot bookmark an expired program.");
+  }
+
+  if (program.isFull) {
+    throw new Error("Cannot bookmark a full program.");
+  }
+
+  user.saveProgram(program);
 }
