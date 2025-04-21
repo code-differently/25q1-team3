@@ -1,63 +1,39 @@
-import { createBookmark } from "./CreateBookmark";
-import { Role } from "../UsersRoles/Role";
-import { User } from "../UsersRoles/User";
-import { Program } from "models/Program";
+import { createBookmark } from './CreateBookmark';
+import { Role } from '../UsersRoles/Role';
+import { User } from '../UsersRoles/User';
+import { Program } from '../models/Program';
 
 describe("createBookmark", () => {
-    let user: User;
-    
-    beforeEach(() => {
-        user = {
-            id: 1,
-            name: "John Doe",
-            role: Role.YOUTH,
-            bookmarks: [],
-            savedPrograms: [],
-    
-            getId() {
-                return this.id;
-            },
-            setId(value: number) {
-                this.id = value;
-            },
-            getName() {
-                return this.name;
-            },
-            setName(value: string) {
-                this.name = value;
-            },
-            getRole() {
-                return this.role;
-            },
-            setRole(value: Role) {
-                this.role = value;
-            },
-            getBookmarks() {
-                return this.bookmarks;
-            },
-            addBookmark(program: Program) {
-                this.bookmarks.push(program);
-            },
-            removeBookmark(program: Program) {
-                this.bookmarks = this.bookmarks.filter(
-                    (p) => p.id !== program.id
-                );
-            }
-        };
-    });
-    
-    
-    it("should create a bookmark for a user", () => {
-        const data = { url: "https://example.com" };
-        const result = createBookmark(user, data);
-        expect(result).toEqual(data);
-    });
-    
-    it("should throw an error if the user is a liaison", () => {
-        user.role = Role.LIAISON;
-        const data = { url: "https://example.com" };
-        expect(() => createBookmark(user, data)).toThrow(
-        "Unauthorized: Liaisons can’t create bookmarks!"
-        );
-    });
+  let user: User;
+  let program: Program;
+
+  beforeEach(() => {
+    user = new User(1, "Ezra", Role.YOUTH);
+    program = {
+      id: 1234,
+      name: "Dance Class",
+      title: "Dance Class",
+      description: "Learn to dance",
+      category: "Dance",
+      startDate: new Date("2025-01-01"),
+      endDate: new Date("2025-01-20"),
+      location: "Wilmington, DE",
+      organizer: "Ezra Org",
+      contact: "ezra@example.com",
+      isFull: false,
+      isExpired: false
+    };
+  });
+
+  it("should create a bookmark for a youth user", () => {
+    const bookmark = createBookmark(user, program);
+    expect(bookmark.userId).toBe("1");
+    expect(bookmark.programId).toBe("1234");
+    expect(bookmark.bookmarkedAt).toBeInstanceOf(Date);
+  });
+
+  it("should throw an error for expired programs", () => {
+    program.isExpired = true;
+    expect(() => createBookmark(user, program)).toThrow("Cannot bookmark an expired program.");
+  });
 });

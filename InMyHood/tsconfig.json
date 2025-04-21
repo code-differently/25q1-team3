@@ -9,7 +9,12 @@
     "baseUrl": "./src", // Base directory for relative imports
     "resolveJsonModule": true, // Allows importing JSON files as modules
     "typeRoots": ["node_modules/@types"],
-    "types": ["jest"]
+    "types": ["jest"],
+    "paths": {
+      "UsersRoles/*": ["UsersRoles/*"],
+      "models/*": ["models/*"],
+      "BookMark/*": ["BookMark/*"]
+    }
   },
   "include": [
     "src/**/*.ts", // Includes all TypeScript files under the 'src' folder
