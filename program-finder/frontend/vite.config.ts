@@ -5,9 +5,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: true,
-    
     proxy: {
-      '/api': 'http://localhost:4000'
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        secure: false
+      }
     }
   },
   build: {
@@ -15,7 +18,9 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: undefined
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+        },
       }
     }
   }
