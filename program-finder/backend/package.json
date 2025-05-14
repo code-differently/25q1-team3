@@ -2,6 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "dist/server.js",
+  "main": "index.js",
   "dependencies": {
     "@types/pg": "^8.15.1",
     "accepts": "^2.0.0",
@@ -129,6 +130,7 @@
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
+    "start": "ts-node src/server.ts"
   },
   "keywords": [],
   "author": "",
