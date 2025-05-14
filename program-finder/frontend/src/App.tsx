@@ -1,11 +1,16 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Detail from './pages/Detail';
 
 const App: React.FC = () => {
   return (
-    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-      <h1>Welcome to Program Finder!</h1>
-      <p>Your frontend is running 🎉</p>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/detail/:id" element={<Detail />} />
+      </Routes>
+    </Router>
   );
 };
 

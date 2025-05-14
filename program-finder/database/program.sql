@@ -1,4 +1,3 @@
--- Create the programs table
 CREATE TABLE IF NOT EXISTS programs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     zip_code VARCHAR(5) NOT NULL,
@@ -8,7 +7,6 @@ CREATE TABLE IF NOT EXISTS programs (
     ages VARCHAR(50) NOT NULL
 );
 
--- Insert the program data
 INSERT INTO programs (zip_code, organization, services, type, ages) VALUES
 ('19801', 'Walnut Street YMCA', 'Offers preschool, school-age childcare, youth development, teen leadership programs, summer day camps, swim lessons, and lifeguard training.', 'Sports, education, lifeguard', '2mos - 17yrs'),
 ('19801', 'Central YMCA', 'Provides preschool programs and childcare services.', 'Preschool, Childcare', '2mos - 5yrs'),
@@ -29,3 +27,4 @@ INSERT INTO programs (zip_code, organization, services, type, ages) VALUES
 ('19805', 'William "Hicks" Anderson Community Center', 'Provides organized sports leagues, youth camps, field trips, tutoring, and various recreational activities.', 'Sports Leagues, Youth Camps, Field Trips, Tutoring, Recreation', '6 - 17yrs'),
 ('19806', 'Delaware Center for Horticulture', 'Offers youth programs focusing on horticulture education and employment training.', 'Horticulture Education, Employment Training', '3 - 18yrs'),
 ('19806', 'Volunteer Opportunities at St. Stephen''s', 'Engages youth in community service through Delaware''s highest-volume pantry, serving over 1,300 families monthly.', 'Community Service', '14 - 18yrs');
+

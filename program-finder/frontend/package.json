@@ -4,6 +4,7 @@
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
   "main": "eslint.config.js",
   "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "accepts": "^2.0.0",
     "acorn": "^8.14.1",
     "acorn-jsx": "^5.3.2",
@@ -148,6 +149,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-refresh": "^0.17.0",
+    "react-router-dom": "^7.6.0",
     "resolve-from": "^4.0.0",
     "reusify": "^1.1.0",
     "rollup": "^4.40.2",
