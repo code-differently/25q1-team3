@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { ProgramData } from '../interfaces/ProgramData';
 import BookmarkButton from './BookmarkButton';
 
@@ -8,12 +10,12 @@ interface ProgramCardProps {
 }
 
 const ProgramCard: React.FC<ProgramCardProps> = ({ data }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleCardClick = (e: React.MouseEvent) => {
     // Prevent navigation if bookmark button is clicked
     if ((e.target as HTMLElement).tagName === 'BUTTON') return;
-    navigate(`/detail/${data.id}`);
+    router.push(`/programs/${data.id}`);
   };
 
   return (
