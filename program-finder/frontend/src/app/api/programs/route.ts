@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { API_BASE_URL } from '../config';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   console.log('API Route: Received request for programs');
   try {
