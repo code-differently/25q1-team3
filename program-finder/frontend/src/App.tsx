@@ -5,7 +5,12 @@ import Detail from './pages/Detail';
 
 const App: React.FC = () => {
   return (
-<div><Home /></div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/detail/:id" element={<Detail />} />
+      </Routes>
+    </Router>
   );
 };
 

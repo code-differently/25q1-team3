@@ -7,7 +7,7 @@ app.use(express.json());
 app.use('/api', programRoutes);
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Backend API is running 🎉' });
+  res.json({ message: 'Yaaayy!!!  Backend API is running' });
 });
 
 export default app;
