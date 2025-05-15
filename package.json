@@ -1,0 +1,10 @@
+{
+"devDependencies": {
+  "cypress": "^14.3.3"
+},
+"scripts": {
+  "start": "node server.js",
+  "cypress:open": "cypress open",
+  "cypress:run": "cypress run"
+}
+}
