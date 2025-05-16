@@ -1,8 +1,18 @@
 export interface ProgramData {
   id: number;
-  zip_code: string;
   organization: string;
   services: string;
-  type: string;
-  ages: string;
+  type?: string;
+  ages?: string;
+  zip_code?: string;
+  location?: {
+    lat: number;
+    lng: number;
+  };
+  contact?: {
+    phone?: string;
+    email?: string;
+    website?: string;
+  };
+  isBookmarked?: boolean;
 }

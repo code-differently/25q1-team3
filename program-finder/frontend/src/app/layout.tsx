@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import Script from 'next/script'
+import { useEffect } from 'react'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata: Metadata = {
-  title: 'Program Finder',
-  description: 'Find your perfect program',
+  title: 'In My Hood - Program Finder',
+  description: 'Find Local Programs for Youth in Your Community',
 }
 
 export default function RootLayout({
@@ -16,7 +15,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="/assets/css/main.css" />
+      </head>
+      <body className="is-preload">
+        {children}
+
+        {/* Scripts */}
+        <Script src="/assets/js/jquery.min.js" />
+        <Script src="/assets/js/jquery.dropotron.min.js" />
+        <Script src="/assets/js/jquery.scrollex.min.js" />
+        <Script src="/assets/js/browser.min.js" />
+        <Script src="/assets/js/breakpoints.min.js" />
+        <Script src="/assets/js/util.js" />
+        <Script src="/assets/js/main.js" />
+      </body>
     </html>
   )
 } 

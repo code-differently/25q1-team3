@@ -1,51 +1,81 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ProgramData } from '../../interfaces/ProgramData';
 import ProgramCard from '../../components/ProgramCard';
-import './BookmarkedPrograms.css';
+import PageLayout from '../../components/PageLayout';
 
-export default function BookmarkedPrograms() {
-  const [bookmarkedPrograms, setBookmarkedPrograms] = useState<ProgramData[]>([]);
+export default function Bookmarks() {
+  const [bookmarks, setBookmarks] = useState<ProgramData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchBookmarkedPrograms = async () => {
+    const fetchBookmarks = async () => {
+      setLoading(true);
       try {
-        const response = await fetch('/api/bookmarks');
-        const data = await response.json();
-        setBookmarkedPrograms(data);
-      } catch (error) {
-        console.error('Error fetching bookmarked programs:', error);
-        setBookmarkedPrograms([]);
+        const res = await fetch('/api/bookmarks');
+        if (!res.ok) throw new Error('Failed to fetch bookmarks');
+        const data = await res.json();
+        setBookmarks(data);
+      } catch (err) {
+        console.error('Fetch error:', err);
+        setError('Unable to fetch bookmarks. Please try again later.');
+        setBookmarks([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBookmarkedPrograms();
+    fetchBookmarks();
   }, []);
 
-  if (loading) {
-    return <div className="loading">Loading bookmarked programs...</div>;
-  }
-
   return (
-    <div className="bookmarked-programs">
-      <h1>Bookmarked Programs</h1>
-      
-      {bookmarkedPrograms.length === 0 ? (
-        <div className="no-bookmarks">
-          <h2>No Bookmarked Programs</h2>
-          <p>You haven't bookmarked any programs yet. Browse programs and bookmark your favorites!</p>
-        </div>
-      ) : (
-        <div className="programs-grid">
-          {bookmarkedPrograms.map(program => (
-            <ProgramCard key={program.id} data={program} />
-          ))}
-        </div>
-      )}
-    </div>
+    <PageLayout>
+      <section id="main" className="container">
+        <header>
+          <h2>Bookmarked Programs</h2>
+          <p>Your saved programs for future reference</p>
+        </header>
+
+        {loading && (
+          <div className="box">
+            <div className="loading-container">
+              <div className="loading-spinner"></div>
+              <p>Loading your bookmarks...</p>
+            </div>
+          </div>
+        )}
+
+        {error && (
+          <div className="box">
+            <div className="error-message">
+              <p>{error}</p>
+              <button className="button small" onClick={() => setError(null)}>Dismiss</button>
+            </div>
+          </div>
+        )}
+
+        {!loading && bookmarks.length === 0 && !error && (
+          <div className="box">
+            <h3>No bookmarks found</h3>
+            <p>You haven't bookmarked any programs yet. Browse programs and click the bookmark icon to save them for later.</p>
+            <ul className="actions">
+              <li><a href="/" className="button primary">Find Programs</a></li>
+            </ul>
+          </div>
+        )}
+
+        {!loading && bookmarks.length > 0 && (
+          <div className="row">
+            {bookmarks.map(program => (
+              <div key={program.id} className="col-4 col-12-narrower">
+                <ProgramCard data={program} />
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </PageLayout>
   );
 } 
