@@ -1,7 +1,11 @@
 {
   "name": "program-finder",
   "version": "1.0.0",
-  "description": "A unified application for finding and managing educational programs",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
@@ -34,18 +38,10 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/jest": "^29.5.12",
-    "@types/jsonwebtoken": "^9.0.5",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "14.1.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.2",
-    "ts-node": "^10.9.2"
+    "concurrently": "^8.2.2"
   },
-  "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  "packageManager": "npm@11.3.0+sha512.96eb611483f49c55f7fa74df61b588de9e213f80a256728e6798ddc67176c7b07e4a1cfc7de8922422cbce02543714367037536955221fa451b0c4fefaf20c66",
+  "engines": {
+    "node": "18.x"
   }
 }
