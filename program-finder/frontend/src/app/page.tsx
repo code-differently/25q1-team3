@@ -109,8 +109,8 @@ export default function Home() {
     <PageLayout isLanding={true}>
       {/* Banner Section */}
       <section id="banner">
-        <h2>In My Hood</h2>
-        <p>Find Local Programs for Youth in Your Community</p>
+				<h2>CYPHER</h2>
+				<p>Connecting Youth to Programs, Hope, Empowerment, and Resources</p>
         <div className="search-container">
           <SearchBar defaultZip="" onSearch={search} />
         </div>
@@ -125,8 +125,11 @@ export default function Home() {
         {/* Intro Box */}
         <section className="box special">
           <header className="major">
-            <h2>Empowering Inner-City Youth</h2>
-            <p>Connect with enriching local programs that nurture potential and strengthen communities</p>
+          <h2>A Digital Movement Designed To Bridge The Gap Between
+							<br />
+						 Underserved Youth And The Opportunities They Deserve</h2>
+							<p>The power of connection starts at CYPHER.<br />
+							Where youth plug into opportunity!!!</p>
           </header>
           <span className="image featured"><img src="/images/pic01.jpg" alt="Youth Programs" /></span>
         </section>
@@ -134,30 +137,57 @@ export default function Home() {
         {/* Feature Icons */}
         <section className="box special features">
           <div className="features-row">
-            <section>
-              <span className="icon solid major fa-search accent2"></span>
-              <h3>Find Programs</h3>
-              <p>Discover educational, recreational, and enrichment programs in your local community.</p>
-            </section>
-            <section>
-              <span className="icon solid major fa-bookmark accent3"></span>
-              <h3>Save Favorites</h3>
-              <p>Bookmark programs you're interested in to easily find them later.</p>
-            </section>
-          </div>
-          <div className="features-row">
-            <section>
-              <span className="icon solid major fa-map-marker accent4"></span>
-              <h3>Nearby Options</h3>
-              <p>Filter programs based on distance and find opportunities close to home.</p>
-            </section>
-            <section>
-              <span className="icon solid major fa-users accent5"></span>
-              <h3>Community Focus</h3>
-              <p>Programs designed for and by community members to strengthen local connections.</p>
-            </section>
+          <section>
+								<span className="icon solid major fa-bolt accent2"></span>
+								<h3>Fast Placement</h3>
+								<p>At CYPHER we have a unique relationship with our community liasons. When registering through us, your'e given first priority to placement within the organization of your choice.</p>
+							</section>
+							<section>
+								<span className="icon solid major fa-chart-area accent3"></span>
+								<h3>Enrollment Booster</h3>
+								<p>CYHPER connects directly with youth ages 12-18, making it easier than ever for programs to boost enrollment and keep participants engaged.</p>
+							</section>
+						</div>
+						<div className="features-row">
+							<section>
+								<span className="icon solid major fa-cloud accent4"></span>
+								<h3>Connection Central</h3>
+								<p>CYPHER brings after-school programs, mentorships, jobs and more together in one place - so you don't have to search everywhere. One app. All the opportunities.</p>
+							</section>
+							<section>
+								<span className="icon solid major fa-lock accent5"></span>
+								<h3>Locked In</h3>
+								<p>CYPHER ensures everything stays current-from program details to eligibility rules. We work closely with community liasons to bring you real-time updates and keep your options accurate and fresh.</p>
+							</section>
           </div>
         </section>
+
+        <div className="row">
+						<div className="col-6 col-12-narrower">
+
+							<section className="box special">
+								<span className="image featured"><img src="images/pic02.jpg" alt="" /></span>
+								<h3>WHY CYPHER ?</h3>
+								<p>In culture, a cypher represents a circle of collaboration, where voices come together to share ideas, skills and creativity-whether it's in hip-hop, poetry or tech. Our platform embodies this same spirit by bringing youth, organizations, and communities into a shared space where opportunities are amplified.</p>
+								<ul className="actions special">
+									<li><a href="#" className="button alt">Learn More</a></li>
+								</ul>
+							</section>
+
+						</div>
+						<div className="col-6 col-12-narrower">
+
+							<section className="box special">
+								<span className="image featured"><img src="images/pic03.jpg" alt="" /></span>
+								<h3>THE CREATORS</h3>
+								<p>The Top Five is a team of technical professionals from diverse backgrounds who saw the need for CYPHER. We worked hard to create a platform that connects youth with programs and resources. Our vision is to grow CYPHER nationwide as the go-to app that helps young people find opportunities for growth, enrichment and empowerment.</p>
+								<ul className="actions special">
+									<li><a href="#" className="button alt">Learn More</a></li>
+								</ul>
+							</section>
+
+						</div>
+					</div>
 
         {/* Filters and Programs */}
         <div className="row">
@@ -283,22 +313,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section id="cta">
-        <h2>Join the community</h2>
-        <p>Sign up to receive updates about new programs in your area.</p>
+      {/* CTA */}
+				<section id="cta">
 
-        <form>
-          <div className="row gtr-50 gtr-uniform">
-            <div className="col-8 col-12-mobilep">
-              <input type="email" name="email" id="email" placeholder="Email Address" />
-            </div>
-            <div className="col-4 col-12-mobilep">
-              <input type="submit" value="Sign Up" className="fit" />
-            </div>
-          </div>
-        </form>
-      </section>
+					<h2>Sign up to get started</h2>
+					<p>Get connected to the coolest opportunities near you.</p>
+
+					<form>
+						<div className="row gtr-50 gtr-uniform">
+							<div className="col-8 col-12-mobilep">
+								<input type="email" name="email" id="email" placeholder="Email Address" />
+							</div>
+							<div className="col-4 col-12-mobilep">
+								<input type="submit" value="Sign Up" className="fit" />
+							</div>
+						</div>
+					</form>
+
+				</section>
     </PageLayout>
   );
 } 
