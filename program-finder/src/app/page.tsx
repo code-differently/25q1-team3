@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ProgramCard from '@/components/ProgramCard'
 
 interface Program {
@@ -19,74 +19,43 @@ interface Program {
 export default function Home() {
   const [search, setSearch] = useState('')
   const [programs, setPrograms] = useState<Program[]>([])
-  const [filtered, setFiltered] = useState<Program[]>([])
-  const [bookmarkedPrograms, setBookmarkedPrograms] = useState<Set<number>>(new Set())
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [bookmarkedPrograms, setBookmarkedPrograms] = useState<Set<number>>(new Set())
+  const [hasSearched, setHasSearched] = useState(false)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
-        setError(null)
-        
-        console.log('Fetching programs and bookmarks...')
-        const [programsRes, bookmarksRes] = await Promise.all([
-          fetch('/api/programs'),
-          fetch('/api/bookmarks?userId=1')
-        ])
-
-        if (!programsRes.ok) {
-          throw new Error(`Failed to fetch programs: ${programsRes.status}`)
-        }
-        if (!bookmarksRes.ok) {
-          throw new Error(`Failed to fetch bookmarks: ${bookmarksRes.status}`)
-        }
-
-        const [programsData, bookmarksData] = await Promise.all([
-          programsRes.json(),
-          bookmarksRes.json()
-        ])
-
-        console.log('Programs data:', programsData)
-        console.log('Bookmarks data:', bookmarksData)
-
-        if (!Array.isArray(programsData)) {
-          throw new Error('Invalid programs data format')
-        }
-        if (!Array.isArray(bookmarksData)) {
-          throw new Error('Invalid bookmarks data format')
-        }
-
-        setPrograms(programsData)
-        setFiltered(programsData)
-
-        const bookmarkedIds = new Set<number>()
-        bookmarksData.forEach((b: { program: { id: number } }) => bookmarkedIds.add(b.program.id))
-        setBookmarkedPrograms(bookmarkedIds)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-        setError(error instanceof Error ? error.message : 'Failed to fetch data')
-      } finally {
-        setIsLoading(false)
+  const handleSearch = async (query: string) => {
+    setSearch(query)
+    setHasSearched(!!query)
+    if (!query) {
+      setPrograms([])
+      setError(null)
+      setIsLoading(false)
+      return
+    }
+    setIsLoading(true)
+    setError(null)
+    try {
+      const programsRes = await fetch('/api/programs')
+      if (!programsRes.ok) {
+        throw new Error(`Failed to fetch programs: ${programsRes.status}`)
       }
-    }
-
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    if (!search) {
-      setFiltered(programs)
-    } else {
-      setFiltered(
-        programs.filter((p) =>
-          p.name.toLowerCase().includes(search.toLowerCase()) ||
-          p.description.toLowerCase().includes(search.toLowerCase())
-        )
+      const programsData = await programsRes.json()
+      if (!Array.isArray(programsData)) {
+        throw new Error('Invalid programs data format')
+      }
+      // Filter client-side for search
+      const filtered = programsData.filter((p: Program) =>
+        p.name.toLowerCase().includes(query.toLowerCase()) ||
+        p.description.toLowerCase().includes(query.toLowerCase())
       )
+      setPrograms(filtered)
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Failed to fetch data')
+    } finally {
+      setIsLoading(false)
     }
-  }, [search, programs])
+  }
 
   const handleBookmarkToggle = async (programId: number) => {
     try {
@@ -98,13 +67,10 @@ export default function Home() {
         },
         body: JSON.stringify({ programId, userId }),
       })
-
       if (!response.ok) {
         throw new Error('Failed to toggle bookmark')
       }
-
       const data = await response.json()
-      
       setBookmarkedPrograms(prev => {
         const newSet = new Set<number>()
         prev.forEach(id => newSet.add(id))
@@ -118,25 +84,6 @@ export default function Home() {
     } catch (err) {
       console.error('Error toggling bookmark:', err)
     }
-  }
-
-  if (isLoading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">Loading programs...</div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center text-red-600">
-          <h2 className="text-xl font-semibold mb-2">Error Loading Data</h2>
-          <p>{error}</p>
-        </div>
-      </div>
-    )
   }
 
   return (
@@ -163,31 +110,36 @@ export default function Home() {
             type="text"
             placeholder="Search for programs..."
             value={search}
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => handleSearch(e.target.value)}
             className="input-field max-w-md"
           />
         </div>
       </header>
-
-      <div className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">
-          {search ? 'Search Results' : 'Featured Programs'}
-        </h2>
-        {filtered.length === 0 ? (
-          <div className="text-gray-500">No programs found.</div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((program) => (
-              <ProgramCard
-                key={program.id}
-                program={program}
-                isBookmarked={bookmarkedPrograms.has(program.id)}
-                onBookmarkToggle={handleBookmarkToggle}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+      {isLoading && (
+        <div className="text-center">Loading programs...</div>
+      )}
+      {error && (
+        <div className="text-center text-red-600 mb-4">{error}</div>
+      )}
+      {hasSearched && !isLoading && !error && (
+        <div className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4">Search Results</h2>
+          {programs.length === 0 ? (
+            <div className="text-gray-500">No programs found.</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {programs.map((program) => (
+                <ProgramCard
+                  key={program.id}
+                  program={program}
+                  isBookmarked={bookmarkedPrograms.has(program.id)}
+                  onBookmarkToggle={handleBookmarkToggle}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 } 
