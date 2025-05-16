@@ -27,3 +27,6 @@ replay_pid*
 # Note: CSV and SQL files in the data/ directory will be tracked
 data/*.tmp
 data/*.bak
+
+# pnpm store
+.pnpm-store/
