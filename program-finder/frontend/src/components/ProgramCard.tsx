@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ProgramData } from '../interfaces/ProgramData';
 import BookmarkButton from './BookmarkButton';
@@ -12,24 +13,37 @@ interface ProgramCardProps {
 const ProgramCard: React.FC<ProgramCardProps> = ({ data }) => {
   const router = useRouter();
 
-  const handleCardClick = (e: React.MouseEvent) => {
-    // Prevent navigation if bookmark button is clicked
-    if ((e.target as HTMLElement).tagName === 'BUTTON') return;
-    router.push(`/programs/${data.id}`);
+  // Determine which image to use based on category or default to generic
+  const getImageForProgram = () => {
+    if (data.type?.toLowerCase().includes('education')) return '/images/pic02.jpg';
+    if (data.type?.toLowerCase().includes('sports')) return '/images/pic03.jpg';
+    if (data.type?.toLowerCase().includes('art')) return '/images/pic01.jpg';
+    return '/images/pic02.jpg'; // Default image
   };
 
   return (
-    <div
-      onClick={handleCardClick}
-      style={{ border: '1px solid #ccc', borderRadius: 8, padding: 16, marginBottom: 12, cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-    >
-      <div>
-        <h3 style={{ margin: 0 }}>{data.organization}</h3>
-        <p style={{ margin: '4px 0' }}>{data.services}</p>
-        <small>Ages: {data.ages}</small>
+    <section className="box special">
+      <span className="image featured">
+        <img src={getImageForProgram()} alt={data.organization} />
+      </span>
+      <div className="program-card-header">
+        <h3>{data.organization}</h3>
+        <BookmarkButton programId={data.id} />
       </div>
-      <BookmarkButton programId={data.id} />
-    </div>
+      <p>{data.services}</p>
+      <p><strong>Ages:</strong> {data.ages || 'All ages'}</p>
+      {data.zip_code && <p><strong>Location:</strong> {data.zip_code}</p>}
+      <ul className="actions special">
+        <li>
+          <Link 
+            href={`/programs/${data.id}`}
+            className="button alt"
+          >
+            Learn More
+          </Link>
+        </li>
+      </ul>
+    </section>
   );
 };
 

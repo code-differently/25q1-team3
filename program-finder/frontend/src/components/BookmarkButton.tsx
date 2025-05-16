@@ -48,9 +48,10 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ programId }) => {
     <button 
       onClick={toggle} 
       aria-label={saved ? 'Remove bookmark' : 'Add bookmark'}
-      className="bookmark-button"
+      className="bookmark-button icon solid fa-bookmark"
+      style={{ color: saved ? '#5480f1' : '#ccc' }}
     >
-      {saved ? '★' : '☆'}
+      <span className="label">{saved ? 'Bookmarked' : 'Bookmark'}</span>
     </button>
   );
 };
