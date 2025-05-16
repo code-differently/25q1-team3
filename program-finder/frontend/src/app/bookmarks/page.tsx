@@ -1,48 +1,60 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { ProgramData } from '../../interfaces/ProgramData';
-import ProgramCard from '../../components/ProgramCard';
-import './BookmarkedPrograms.css';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
+interface Program {
+  id: number;
+  organization: string;
+  services: string;
+  type: string;
+  ages: string;
+  zip_code: string;
+  bookmark_id?: number;
+}
 
 export default function BookmarkedPrograms() {
-  const [bookmarkedPrograms, setBookmarkedPrograms] = useState<ProgramData[]>([]);
+  const [bookmarks, setBookmarks] = useState<Program[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBookmarkedPrograms = async () => {
-      try {
-        const response = await fetch('/api/bookmarks');
-        const data = await response.json();
-        setBookmarkedPrograms(data);
-      } catch (error) {
-        console.error('Error fetching bookmarked programs:', error);
-        setBookmarkedPrograms([]);
-      } finally {
+    fetch('/api/bookmarks')
+      .then(res => res.json())
+      .then(data => {
+        setBookmarks(data);
         setLoading(false);
-      }
-    };
-
-    fetchBookmarkedPrograms();
+      });
   }, []);
 
-  if (loading) {
-    return <div className="loading">Loading bookmarked programs...</div>;
-  }
+  const handleUnbookmark = async (programId: number) => {
+    await fetch('/api/bookmarks', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ programId }),
+    });
+    setBookmarks(bookmarks.filter(p => p.id !== programId));
+  };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="bookmarked-programs">
+    <div>
       <h1>Bookmarked Programs</h1>
-      
-      {bookmarkedPrograms.length === 0 ? (
-        <div className="no-bookmarks">
-          <h2>No Bookmarked Programs</h2>
-          <p>You haven't bookmarked any programs yet. Browse programs and bookmark your favorites!</p>
-        </div>
+      {bookmarks.length === 0 ? (
+        <p>No bookmarks yet.</p>
       ) : (
-        <div className="programs-grid">
-          {bookmarkedPrograms.map(program => (
-            <ProgramCard key={program.id} data={program} />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+          {bookmarks.map(program => (
+            <div key={program.id} style={{ border: '1px solid #ccc', borderRadius: 8, padding: 16, width: 300 }}>
+              <h2>
+                <Link href={`/programs/${program.id}`}>{program.organization}</Link>
+              </h2>
+              <p>{program.services}</p>
+              <p><strong>Type:</strong> {program.type}</p>
+              <p><strong>Ages:</strong> {program.ages}</p>
+              <p><strong>Location (ZIP):</strong> {program.zip_code}</p>
+              <button onClick={() => handleUnbookmark(program.id)}>Remove Bookmark</button>
+            </div>
           ))}
         </div>
       )}

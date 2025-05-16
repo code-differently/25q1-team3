@@ -17,8 +17,8 @@ export async function GET(request: Request) {
 
     // Build query parameters
     const queryParams = new URLSearchParams();
-    if (zip) queryParams.append('zip', zip);
-    if (keyword) queryParams.append('keyword', keyword);
+    if (zip && zip.trim() !== '') queryParams.append('zip', zip);
+    if (keyword && keyword.trim() !== '') queryParams.append('keyword', keyword);
     if (ageGroup) queryParams.append('ageGroup', ageGroup);
     if (category) queryParams.append('category', category);
     if (distance) queryParams.append('distance', distance);

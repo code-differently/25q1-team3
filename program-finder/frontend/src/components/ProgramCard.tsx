@@ -4,6 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { ProgramData } from '../interfaces/ProgramData';
 import BookmarkButton from './BookmarkButton';
+import './ProgramCard.css';
 
 interface ProgramCardProps {
   data: ProgramData;
@@ -19,16 +20,27 @@ const ProgramCard: React.FC<ProgramCardProps> = ({ data }) => {
   };
 
   return (
-    <div
-      onClick={handleCardClick}
-      style={{ border: '1px solid #ccc', borderRadius: 8, padding: 16, marginBottom: 12, cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-    >
-      <div>
-        <h3 style={{ margin: 0 }}>{data.organization}</h3>
-        <p style={{ margin: '4px 0' }}>{data.services}</p>
-        <small>Ages: {data.ages}</small>
+    <div className="program-card" onClick={handleCardClick}>
+      <div className="program-header">
+        <h3>{data.organization}</h3>
+        <BookmarkButton programId={data.id} />
       </div>
-      <BookmarkButton programId={data.id} />
+      
+      <div className="program-content">
+        <p className="program-description">{data.services}</p>
+        
+        <div className="program-details">
+          <div className="detail-item">
+            <span className="program-category">{data.type}</span>
+          </div>
+          <div className="detail-item">
+            <span className="program-age-range">{data.ages}</span>
+          </div>
+          <div className="detail-item">
+            <span className="program-location">ZIP: {data.zip_code}</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
