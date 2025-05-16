@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'In My Hood - Program Finder',
+  title: 'CYPHER - Program Finder',
   description: 'Find Local Programs for Youth in Your Community',
 }
 

@@ -10,7 +10,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ isLanding = false }) => {
   return (
     <header id="header" className={isLanding ? "alt" : ""}>
-      <h1><Link href="/">In My Hood</Link> Program Finder</h1>
+      <h1><Link href="/">CYPHER</Link> Program Finder</h1>
       <nav id="nav">
         <ul>
           <li><Link href="/">Home</Link></li>
