@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  name      String?
+  bookmarks Bookmark[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model University {
+  id        Int       @id @default(autoincrement())
+  name      String
+  location  String
+  programs  Program[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Program {
+  id            Int           @id @default(autoincrement())
+  name          String
+  description   String
+  universityId  Int
+  university    University    @relation(fields: [universityId], references: [id])
+  requirements  Requirement[]
+  bookmarks     Bookmark[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Requirement {
+  id          Int      @id @default(autoincrement())
+  description String
+  programId   Int
+  program     Program  @relation(fields: [programId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Bookmark {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  programId Int
+  program   Program  @relation(fields: [programId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, programId])
+} 
