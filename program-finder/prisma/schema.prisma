@@ -12,6 +12,7 @@ model User {
   email     String    @unique
   password  String
   name      String?
+  bio       String?
   bookmarks Bookmark[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

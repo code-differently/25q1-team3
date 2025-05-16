@@ -4,14 +4,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-export default function Signup() {
+export default function ResetPassword() {
   const router = useRouter()
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    name: '',
-  })
+  const [formData, setFormData] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,19 +18,21 @@ export default function Signup() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setSuccess('')
     setLoading(true)
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch('/api/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
       const data = await response.json()
       if (!response.ok) {
-        throw new Error(data.error || 'Signup failed')
+        throw new Error(data.error || 'Reset failed')
       }
-      // Redirect to the new user's profile page
-      router.push(`/profile/${data.id}`)
+      setSuccess('Password reset successfully! You can now log in.')
+      setFormData({ email: '', password: '' })
+      setTimeout(() => router.push('/login'), 2000)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
@@ -43,22 +42,10 @@ export default function Signup() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
-      <h1 className="mb-6 text-3xl font-bold">Sign Up</h1>
+      <h1 className="mb-6 text-3xl font-bold">Reset Password</h1>
       {error && <p className="mb-4 text-red-500">{error}</p>}
+      {success && <p className="mb-4 text-green-600">{success}</p>}
       <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border border-gray-300 p-2"
-            disabled={loading}
-          />
-        </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
           <input
@@ -73,7 +60,7 @@ export default function Signup() {
           />
         </div>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">New Password</label>
           <input
             type="password"
             id="password"
@@ -90,17 +77,11 @@ export default function Signup() {
           className="w-full rounded-md bg-blue-600 p-2 text-white hover:bg-blue-700 disabled:opacity-60 flex items-center justify-center gap-2"
           disabled={loading}
         >
-          {loading && (
-            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-            </svg>
-          )}
-          {loading ? 'Signing up...' : 'Sign Up'}
+          {loading ? 'Resetting...' : 'Reset Password'}
         </button>
       </form>
       <div className="mt-4 text-sm">
-        <Link href="/login" className="text-blue-600 hover:underline">Already have an account? Log in</Link>
+        <Link href="/login" className="text-blue-600 hover:underline">Back to login</Link>
       </div>
     </div>
   )

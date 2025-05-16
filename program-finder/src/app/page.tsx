@@ -58,6 +58,7 @@ export default function Home() {
   }
 
   const handleBookmarkToggle = async (programId: number) => {
+    console.log('Toggling bookmark for program:', programId)
     try {
       const userId = 1 // TODO: Replace with actual user ID
       const response = await fetch('/api/bookmarks', {
@@ -67,10 +68,12 @@ export default function Home() {
         },
         body: JSON.stringify({ programId, userId }),
       })
+      console.log('API response status:', response.status)
+      const data = await response.json()
+      console.log('API response data:', data)
       if (!response.ok) {
         throw new Error('Failed to toggle bookmark')
       }
-      const data = await response.json()
       setBookmarkedPrograms(prev => {
         const newSet = new Set<number>()
         prev.forEach(id => newSet.add(id))
