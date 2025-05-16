@@ -80,15 +80,19 @@ async function main() {
   })
 
   // Users
-  const user1 = await prisma.user.create({
-    data: {
+  const user1 = await prisma.user.upsert({
+    where: { email: 'parent@example.com' },
+    update: {},
+    create: {
       email: 'parent@example.com',
       password: 'hashedpassword',
       name: 'Parent User',
     },
   })
-  const user2 = await prisma.user.create({
-    data: {
+  const user2 = await prisma.user.upsert({
+    where: { email: 'youth@example.com' },
+    update: {},
+    create: {
       email: 'youth@example.com',
       password: 'hashedpassword',
       name: 'Youth User',
@@ -96,14 +100,28 @@ async function main() {
   })
 
   // Bookmarks
-  await prisma.bookmark.create({
-    data: {
+  await prisma.bookmark.upsert({
+    where: {
+      userId_programId: {
+        userId: user1.id,
+        programId: 1,
+      },
+    },
+    update: {},
+    create: {
       userId: user1.id,
       programId: 1,
     },
   })
-  await prisma.bookmark.create({
-    data: {
+  await prisma.bookmark.upsert({
+    where: {
+      userId_programId: {
+        userId: user2.id,
+        programId: 3,
+      },
+    },
+    update: {},
+    create: {
       userId: user2.id,
       programId: 3,
     },

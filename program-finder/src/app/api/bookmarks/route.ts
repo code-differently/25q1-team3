@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 
-const prisma = new PrismaClient()
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export async function GET(request: Request) {
   try {
@@ -15,6 +16,7 @@ export async function GET(request: Request) {
       )
     }
 
+    console.log('Fetching bookmarks for user:', userId)
     const bookmarks = await prisma.bookmark.findMany({
       where: {
         userId: parseInt(userId),
@@ -27,12 +29,14 @@ export async function GET(request: Request) {
           },
         },
       },
+      take: 50, // Limit the number of bookmarks returned
     })
-
+    console.log(`Found ${bookmarks.length} bookmarks`)
     return NextResponse.json(bookmarks)
   } catch (error) {
+    console.error('Error fetching bookmarks:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch bookmarks' },
+      { error: 'Failed to fetch bookmarks', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }
@@ -50,6 +54,7 @@ export async function POST(request: Request) {
       )
     }
 
+    console.log('Toggling bookmark:', { programId, userId })
     // Check if bookmark already exists
     const existingBookmark = await prisma.bookmark.findUnique({
       where: {
@@ -62,6 +67,7 @@ export async function POST(request: Request) {
 
     if (existingBookmark) {
       // Remove bookmark if it exists
+      console.log('Removing existing bookmark')
       await prisma.bookmark.delete({
         where: {
           id: existingBookmark.id,
@@ -71,6 +77,7 @@ export async function POST(request: Request) {
     }
 
     // Create new bookmark
+    console.log('Creating new bookmark')
     const bookmark = await prisma.bookmark.create({
       data: {
         userId: parseInt(userId),
@@ -85,11 +92,12 @@ export async function POST(request: Request) {
         },
       },
     })
-
+    console.log('Bookmark created:', bookmark)
     return NextResponse.json(bookmark)
   } catch (error) {
+    console.error('Error toggling bookmark:', error)
     return NextResponse.json(
-      { error: 'Failed to toggle bookmark' },
+      { error: 'Failed to toggle bookmark', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }
