@@ -44,5 +44,5 @@
 ## 🛠️ Installation Instructions
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-org/cypher.git
+   git clone git@github.com:code-differently/25q1-team3.git
 
