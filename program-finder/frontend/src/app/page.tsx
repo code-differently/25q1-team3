@@ -6,6 +6,8 @@ import SearchBar from '../components/SearchBar';
 import ProgramCard from '../components/ProgramCard';
 import PageLayout from '../components/PageLayout';
 import './Home.css';
+import GoogleLoginButton from '../components/GoogleLoginButton';
+
 
 export default function Home() {
   const [programs, setPrograms] = useState<ProgramData[]>([]);
@@ -113,6 +115,7 @@ export default function Home() {
 				<p>Connecting Youth to Programs, Hope, Empowerment, and Resources</p>
         <div className="search-container">
           <SearchBar defaultZip="" onSearch={search} />
+          <GoogleLoginButton />
         </div>
         <ul className="actions special">
           <li><a href="#main" className="button primary">Find Programs</a></li>
