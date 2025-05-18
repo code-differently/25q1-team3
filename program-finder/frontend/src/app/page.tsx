@@ -7,6 +7,7 @@ import ProgramCard from '../components/ProgramCard';
 import PageLayout from '../components/PageLayout';
 import './Home.css';
 import GoogleLoginButton from '../components/GoogleLoginButton';
+import EmailPasswordLogin from '../components/EmailPasswordLogin';
 
 
 export default function Home() {
@@ -116,6 +117,8 @@ export default function Home() {
         <div className="search-container">
           <SearchBar defaultZip="" onSearch={search} />
           <GoogleLoginButton />
+          <EmailPasswordLogin />
+
         </div>
         <ul className="actions special">
           <li><a href="#main" className="button primary">Find Programs</a></li>
