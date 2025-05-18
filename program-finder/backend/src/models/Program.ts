@@ -1,8 +1,8 @@
 export interface Program {
-  id: string;
-  name: string;
-  description: string;
-  zip: string;
-  ages?: string;
-  created_at?: string;
+  id: number;
+  zip_code: string;
+  organization: string;
+  services: string;
+  type: string;
+  ages: string;
 }
