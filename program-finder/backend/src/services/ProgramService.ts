@@ -5,8 +5,8 @@ export class ProgramService {
   static async findByLocationAndKeyword(zip: string, keyword: string): Promise<Program[]> {
     const db = await getDb();
     return db.all(
-      `SELECT * FROM programs WHERE zip_code = ? AND organization LIKE ?`,
-      [zip, `%${keyword}%`]
+      `SELECT * FROM programs WHERE zip_code = ? AND (organization LIKE ? OR services LIKE ? OR type LIKE ?)`,
+      [zip, `%${keyword}%`, `%${keyword}%`, `%${keyword}%`]
     );
   }
 
