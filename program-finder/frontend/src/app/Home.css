@@ -234,4 +234,24 @@
   .programs-grid {
     grid-template-columns: 1fr;
   }
+  .featured-banner {
+    width: 100%;
+    max-width: 880px;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;
+  }
+  .featured-image {
+    width: 100%;
+    max-width: 880px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+    
+
 } 

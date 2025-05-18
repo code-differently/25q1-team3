@@ -131,7 +131,9 @@ export default function Home() {
 							<p>The power of connection starts at CYPHER.<br />
 							Where youth plug into opportunity!!!</p>
           </header>
-          <span className="image featured"><img src="/images/pic01.jpg" alt="Youth Programs" /></span>
+          <span>
+            <img src="/images/youngkids.jpg" alt="Neighborhood Programs" className="featured-banner" />
+          </span>
         </section>
 
         {/* Feature Icons */}
@@ -140,7 +142,7 @@ export default function Home() {
           <section>
 								<span className="icon solid major fa-bolt accent2"></span>
 								<h3>Fast Placement</h3>
-								<p>At CYPHER we have a unique relationship with our community liasons. When registering through us, your'e given first priority to placement within the organization of your choice.</p>
+								<p>At CYPHER we have a unique relationship with our community liasons. When registering through us, you're given first priority to placement within the organization of your choice.</p>
 							</section>
 							<section>
 								<span className="icon solid major fa-chart-area accent3"></span>
