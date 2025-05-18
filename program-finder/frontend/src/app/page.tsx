@@ -118,6 +118,7 @@ export default function Home() {
           <SearchBar defaultZip="" onSearch={search} />
           <GoogleLoginButton />
           <EmailPasswordLogin />
+
         </div>
         <ul className="actions special">
           <li><a href="#main" className="button primary">Find Programs</a></li>
