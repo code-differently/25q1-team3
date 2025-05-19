@@ -174,3 +174,5 @@ export default function ProgramsPage() {
   );
 }*/
 >>>>>>> ff299f5 (feat: adds suspense to the page specifically and not the layout (#50))
+=======
+>>>>>>> 9e49fab (feat: enhance frontend with new components and styles)
