@@ -43,7 +43,7 @@ export default function Home() {
     setLoading(true);
     setError(null);
     try {
-      const data = [];
+      const data: any = [];
       setPrograms(data);
     } catch (err) {
       console.error('Fetch error:', err);
