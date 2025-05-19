@@ -30,6 +30,7 @@ export default function RootLayout({
         {children}
         <ScriptInitializer />
       </body>
+<<<<<<< HEAD
     </html> 
   )
 } 
