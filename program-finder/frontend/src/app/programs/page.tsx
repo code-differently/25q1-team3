@@ -20,6 +20,7 @@ export default function ProgramsPage() {
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<SearchFilters>({
     ageGroup: '',
+<<<<<<< HEAD
     category: '',
     distance: ''
   });
