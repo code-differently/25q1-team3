@@ -32,7 +32,7 @@ export default function RootLayout({
         <Script src="/assets/js/util.js" />
         <Script src="/assets/js/main.js" />
       </body>
-    </html>
+    </html> 
 
   )
 } 
