@@ -14,10 +14,11 @@ const Header: React.FC<HeaderProps> = ({ isLanding = false }) => {
       <nav id="nav">
         <ul>
           <li><Link href="/">Home</Link></li>
+          <li><Link href="/about">About</Link></li>
           <li>
-            <a href="#" className="icon solid fa-angle-down">Programs</a>
+            <a href="#" className="icon solid fa-angle-down">More</a>
             <ul>
-              <li><Link href="/programs">All Programs</Link></li>
+              <li><Link href="/programs">Programs</Link></li>
               <li><Link href="/bookmarks">Bookmarked Programs</Link></li>
               <li>
                 <a href="#">Categories</a>
@@ -30,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ isLanding = false }) => {
               </li>
             </ul>
           </li>
-          <li><Link href="/about" className="button">About</Link></li>
+          <li><Link href="/login" className="button">Login</Link></li>
         </ul>
       </nav>
     </header>

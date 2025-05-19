@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import './Footer.css';
 
 const Footer: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ const Footer: React.FC = () => {
         <li><a href="#" className="icon brands fa-github"><span className="label">Github</span></a></li>
       </ul>
       <ul className="copyright">
-        <li>&copy; {new Date().getFullYear()} In My Hood. All rights reserved.</li>
+        <li>&copy; {new Date().getFullYear()} CYPHER. All rights reserved.</li>
         <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
       </ul>
     </footer>

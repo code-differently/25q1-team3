@@ -1,0 +1,79 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f8f9fa;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h1 {
+  margin: 0 0 0.5rem 0;
+  color: #202124;
+  font-size: 1.75rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.subtitle {
+  margin: 0 0 2rem 0;
+  color: #5f6368;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #dadce0;
+}
+
+.divider span {
+  padding: 0 1rem;
+  color: #5f6368;
+  font-size: 0.9rem;
+}
+
+.signup-link {
+  margin: 1.5rem 0 0 0;
+  text-align: center;
+  color: #5f6368;
+  font-size: 0.9rem;
+}
+
+.signup-link a {
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+  .login-page {
+    padding: 1rem;
+  }
+
+  .login-container {
+    padding: 1.5rem;
+  }
+} 

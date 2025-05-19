@@ -2,16 +2,29 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import './globals.css'
 
-// Add jQuery type declaration
-declare global {
-  interface Window {
-    jQuery: any;
-  }
-}
-
 export const metadata: Metadata = {
   title: 'CYPHER - Program Finder',
   description: 'Find Local Programs for Youth in Your Community',
+}
+
+// Client-side initialization component
+'use client'
+function ScriptInitializer() {
+  useEffect(() => {
+    // Initialize dropotron after jQuery is loaded
+    if (typeof window !== 'undefined' && window.jQuery) {
+      window.jQuery('#nav').dropotron({
+        offsetY: -22,
+        offsetX: 0,
+        mode: 'fade',
+        noOpenerFade: true,
+        speed: 300,
+        detach: false
+      });
+    }
+  }, []);
+
+  return null;
 }
 
 export default function RootLayout({
@@ -57,20 +70,7 @@ export default function RootLayout({
           src="/assets/js/main.js"
           strategy="afterInteractive"
         />
-        <Script id="initialize-dropotron" strategy="afterInteractive">
-          {`
-            if (typeof window !== 'undefined' && window.jQuery) {
-              window.jQuery('#nav').dropotron({
-                offsetY: -22,
-                offsetX: 0,
-                mode: 'fade',
-                noOpenerFade: true,
-                speed: 300,
-                detach: false
-              });
-            }
-          `}
-        </Script>
+        <ScriptInitializer />
       </body>
     </html>
   )
