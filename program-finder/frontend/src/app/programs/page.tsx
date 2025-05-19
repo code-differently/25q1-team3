@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ProgramData } from '../../interfaces/ProgramData';
 import ProgramCard from '../../components/ProgramCard';
 import SearchBar from '../../components/SearchBar';
 import PageLayout from '../../components/PageLayout';
 
-export default function Programs() {
+function ProgramsContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams?.get('category') || '';
-  
+
   const [programs, setPrograms] = useState<ProgramData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -18,11 +18,10 @@ export default function Programs() {
   const [filters, setFilters] = useState({
     ageGroup: '',
     category: initialCategory,
-    distance: '10'
+    distance: '10',
   });
 
   useEffect(() => {
-    // Initial fetch based on URL parameters
     fetchPrograms();
   }, [initialCategory]);
 
@@ -35,10 +34,10 @@ export default function Programs() {
       if (filters.ageGroup) queryParams.append('ageGroup', filters.ageGroup);
       if (filters.category) queryParams.append('category', filters.category);
       if (filters.distance) queryParams.append('distance', filters.distance);
-      
+
       const res = await fetch(`/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`);
       if (!res.ok) throw new Error('Failed to fetch programs');
-      
+
       const data = await res.json();
       setPrograms(data);
     } catch (err) {
@@ -52,14 +51,14 @@ export default function Programs() {
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFilters(prev => ({ ...prev, [name]: value }));
+    setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
   const clearFilters = () => {
     setFilters({
       ageGroup: '',
       category: '',
-      distance: '10'
+      distance: '10',
     });
     fetchPrograms();
   };
@@ -75,37 +74,30 @@ export default function Programs() {
           <h2>All Programs</h2>
           <p>Find programs that match your interests</p>
         </header>
-        
+
         <section className="box">
           <h3>Search Programs</h3>
           <SearchBar defaultZip="" onSearch={search} />
-          
+
           <div className="filters-section">
-            <button 
+            <button
               className="button alt"
               onClick={() => setShowFilters(!showFilters)}
-              style={{marginTop: '1rem'}}
+              style={{ marginTop: '1rem' }}
             >
               {showFilters ? 'Hide Filters' : 'Show Filters'}
             </button>
-            
+
             {showFilters && (
               <div className="filters row">
                 <div className="col-12">
                   <h4>Filter Programs</h4>
-                  <button 
-                    className="button small"
-                    onClick={clearFilters}
-                  >
+                  <button className="button small" onClick={clearFilters}>
                     Clear Filters
                   </button>
                 </div>
                 <div className="col-4 col-12-mobilep">
-                  <select
-                    name="ageGroup"
-                    value={filters.ageGroup}
-                    onChange={handleFilterChange}
-                  >
+                  <select name="ageGroup" value={filters.ageGroup} onChange={handleFilterChange}>
                     <option value="">All Ages</option>
                     <option value="children">Children (0-12)</option>
                     <option value="teens">Teens (13-17)</option>
@@ -113,11 +105,7 @@ export default function Programs() {
                   </select>
                 </div>
                 <div className="col-4 col-12-mobilep">
-                  <select
-                    name="category"
-                    value={filters.category}
-                    onChange={handleFilterChange}
-                  >
+                  <select name="category" value={filters.category} onChange={handleFilterChange}>
                     <option value="">All Categories</option>
                     <option value="education">Education</option>
                     <option value="sports">Sports</option>
@@ -156,7 +144,9 @@ export default function Programs() {
           <div className="box">
             <div className="error-message">
               <p>{error}</p>
-              <button className="button small" onClick={() => setError(null)}>Dismiss</button>
+              <button className="button small" onClick={() => setError(null)}>
+                Dismiss
+              </button>
             </div>
           </div>
         )}
@@ -170,7 +160,7 @@ export default function Programs() {
 
         {!loading && programs.length > 0 && (
           <div className="row">
-            {programs.map(program => (
+            {programs.map((program) => (
               <div key={program.id} className="col-4 col-12-narrower">
                 <ProgramCard data={program} />
               </div>
@@ -180,4 +170,12 @@ export default function Programs() {
       </section>
     </PageLayout>
   );
-} 
+}
+
+export default function Programs() {
+  return (
+    <Suspense fallback={<p>Loading content...</p>}>
+      <ProgramsContent />
+    </Suspense>
+  );
+}
