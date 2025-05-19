@@ -163,3 +163,14 @@ export default function ProgramsPage() {
     </PageLayout>
   );
 }
+<<<<<<< HEAD
+=======
+
+/*export default function Programs() {
+  return (
+    <Suspense fallback={<p>Loading content...</p>}>
+      <ProgramsContent />
+    </Suspense>
+  );
+}*/
+>>>>>>> ff299f5 (feat: adds suspense to the page specifically and not the layout (#50))
