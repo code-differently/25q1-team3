@@ -24,6 +24,7 @@
     "node": "18.x"
   },
   "dependencies": {
+    "cypress": "^14.3.3",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   }
