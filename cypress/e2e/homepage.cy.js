@@ -1,0 +1,15 @@
+describe('testing on homepage', () => {
+  it('passes', () => {
+    cy.visit('http://localhost:3000')
+    cy.intercept("**/api/programs").as("api")
+    cy.wait("@api")
+    cy.contains('h1', 'Find Local Programs Near You')
+    cy.get('.zip-input').type('19801')
+    cy.get('.search-button').click()
+    cy.get('.keyword-input')
+    cy.get('.filter-toggle').click()
+    cy.get('.filters-header').should('exist')
+    cy.get('.clear-recent').click()
+    cy.get('.recent-searches-list').should('not.exist')
+  })
+})
