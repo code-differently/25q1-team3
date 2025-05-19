@@ -127,7 +127,7 @@ export default function Home() {
           <header className="major">
           <h2>A Digital Movement Designed To Bridge The Gap Between
 							<br />
-						 Underserved Youth And The Opportunities They Deserve</h2>
+						  Youth And The Opportunities They Deserve</h2>
 							<p>The power of connection starts at CYPHER.<br />
 							Where youth plug into opportunity!!!</p>
           </header>
