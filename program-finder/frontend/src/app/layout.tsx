@@ -31,6 +31,7 @@ export default function RootLayout({
         <ScriptInitializer />
       </body>
 <<<<<<< HEAD
+<<<<<<< HEAD
     </html> 
   )
 } 
