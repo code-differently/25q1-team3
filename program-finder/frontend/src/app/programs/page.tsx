@@ -1,12 +1,11 @@
-'use server';
-
+'use server'
 import React, { Suspense } from 'react';
-import ProgramsContent from './ProgramsContent';
+import ProgramsClient from './ProgramsContent';
 
-export default function Programs() {
+export default async function ProgramsPage() {
   return (
     <Suspense fallback={<p>Loading content...</p>}>
-      <ProgramsContent />
+      <ProgramsClient />
     </Suspense>
   );
 }
