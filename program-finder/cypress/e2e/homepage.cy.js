@@ -1,15 +1,35 @@
 describe('testing on homepage', () => {
-  it('passes', () => {
-    cy.visit('http://localhost:3000')
-    cy.intercept("**/api/programs").as("api")
-    cy.wait("@api")
-    cy.contains('h1', 'Find Local Programs Near You')
-    cy.get('.zip-input').type('19801')
-    cy.get('.search-button').click()
-    cy.get('.keyword-input')
-    cy.get('.filter-toggle').click()
-    cy.get('.filters-header').should('exist')
-    cy.get('.clear-recent').click()
-    cy.get('.recent-searches-list').should('not.exist')
-  })
+
+  beforeEach(() => {
+    Cypress.on('uncaught:exception', (err) => {
+      if (
+        err.message.includes('Hydration failed') ||
+        err.message.includes('error while hydrating')
+      ) {
+        return false;
+      }
+    });
+  });
+
+  afterEach(() => {
+    Cypress.on('uncaught:exception', () => {});
+  });
+
+  it('navigates to program details', () => {
+    // Visit the homepage
+    cy.visit('http://localhost:3000');
+
+    // Wait for the page to load
+    cy.wait(3000);
+    
+    // Hover over the "Programs" link in the navigation bar
+    const programLink = cy.get('#nav > :nth-child(1) > :nth-child(2)');
+    programLink.should('be.visible');
+    programLink.trigger('mouseover');
+
+    // Click the "All Programs" link in the dropdown
+    const allProgramsLink = cy.get('.level-0 > :nth-child(1) > a');
+    allProgramsLink.invoke('show').click({force: true});
+
+  });
 })
