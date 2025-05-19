@@ -8,25 +8,25 @@ export default function About() {
     <PageLayout>
       <section id="main" className="container">
         <header>
-          <h2>About In My Hood</h2>
-          <p>Our mission is to connect youth with enriching community programs</p>
+          <h2>About CYPHER</h2>
+          <p>Connecting Youth to Programs, Hope, Empowerment, and Resources</p>
         </header>
         
         <div className="box">
-          <span className="image featured"><img src="/images/pic01.jpg" alt="Community Programs" /></span>
+          <img src="/images/hyped.jpg" alt="Youth Group Hyped" className="featured-image" />
           
           <h3>Our Mission</h3>
-          <p>In My Hood was created to help bridge the gap between inner-city youth and the various educational, recreational, and enrichment programs available in their communities. We believe that access to quality programs can make a significant difference in a young person's life, providing opportunities for growth, learning, and positive social connections.</p>
+          <p>CYPHER's mission is all about helping young people find their thing. Whether it's school help, art, coding, sports, or something totally new - we make it easy to find programs and activities happening right in your neighborhood. We're here for the youth looking to grow, create, and connect. And, we're also here for the parents who want to keep their kids inspired, safe, and supported. Because every kid deserves a shot at something great, and every family deserves to know what's out there.</p>
           
           <h3>What We Do</h3>
-          <p>Our platform allows families to easily search for programs in their area using their ZIP code. Whether looking for after-school activities, sports programs, arts and cultural experiences, or educational support, our comprehensive database helps connect youth with opportunities that interest them.</p>
+          <p>At CYPHER, we help families find programs that spark curiosity, build confidence, and keep young people engaged. Using just a zipcode, you can explore everything from after-school activities and sports to arts, culture, and educational support - ALL IN ONE PLACE. Our platform is designed to make the search simple, so youth can focus on showing up, growing, and doing what they love.</p>
           
           <div className="row">
             <div className="col-6 col-12-mobilep">
               <h3>For Families</h3>
               <ul className="alt">
-                <li>Search programs by ZIP code or keyword</li>
-                <li>Filter by age group, program type, and distance</li>
+                <li>Search programs by zipcode or keyword</li>
+                <li>Filter by age, program type, and distance</li>
                 <li>Bookmark favorite programs for future reference</li>
                 <li>Find free and low-cost opportunities</li>
               </ul>
