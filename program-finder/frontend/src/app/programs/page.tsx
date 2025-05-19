@@ -194,118 +194,21 @@ export default function ProgramsPage() {
   const search = (zip: string, keyword: string) => {
     fetchPrograms(zip, keyword);
   };
+=======
+'use server'
+import React, { Suspense } from 'react';
+import ProgramsClient from './ProgramsContent';
+>>>>>>> 5f13709 (Feat: suspense programs page (#51))
 
+export default async function ProgramsPage() {
   return (
-    <PageLayout>
-      <section id="main" className="container">
-        <header>
-          <h2>All Programs</h2>
-          <p>Find programs that match your interests</p>
-        </header>
-        
-        <section className="box">
-          <h3>Search Programs</h3>
-          <SearchBar defaultZip="" onSearch={search} />
-          
-          <div className="filters-section">
-            <button 
-              className="button alt"
-              onClick={() => setShowFilters(!showFilters)}
-              style={{marginTop: '1rem'}}
-            >
-              {showFilters ? 'Hide Filters' : 'Show Filters'}
-            </button>
-            
-            {showFilters && (
-              <div className="filters row">
-                <div className="col-12">
-                  <h4>Filter Programs</h4>
-                  <button 
-                    className="button small"
-                    onClick={clearFilters}
-                  >
-                    Clear Filters
-                  </button>
-                </div>
-                <div className="col-4 col-12-mobilep">
-                  <select
-                    name="ageGroup"
-                    value={filters.ageGroup}
-                    onChange={handleFilterChange}
-                  >
-                    <option value="">All Ages</option>
-                    <option value="children">Children (0-12)</option>
-                    <option value="teens">Teens (13-17)</option>
-                    <option value="adults">Adults (18+)</option>
-                  </select>
-                </div>
-                <div className="col-4 col-12-mobilep">
-                  <select
-                    name="category"
-                    value={filters.category}
-                    onChange={handleFilterChange}
-                  >
-                    <option value="">All Categories</option>
-                    <option value="education">Education</option>
-                    <option value="sports">Sports</option>
-                    <option value="arts">Arts & Culture</option>
-                    <option value="stem">STEM</option>
-                  </select>
-                </div>
-                <div className="col-4 col-12-mobilep">
-                  <div className="distance-filter">
-                    <label>Distance: {filters.distance} miles</label>
-                    <input
-                      type="range"
-                      name="distance"
-                      min="1"
-                      max="50"
-                      value={filters.distance}
-                      onChange={handleFilterChange}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {loading && (
-          <div className="box">
-            <div className="loading-container">
-              <div className="loading-spinner"></div>
-              <p>Loading programs...</p>
-            </div>
-          </div>
-        )}
-
-        {error && (
-          <div className="box">
-            <div className="error-message">
-              <p>{error}</p>
-              <button className="button small" onClick={() => setError(null)}>Dismiss</button>
-            </div>
-          </div>
-        )}
-
-        {!loading && programs.length === 0 && !error && (
-          <div className="box">
-            <h3>No programs found</h3>
-            <p>Try adjusting your search criteria or filters</p>
-          </div>
-        )}
-
-        {!loading && programs.length > 0 && (
-          <div className="row">
-            {programs.map(program => (
-              <div key={program.id} className="col-4 col-12-narrower">
-                <ProgramCard data={program} />
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-    </PageLayout>
+    <Suspense fallback={<p>Loading content...</p>}>
+      <ProgramsClient />
+    </Suspense>
   );
+<<<<<<< HEAD
 } 
 >>>>>>> cbed308 (feat: adds suspense to the page specifically and not the layout (#50))
+=======
+}
+>>>>>>> 5f13709 (Feat: suspense programs page (#51))
