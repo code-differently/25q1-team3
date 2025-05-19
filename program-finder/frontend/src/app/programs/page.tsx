@@ -135,7 +135,7 @@ export default function ProgramsPage() {
 /*export default function Programs() {
   return (
     <Suspense fallback={<p>Loading content...</p>}>
-      <ProgramsContent />
+      <ProgramsClient />
     </Suspense>
   );
 }*/
