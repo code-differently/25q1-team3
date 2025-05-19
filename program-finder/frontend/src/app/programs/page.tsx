@@ -22,6 +22,7 @@ export default function ProgramsPage() {
     ageGroup: '',
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     category: '',
     distance: ''
   });
