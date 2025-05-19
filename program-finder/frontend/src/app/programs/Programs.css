@@ -164,4 +164,75 @@
   .programs-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.program-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.program-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.program-card h3 {
+  color: #202124;
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+}
+
+.program-card p {
+  color: #5f6368;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.program-details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e8eaed;
+}
+
+.program-details p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.program-details strong {
+  color: #202124;
+  font-weight: 500;
+}
+
+.contact-info {
+  margin-top: 1rem;
+}
+
+.contact-info a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+.filter-select {
+  padding: 0.8rem;
+  border: 1px solid #dfe1e5;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 2px rgba(26,115,232,0.2);
 } 
