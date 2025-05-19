@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ProgramData } from '../../interfaces/ProgramData';
 import { SearchBar } from '../../components/SearchBar';
@@ -25,7 +25,7 @@ export default function ProgramsPage() {
     zip: '',
     keyword: '',
     ageGroup: '',
-    category: ''
+    category: '',
   });
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -49,7 +49,8 @@ export default function ProgramsPage() {
     fetchPrograms();
   }, [searchParams]);
 
-  const fetchPrograms = async () => {
+  const fetchPrograms = async (zip = '', keyword = '') => {
+    setLoading(true);
     try {
       setLoading(true);
       setError(null);
@@ -58,10 +59,10 @@ export default function ProgramsPage() {
       if (filters.keyword) queryParams.append('keyword', encodeURIComponent(filters.keyword));
       if (filters.ageGroup) queryParams.append('ageGroup', filters.ageGroup);
       if (filters.category) queryParams.append('category', filters.category);
-      
+
       const res = await fetch(`/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`);
       if (!res.ok) throw new Error('Failed to fetch programs');
-      
+
       const data = await res.json();
       setPrograms(data);
     } catch (err) {
@@ -88,17 +89,17 @@ export default function ProgramsPage() {
       <main className="programs-page">
         <div className="search-section">
           <SearchBar
-            initialZip={filters.zip}
+    initialZip={filters.zip}
             onSearch={(zip) => handleSearch({ ...filters, zip })}
-          />
+/>
           <div className="filters-section">
-            <button 
+            <button
               className="button alt"
               onClick={() => setShowFilters(!showFilters)}
             >
               {showFilters ? 'Hide Filters' : 'Show Filters'}
             </button>
-            
+
             {showFilters && (
               <SearchFilters
                 filters={filters}
