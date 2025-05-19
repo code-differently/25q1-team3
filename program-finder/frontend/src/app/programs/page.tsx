@@ -21,6 +21,7 @@ export default function ProgramsPage() {
   const [filters, setFilters] = useState<SearchFilters>({
     ageGroup: '',
 <<<<<<< HEAD
+<<<<<<< HEAD
     category: '',
     distance: ''
   });
