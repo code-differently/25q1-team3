@@ -43,9 +43,7 @@ export default function Home() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/programs');
-      if (!res.ok) throw new Error('Failed to fetch programs');
-      const data = await res.json();
+      const data = [];
       setPrograms(data);
     } catch (err) {
       console.error('Fetch error:', err);
