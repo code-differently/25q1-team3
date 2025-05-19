@@ -168,7 +168,9 @@ export default function Home() {
 						<div className="col-6 col-12-narrower">
 
 							<section className="box special">
-								<span className="image featured"><img src="images/pic02.jpg" alt="" /></span>
+                <span>
+                  <img src="/images/newlogo.jpg" alt="CYPHER logo" className="cypher-logo" />
+                </span>
 								<h3>WHY CYPHER ?</h3>
 								<p>In culture, a cypher represents a circle of collaboration, where voices come together to share ideas, skills and creativity-whether it's in hip-hop, poetry or tech. Our platform embodies this same spirit by bringing youth, organizations, and communities into a shared space where opportunities are amplified.</p>
 								<ul className="actions special">
