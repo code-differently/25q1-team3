@@ -13,7 +13,8 @@
     "build": "npm run build:frontend && npm run build:backend",
     "build:frontend": "cd frontend && npm run build",
     "build:backend": "cd backend && npm run build",
-    "start": "cd backend && npm start"
+    "start": "cd backend && npm start",
+    "cy:open": "cypress open"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

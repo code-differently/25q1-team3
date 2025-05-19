@@ -46,3 +46,27 @@
    ```bash
    git clone git@github.com:code-differently/25q1-team3.git
 
+## Integration Test Instructions
+
+1. Start back-end server
+   
+   ```bash
+   cd program-finder/backend
+   npm run dev
+   ```
+
+2. Start front-end server
+   
+   ```bash
+   cd program-finder/frontend
+   npm run dev
+   ```
+
+3. Open Cypress and click "E2E Testing"
+   
+   ```bash
+   cd program-finder
+   npm run cy:open
+   ```
+
+
