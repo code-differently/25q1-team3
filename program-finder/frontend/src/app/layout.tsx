@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { useEffect } from 'react'
 import './globals.css'
 
 // Add jQuery type declaration
