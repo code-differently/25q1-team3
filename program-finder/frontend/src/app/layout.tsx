@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Suspense, useEffect } from 'react'
 import './globals.css'
 
 // Add jQuery type declaration
@@ -20,6 +21,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    <Suspense fallback={<h1>Loading...</h1>}>
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -73,5 +75,6 @@ export default function RootLayout({
         </Script>
       </body>
     </html>
+    </Suspense>
   )
 } 
