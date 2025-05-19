@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect} from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { ProgramData } from '../../interfaces/ProgramData';
 import { SearchBar } from '../../components/SearchBar';
@@ -25,7 +25,7 @@ export default function ProgramsPage() {
     zip: '',
     keyword: '',
     ageGroup: '',
-    category: '',
+    category: '',,
   });
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -73,16 +73,28 @@ export default function ProgramsPage() {
     }
   };
 
-  const handleSearch = (newFilters: Filters) => {
-    console.log('Handling search with new filters:', newFilters);
-    setFilters(newFilters);
-    const params = new URLSearchParams();
-    if (newFilters.zip) params.set('zip', newFilters.zip);
-    if (newFilters.keyword) params.set('keyword', newFilters.keyword);
-    if (newFilters.ageGroup) params.set('ageGroup', newFilters.ageGroup);
-    if (newFilters.category) params.set('category', newFilters.category);
-    router.push(`/programs?${params.toString()}`);
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({ ...prev, [name]: value }));
   };
+
+  const clearFilters = () => {
+    setFilters({
+      ageGroup: '',
+      category: '',
+      zip: '',
+      keyword: ''
+    });
+    fetchPrograms();
+  };
+
+  const search = (zip: string, keyword: string) => {
+    fetchPrograms(zip, keyword);
+  };
+
+  function handleSearch(filters: { zip: string; keyword: string; ageGroup: string; category: string; }): void {
+    throw new Error('Function not implemented.');
+  }
 
   return (
     <PageLayout>
