@@ -1,55 +1,48 @@
-# 25q1-team3
-# 🌟 In My Hood: Empowering Inner-City Youth
+# CYPHER  
+**Creating Youth Pathways for Hope, Equity, and Resources**
 
-## 🎯 Mission
 
-To empower inner-city youth by connecting them with enriching local programs that nurture their potential while strengthening their communities.
 
----
+## 📝 Project Overview
 
-## 🧩 The Problem
-
-Inner-city youth often face systemic barriers—such as underfunded schools, community violence, and limited access to extracurricular opportunities—that limit their ability to thrive. These challenges aren’t rooted in a lack of ambition or ability, but rather in a historic lack of equitable access and consistent investment.
+**CYPHER** is a community-centered platform designed to connect youth, especially those in underserved communities, to life-changing programs, resources, and opportunities. Inspired by the cultural power of the **cypher**—a circle where people gather to share knowledge, creativity, and expression—our platform amplifies voices and builds bridges between youth, organizations, and communities nationwide.
 
 ---
 
-## 💡 Our Solution
-
-This app provides a central platform for discovering and sharing youth-focused programs within local communities. It is designed to:
-
-- Connect youth with opportunities aligned to their interests.
-- Help parents, guardians, and mentors discover and recommend programs.
-- Empower community liaisons and organizations to promote their initiatives.
-
-Importantly, our approach is not about removing youth from their neighborhoods—as with past desegregation busing efforts—but about **building stronger communities from within**, in the spirit of *for us, by us*.
+## 🚀 Live Demo
+[Access the CYPHER Live App](https://your-deployment-link.com)
 
 ---
 
-## 🤝 Why It Matters
-
-Much like the founding of HBCUs, this platform recognizes the power of investing in systems that support youth locally. This app is not about serving one race or group—it’s about **centering inner-city youth**, full stop.
-
-We believe **change only comes through partnership**—with youth, families, educators, community leaders, and organizations working side by side to uplift the next generation.
-
----
-
-## 🚀 Future Improvements
-
-- 🔐 User account creation and authentication
-- 📍 Location-based program filtering
-- 👥 Role-based user accounts (e.g. Parent, Organization, Youth)
-- ⭐ Community ratings and reviews
-- 🔔 Notifications for new or ending programs
-- 📊 Analytics dashboard for organizations to track engagement
+## 🎯 Features
+- **Program Discovery** — Search and filter local and national programs.
+- **Bookmark Favorites** — Save programs to revisit later.
+- **Location-Based Search** — View programs by proximity using Google Maps integration.
+- **User Authentication** — Sign up and log in using email/password or Google.
+- **Community Chatbot** — Get instant answers to frequently asked questions.
+- **Amplify Voices** — Empower youth to share feedback and stories of impact.
 
 ---
 
-## 🛠 Built With
-
-- HTML, CSS, JavaScript / TypeScript
+## 🧑🏽‍💻 Technologies Used
+- **Frontend:** Next.js, React, TypeScript, Tailwind CSS
+- **Backend:** Firebase (Authentication, Firestore Database)
+- **APIs:** Google Maps API
+- **Deployment:** Vercel
 
 ---
 
-## 🤲 Get Involved
+## 🧑🏽‍🤝‍🧑🏽 The Team
+- Ezra Nyabuti – Backend Engineer
+- Darius Davis – Frontend Engineer
+- Nia Pack – Frontend Engineer
+- Chanel Hutt – Test Integration Engineer
+- Khayla Saunders – Backend Engineer
 
-Whether you're a community member, developer, educator, or youth advocate—**we'd love to collaborate**. Together, we can build something that not only serves the next generation but empowers them to lead.
+---
+
+## 🛠️ Installation Instructions
+1. **Clone the repository**
+   ```bash
+   git clone git@github.com:code-differently/25q1-team3.git
+

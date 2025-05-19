@@ -6,6 +6,9 @@ import SearchBar from '../components/SearchBar';
 import ProgramCard from '../components/ProgramCard';
 import PageLayout from '../components/PageLayout';
 import './Home.css';
+import GoogleLoginButton from '../components/GoogleLoginButton';
+import EmailPasswordLogin from '../components/EmailPasswordLogin';
+
 
 export default function Home() {
   const [programs, setPrograms] = useState<ProgramData[]>([]);
@@ -113,6 +116,9 @@ export default function Home() {
 				<p>Connecting Youth to Programs, Hope, Empowerment, and Resources</p>
         <div className="search-container">
           <SearchBar defaultZip="" onSearch={search} />
+          <GoogleLoginButton />
+          <EmailPasswordLogin />
+
         </div>
         <ul className="actions special">
           <li><a href="#main" className="button primary">Find Programs</a></li>
@@ -128,6 +134,7 @@ export default function Home() {
           <h2>A Digital Movement Designed To Bridge The Gap Between
 							<br />
 						  Youth And The Opportunities They Deserve</h2>
+						 Underserved Youth And The Opportunities They Deserve</h2>
 							<p>The power of connection starts at CYPHER.<br />
 							Where youth plug into opportunity!!!</p>
           </header>
@@ -171,6 +178,7 @@ export default function Home() {
                 <span>
                   <img src="/images/newlogo.jpg" alt="CYPHER logo" className="cypher-logo" />
                 </span>
+								<span className="image featured"><img src="images/pic02.jpg" alt="" /></span>
 								<h3>WHY CYPHER ?</h3>
 								<p>In culture, a cypher represents a circle of collaboration, where voices come together to share ideas, skills and creativity-whether it's in hip-hop, poetry or tech. Our platform embodies this same spirit by bringing youth, organizations, and communities into a shared space where opportunities are amplified.</p>
 								<ul className="actions special">
