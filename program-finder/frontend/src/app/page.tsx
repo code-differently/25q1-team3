@@ -132,11 +132,15 @@ export default function Home() {
         {/* Intro Box */}
         <section className="box special">
           <header className="major">
-            <h2>A Digital Movement Designed To Bridge The Gap Between
+            <h2>
+              A Digital Movement Designed To Bridge The Gap Between
               <br />
-              Youth And The Opportunities They Deserve</h2>
+              Youth And The Opportunities They Deserve
+              <br />
+              Underserved Youth And The Opportunities They Deserve
+            </h2>
             <p>The power of connection starts at CYPHER.<br />
-              Where youth plug into opportunity!!!</p>
+            Where youth plug into opportunity!!!</p>
           </header>
           <span>
             <img src="/images/youngkids.jpg" alt="Neighborhood Programs" className="featured-banner" />
