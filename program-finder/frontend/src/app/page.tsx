@@ -1,94 +1,27 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { ProgramData } from '../interfaces/ProgramData';
+import React, { useEffect } from 'react';
 import { SearchBar } from '../components/SearchBar';
+import { RecentSearches } from '../components/RecentSearches';
 import PageLayout from '../components/PageLayout';
+import { usePrograms } from '../hooks/usePrograms';
+import { useRecentSearches } from '../hooks/useRecentSearches';
+import { SearchFilters } from '../services/ProgramService';
 import './Home.css';
 
-interface SearchFilters {
-  ageGroup: string;
-  category: string;
-  distance: string;
-}
-
 export default function Home() {
-  const [programs, setPrograms] = useState<ProgramData[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [searched, setSearched] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const { programs, loading, error, fetchAllPrograms, searchPrograms } = usePrograms();
+  const { recentSearches, saveSearch, clearSearches } = useRecentSearches();
 
   useEffect(() => {
-    // Load recent searches from localStorage
-    const savedSearches = localStorage.getItem('recentSearches');
-    if (savedSearches) {
-      try {
-        const parsed = JSON.parse(savedSearches);
-        // Convert any object format to string format
-        const searches = Array.isArray(parsed) 
-          ? parsed.map(item => typeof item === 'object' ? item.zip : item)
-          : [];
-        setRecentSearches(searches);
-      } catch (err) {
-        console.error('Error parsing recent searches:', err);
-        setRecentSearches([]);
-      }
-    }
-    // Load all programs on component mount
     fetchAllPrograms();
-  }, []);
-
-  const fetchAllPrograms = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data: any = [];
-      setPrograms(data);
-    } catch (err) {
-      console.error('Fetch error:', err);
-      setError('Unable to fetch programs. Please try again later.');
-      setPrograms([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const saveRecentSearch = (zip: string) => {
-    if (!zip) return;
-    const updatedSearches = [zip, ...recentSearches.filter(s => s !== zip).slice(0, 4)];
-    setRecentSearches(updatedSearches);
-    localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
-  };
+  }, [fetchAllPrograms]);
 
   const handleSearch = async (zip: string, filters: SearchFilters) => {
-    setLoading(true);
-    setError(null);
-    setSearched(true);
     if (zip) {
-      saveRecentSearch(zip);
+      saveSearch(zip);
     }
-    try {
-      const queryParams = new URLSearchParams();
-      if (zip) queryParams.append('zip', zip);
-      if (filters.ageGroup) queryParams.append('ageGroup', filters.ageGroup);
-      if (filters.category) queryParams.append('category', filters.category);
-      if (filters.distance) queryParams.append('distance', filters.distance);
-      const res = await fetch(`/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`);
-      if (!res.ok) throw new Error('Failed to fetch programs');
-      const data = await res.json();
-      setPrograms(data);
-    } catch (err) {
-      setError('Unable to fetch programs. Please try again later.');
-      setPrograms([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const clearRecentSearches = () => {
-    setRecentSearches([]);
-    localStorage.removeItem('recentSearches');
+    await searchPrograms(zip, filters);
   };
 
   return (
@@ -99,27 +32,11 @@ export default function Home() {
         <p style={{ color: 'white' }}>Connecting Youth to Programs, Hope, Empowerment, and Resources</p>
         <div className="search-section">
           <SearchBar onSearch={handleSearch} />
-          {recentSearches.length > 0 && (
-            <div className="recent-searches">
-              <div className="recent-searches-header">
-                <h3>Recent Searches</h3>
-                <button onClick={clearRecentSearches} className="clear-recent">
-                  Clear all
-                </button>
-              </div>
-              <div className="recent-searches-list">
-                {recentSearches.map((zip, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleSearch(zip, { ageGroup: '', category: '', distance: '10' })}
-                    className="recent-search-item"
-                  >
-                    {zip}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          <RecentSearches
+            searches={recentSearches}
+            onSearch={handleSearch}
+            onClear={clearSearches}
+          />
         </div>
         <ul className="actions special">
           <li><a href="/programs" className="button primary">Find Programs</a></li>
