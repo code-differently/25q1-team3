@@ -1,21 +1,43 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { ProgramData } from '../../interfaces/ProgramData';
-import ProgramCard from '../../components/ProgramCard';
+import { ProgramCard } from '../../components/ProgramCard';
+import { useAuth } from '../../contexts/AuthContext';
 import PageLayout from '../../components/PageLayout';
 
 export default function Bookmarks() {
   const [bookmarks, setBookmarks] = useState<ProgramData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { isAuthenticated, user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
+
     const fetchBookmarks = async () => {
       setLoading(true);
       try {
-        const res = await fetch('/api/bookmarks');
-        if (!res.ok) throw new Error('Failed to fetch bookmarks');
+        const token = localStorage.getItem('auth_token');
+        const res = await fetch('/api/bookmarks', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!res.ok) {
+          if (res.status === 401) {
+            router.push('/login');
+            return;
+          }
+          throw new Error('Failed to fetch bookmarks');
+        }
+        
         const data = await res.json();
         setBookmarks(data);
       } catch (err) {
@@ -28,7 +50,11 @@ export default function Bookmarks() {
     };
 
     fetchBookmarks();
-  }, []);
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <PageLayout>
@@ -61,7 +87,7 @@ export default function Bookmarks() {
             <h3>No bookmarks found</h3>
             <p>You haven't bookmarked any programs yet. Browse programs and click the bookmark icon to save them for later.</p>
             <ul className="actions">
-              <li><a href="/" className="button primary">Find Programs</a></li>
+              <li><a href="/programs" className="button primary">Find Programs</a></li>
             </ul>
           </div>
         )}
