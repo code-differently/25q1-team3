@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './SearchBar.css';
 
 interface SearchBarProps {
@@ -25,14 +25,16 @@ export function SearchBar({ onSearch, initialZip = '' }: SearchBarProps) {
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    function handleClickOutside(event: MouseEvent) {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
         setShowFilters(false);
       }
-    };
+    }
 
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -63,13 +65,20 @@ export function SearchBar({ onSearch, initialZip = '' }: SearchBarProps) {
             onChange={(e) => setZip(e.target.value)}
             placeholder="Enter ZIP code to find programs near you"
             className="search-input"
-            onFocus={() => setShowFilters(true)}
           />
           <button type="submit" className="search-button">
             <span className="search-icon">🔍</span>
           </button>
         </div>
       </form>
+
+      <button
+        type="button"
+        className="show-filters-button"
+        onClick={() => setShowFilters(!showFilters)}
+      >
+        {showFilters ? 'Hide Filters' : 'Show Filters'}
+      </button>
 
       {showFilters && (
         <div className="search-filters">
@@ -80,48 +89,50 @@ export function SearchBar({ onSearch, initialZip = '' }: SearchBarProps) {
             </button>
           </div>
           
-          <div className="filter-group">
-            <label>Age Group</label>
-            <select
-              name="ageGroup"
-              value={filters.ageGroup}
-              onChange={handleFilterChange}
-              className="filter-select"
-            >
-              <option value="">All Ages</option>
-              <option value="children">Children (0-12)</option>
-              <option value="teens">Teens (13-17)</option>
-              <option value="adults">Adults (18+)</option>
-            </select>
-          </div>
+          <div className="filters-content">
+            <div className="filter-group">
+              <label>Age Group</label>
+              <select
+                name="ageGroup"
+                value={filters.ageGroup}
+                onChange={handleFilterChange}
+                className="filter-select"
+              >
+                <option value="">All Ages</option>
+                <option value="children">Children (0-12)</option>
+                <option value="teens">Teens (13-17)</option>
+                <option value="adults">Adults (18+)</option>
+              </select>
+            </div>
 
-          <div className="filter-group">
-            <label>Category</label>
-            <select
-              name="category"
-              value={filters.category}
-              onChange={handleFilterChange}
-              className="filter-select"
-            >
-              <option value="">All Categories</option>
-              <option value="education">Education</option>
-              <option value="sports">Sports</option>
-              <option value="arts">Arts & Culture</option>
-              <option value="stem">STEM</option>
-            </select>
-          </div>
+            <div className="filter-group">
+              <label>Category</label>
+              <select
+                name="category"
+                value={filters.category}
+                onChange={handleFilterChange}
+                className="filter-select"
+              >
+                <option value="">All Categories</option>
+                <option value="education">Education</option>
+                <option value="sports">Sports</option>
+                <option value="arts">Arts & Culture</option>
+                <option value="stem">STEM</option>
+              </select>
+            </div>
 
-          <div className="filter-group">
-            <label>Distance: {filters.distance} miles</label>
-            <input
-              type="range"
-              name="distance"
-              min="1"
-              max="50"
-              value={filters.distance}
-              onChange={handleFilterChange}
-              className="distance-slider"
-            />
+            <div className="filter-group">
+              <label>Distance: {filters.distance} miles</label>
+              <input
+                type="range"
+                name="distance"
+                min="1"
+                max="50"
+                value={filters.distance}
+                onChange={handleFilterChange}
+                className="distance-slider"
+              />
+            </div>
           </div>
 
           <button 

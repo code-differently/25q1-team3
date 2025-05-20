@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ProgramData } from '../interfaces/ProgramData';
 import './ProgramCard.css';
@@ -21,8 +20,12 @@ export function ProgramCard({ data: program }: ProgramCardProps) {
     return '/images/pic02.jpg'; // Default image
   };
 
+  const handleCardClick = () => {
+    router.push(`/programs/${program.id}`);
+  };
+
   return (
-    <div className="program-card" onClick={() => router.push(`/programs/${program.id}`)}>
+    <div className="program-card" onClick={handleCardClick}>
       <div className="program-image">
         <img src={getImageForProgram()} alt={program.organization} />
       </div>
@@ -38,34 +41,52 @@ export function ProgramCard({ data: program }: ProgramCardProps) {
           <span className="program-category">{program.type}</span>
           <span className="program-age-group">{program.ages}</span>
           {program.location && (
-            <span className="program-distance">{program.location}</span>
+            <span className="program-location">{program.location}</span>
           )}
         </div>
 
-        <div className="program-location">
-          <p>
-            <span className="location-icon">📍</span>
-            <span className="zip-code">ZIP Code: {program.zip_code}</span>
-          </p>
+        {program.hours && (
+          <div className="program-hours">
+            <p>
+              <span className="hours-icon">🕒</span>
+              <span>{program.hours}</span>
+            </p>
+          </div>
+        )}
+
+        {program.cost && (
+          <div className="program-cost">
+            <p>
+              <span className="cost-icon">💰</span>
+              <span>{program.cost}</span>
+            </p>
+          </div>
+        )}
+
+        <div className="program-contact">
+          {program.contact_website && (
+            <a href={program.contact_website} target="_blank" rel="noopener noreferrer" className="contact-link">
+              <span>🌐</span> Website
+            </a>
+          )}
+          {program.contact_email && (
+            <a href={`mailto:${program.contact_email}`} className="contact-link">
+              <span>✉️</span> Email
+            </a>
+          )}
+          {program.contact_phone && (
+            <a href={`tel:${program.contact_phone}`} className="contact-link">
+              <span>📞</span> Phone
+            </a>
+          )}
         </div>
 
-        {program.contact && (
-          <div className="program-contact">
-            {program.contact.website && (
-              <a href={program.contact.website} target="_blank" rel="noopener noreferrer" className="contact-link">
-                <span>🌐</span> Website
-              </a>
-            )}
-            {program.contact.email && (
-              <a href={`mailto:${program.contact.email}`} className="contact-link">
-                <span>✉️</span> Email
-              </a>
-            )}
-            {program.contact.phone && (
-              <a href={`tel:${program.contact.phone}`} className="contact-link">
-                <span>📞</span> Phone
-              </a>
-            )}
+        {program.registration_info && (
+          <div className="program-registration">
+            <p>
+              <span className="registration-icon">📝</span>
+              <span>{program.registration_info}</span>
+            </p>
           </div>
         )}
       </div>

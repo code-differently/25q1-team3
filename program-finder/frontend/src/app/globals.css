@@ -150,7 +150,7 @@ a {
   justify-content: space-between;
   align-items: flex-start;
   margin: 1rem 0;
-}
+} 
 
 /* Override main.css dropdown styles */
 #header .dropdown-menu {
