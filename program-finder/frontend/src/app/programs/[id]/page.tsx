@@ -1,14 +1,19 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ProgramData } from '../../../interfaces/ProgramData';
 import BookmarkButton from '../../../components/BookmarkButton';
+import { GoogleMap } from '../../../components/GoogleMap';
 import PageLayout from '../../../components/PageLayout';
+import './page.css';
 
 export default function ProgramDetail({ params }: { params: { id: string } }) {
   const { id } = params;
+  const router = useRouter();
   const [program, setProgram] = useState<ProgramData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -25,6 +30,10 @@ export default function ProgramDetail({ params }: { params: { id: string } }) {
     if (program.type?.toLowerCase().includes('sports')) return '/images/pic03.jpg';
     if (program.type?.toLowerCase().includes('art')) return '/images/pic01.jpg';
     return '/images/pic02.jpg'; // Default image
+  };
+
+  const handleBackClick = () => {
+    router.push('/programs');
   };
 
   if (loading) return (
@@ -47,12 +56,21 @@ export default function ProgramDetail({ params }: { params: { id: string } }) {
           <h3>Program not found</h3>
           <p>The program you're looking for could not be found.</p>
           <ul className="actions">
-            <li><a href="/" className="button">Back to Programs</a></li>
+            <li><button onClick={handleBackClick} className="button">Back to Programs</button></li>
           </ul>
         </div>
       </section>
     </PageLayout>
   );
+
+  const fullAddress = [
+    program?.address,
+    program?.city,
+    program?.state,
+    program?.zip_code
+  ].filter(Boolean).join(', ');
+
+  const hasAddress = program?.zip_code || program?.address || program?.city || program?.state;
 
   return (
     <PageLayout>
@@ -79,14 +97,26 @@ export default function ProgramDetail({ params }: { params: { id: string } }) {
                 <li><strong>Services:</strong> {program.services}</li>
                 <li><strong>Type:</strong> {program.type}</li>
                 <li><strong>Ages:</strong> {program.ages}</li>
-                <li><strong>ZIP Code:</strong> {program.zip_code}</li>
+                {hasAddress && (
+                  <li className="location-item">
+                    <strong>Location:</strong>
+                    <div className="clickable-address" onClick={() => setShowMap(!showMap)}>
+                      {fullAddress || program.zip_code}
+                    </div>
+                  </li>
+                )}
               </ul>
+              {showMap && hasAddress && (
+                <div className="map-container">
+                  <GoogleMap address={fullAddress || program.zip_code} height="300px" />
+                </div>
+              )}
             </div>
             <div className="col-6 col-12-mobilep">
               <h4>Contact Information</h4>
               <p>To learn more about this program or to register, please contact the program administrator.</p>
               <ul className="actions">
-                <li><a href="/" className="button alt">Back to Programs</a></li>
+                <li><button onClick={handleBackClick} className="button alt">Back to Programs</button></li>
               </ul>
             </div>
           </div>

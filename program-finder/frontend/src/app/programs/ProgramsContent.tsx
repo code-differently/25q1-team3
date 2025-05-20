@@ -20,7 +20,7 @@ export default function ProgramsContent() {
   const [programs, setPrograms] = useState<ProgramData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showFilters, setShowFilters] = useState(false);
+
   const [filters, setFilters] = useState<SearchFilters>({
     ageGroup: '',
     category: initialCategory,
@@ -140,6 +140,7 @@ export default function ProgramsContent() {
               </div>
             )}
           </div>
+
         </section>
 
         {loading && (

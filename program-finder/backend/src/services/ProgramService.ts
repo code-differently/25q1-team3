@@ -4,10 +4,20 @@ import { Program } from '../models/Program';
 export class ProgramService {
   static async findByLocationAndKeyword(zip: string, keyword: string): Promise<Program[]> {
     const db = await getDb();
-    return db.all(
-      `SELECT * FROM programs WHERE zip_code = ? AND (organization LIKE ? OR services LIKE ? OR type LIKE ?)`,
-      [zip, `%${keyword}%`, `%${keyword}%`, `%${keyword}%`]
-    );
+    let query = 'SELECT * FROM programs WHERE 1=1';
+    const params: any[] = [];
+
+    if (zip) {
+      query += ' AND zip_code = ?';
+      params.push(zip);
+    }
+
+    if (keyword) {
+      query += ' AND (organization LIKE ? OR services LIKE ? OR type LIKE ?)';
+      params.push(`%${keyword}%`, `%${keyword}%`, `%${keyword}%`);
+    }
+
+    return db.all(query, params);
   }
 
   static async getById(id: string): Promise<Program | null> {
