@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Suspense, useEffect } from 'react'
+
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -31,6 +31,5 @@ export default function RootLayout({
         <Script src="/assets/js/util.js" />
         <Script src="/assets/js/main.js" />
       </body>
-    </html>
   )
 } 
