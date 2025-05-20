@@ -3,6 +3,7 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  z-index: 1000;
 }
 
 .search-bar {
@@ -60,7 +61,24 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   margin-top: 8px;
   padding: 16px;
-  z-index: 1000;
+  z-index: 1001;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  transition: none !important;
+}
+
+.search-filters:hover {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .filters-header {
