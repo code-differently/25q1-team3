@@ -1,15 +1,26 @@
-import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "./Firebase";
+import React from 'react';
+import './GoogleLoginButton.css';
 
-export default function GoogleLoginButton() {
-  const handleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      console.log(result.user);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return <button onClick={handleLogin}>Login with Google</button>;
+interface GoogleLoginButtonProps {
+  onClick: () => void;
+  disabled?: boolean;
 }
+
+const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ onClick, disabled = false }) => {
+  return (
+    <button 
+      className="google-login-button" 
+      onClick={onClick}
+      disabled={disabled}
+    >
+      <img
+        src="/google-logo.svg"
+        alt="Google"
+        className="google-logo"
+      />
+      <span>Continue with Google</span>
+    </button>
+  );
+};
+
+export default GoogleLoginButton;

@@ -4,47 +4,71 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ProgramData } from '../interfaces/ProgramData';
-import BookmarkButton from './BookmarkButton';
+import './ProgramCard.css';
 
 interface ProgramCardProps {
   data: ProgramData;
 }
 
-const ProgramCard: React.FC<ProgramCardProps> = ({ data }) => {
+export function ProgramCard({ data: program }: ProgramCardProps) {
   const router = useRouter();
 
-  // Determine which image to use based on category or default to generic
+  // Determine which image to use based on type or default to generic
   const getImageForProgram = () => {
-    if (data.type?.toLowerCase().includes('education')) return '/images/pic02.jpg';
-    if (data.type?.toLowerCase().includes('sports')) return '/images/pic03.jpg';
-    if (data.type?.toLowerCase().includes('art')) return '/images/pic01.jpg';
+    if (program.type?.toLowerCase().includes('education')) return '/images/pic02.jpg';
+    if (program.type?.toLowerCase().includes('sports')) return '/images/pic03.jpg';
+    if (program.type?.toLowerCase().includes('art')) return '/images/pic01.jpg';
     return '/images/pic02.jpg'; // Default image
   };
 
   return (
-    <section className="box special">
-      <span className="image featured">
-        <img src={getImageForProgram()} alt={data.organization} />
-      </span>
-      <div className="program-card-header">
-        <h3>{data.organization}</h3>
-        <BookmarkButton programId={data.id} />
+    <div className="program-card" onClick={() => router.push(`/programs/${program.id}`)}>
+      <div className="program-image">
+        <img src={getImageForProgram()} alt={program.organization} />
       </div>
-      <p>{data.services}</p>
-      <p><strong>Ages:</strong> {data.ages || 'All ages'}</p>
-      {data.zip_code && <p><strong>Location:</strong> {data.zip_code}</p>}
-      <ul className="actions special">
-        <li>
-          <Link 
-            href={`/programs/${data.id}`}
-            className="button alt"
-          >
-            Learn More
-          </Link>
-        </li>
-      </ul>
-    </section>
-  );
-};
+      <div className="program-content">
+        <div className="program-header">
+          <h3 className="program-name">{program.organization}</h3>
+          <span className="program-organization">{program.type}</span>
+        </div>
+        
+        <p className="program-services">{program.services}</p>
 
-export default ProgramCard;
+        <div className="program-details">
+          <span className="program-category">{program.type}</span>
+          <span className="program-age-group">{program.ages}</span>
+          {program.location && (
+            <span className="program-distance">{program.location}</span>
+          )}
+        </div>
+
+        <div className="program-location">
+          <p>
+            <span className="location-icon">📍</span>
+            <span className="zip-code">ZIP Code: {program.zip_code}</span>
+          </p>
+        </div>
+
+        {program.contact && (
+          <div className="program-contact">
+            {program.contact.website && (
+              <a href={program.contact.website} target="_blank" rel="noopener noreferrer" className="contact-link">
+                <span>🌐</span> Website
+              </a>
+            )}
+            {program.contact.email && (
+              <a href={`mailto:${program.contact.email}`} className="contact-link">
+                <span>✉️</span> Email
+              </a>
+            )}
+            {program.contact.phone && (
+              <a href={`tel:${program.contact.phone}`} className="contact-link">
+                <span>📞</span> Phone
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
