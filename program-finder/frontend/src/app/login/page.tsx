@@ -19,7 +19,7 @@ export default function LoginPage() {
       setLoading(true);
       setError('');
       await signInWithEmailAndPassword(auth, email, password);
-      router.push('/programs');
+      router.push('/');
     } catch (err: any) {
       setError(err.message || 'Failed to sign in');
     } finally {
@@ -32,7 +32,7 @@ export default function LoginPage() {
       setLoading(true);
       setError('');
       await signInWithPopup(auth, provider);
-      router.push('/programs');
+      router.push('/');
     } catch (err: any) {
       setError(err.message || 'Failed to sign in with Google');
     } finally {
