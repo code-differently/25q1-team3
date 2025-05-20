@@ -13,6 +13,18 @@ export default function Login() {
   const searchParams = useSearchParams();
   const { login, isAuthenticated } = useAuth();
 
+ feature/user-profile
+  const handleEmailLogin = async (email: string, password: string) => {
+    try {
+      setLoading(true);
+      setError('');
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push('/');
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign in');
+    } finally {
+      setLoading(false);
+
   useEffect(() => {
     const token = searchParams?.get('token');
     const error = searchParams?.get('error');
@@ -22,6 +34,7 @@ export default function Login() {
       router.push('/programs');
     } else if (error) {
       console.error('Login error:', error);
+
     }
   }, [searchParams, login, router]);
 
@@ -29,8 +42,22 @@ export default function Login() {
     // Implementation of handleEmailLogin
   };
 
+ feature/user-profile
+  const handleGoogleLogin = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      await signInWithPopup(auth, provider);
+      router.push('/');
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign in with Google');
+    } finally {
+      setLoading(false);
+    }
+
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:3001/api/auth/google';
+
 
   };
 
