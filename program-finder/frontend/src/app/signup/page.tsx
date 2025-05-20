@@ -47,7 +47,7 @@ export default function SignupPage() {
         displayName: formData.name
       });
 
-      router.push('/programs');
+      router.push('/');
     } catch (err: any) {
       setError(err.message || 'Failed to create account');
     } finally {
