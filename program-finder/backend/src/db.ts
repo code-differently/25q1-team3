@@ -5,7 +5,7 @@ import path from 'path';
 
 export const getDb = async () => {
   return open({
-    filename: './dev.sqlite3',
+    filename: path.join(__dirname, '../../dev.sqlite3'),
     driver: sqlite3.Database
   });
 };
@@ -13,13 +13,21 @@ export const getDb = async () => {
 export const initializeDb = async () => {
   const db = await getDb();
   try {
-    // Read the SQL file
-    const sqlPath = path.join(__dirname, '../../database/program.sql');
-    const sql = fs.readFileSync(sqlPath, 'utf8');
-    
-    // Execute the SQL commands
-    const commands = sql.split(';').filter(cmd => cmd.trim());
-    for (const command of commands) {
+    // Read and execute schema.sql first
+    const schemaPath = path.join(__dirname, '../../database/schema.sql');
+    const schemaSql = fs.readFileSync(schemaPath, 'utf8');
+    const schemaCommands = schemaSql.split(';').filter(cmd => cmd.trim());
+    for (const command of schemaCommands) {
+      if (command.trim()) {
+        await db.exec(command + ';');
+      }
+    }
+
+    // Then read and execute program.sql
+    const programPath = path.join(__dirname, '../../database/program.sql');
+    const programSql = fs.readFileSync(programPath, 'utf8');
+    const programCommands = programSql.split(';').filter(cmd => cmd.trim());
+    for (const command of programCommands) {
       if (command.trim()) {
         await db.exec(command + ';');
       }

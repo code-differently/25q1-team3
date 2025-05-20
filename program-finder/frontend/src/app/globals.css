@@ -97,24 +97,25 @@ a {
 
 /* Loading spinner */
 .loading-container {
-  text-align: center;
-  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
 }
 
 .loading-spinner {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  border: 5px solid rgba(0, 0, 0, 0.1);
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1a73e8;
   border-radius: 50%;
-  border-top-color: #5480f1;
-  animation: spin 1s ease-in-out infinite;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* No results */
@@ -149,4 +150,124 @@ a {
   justify-content: space-between;
   align-items: flex-start;
   margin: 1rem 0;
+
+} 
+
+
+/* Override main.css dropdown styles */
+#header .dropdown-menu {
+    display: block !important;
+    background: #2b2b2b !important;
+    color: #fff !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease-in-out;
+}
+
+#header .dropdown-menu.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+#header .dropdown-menu-item {
+    color: #fff !important;
+}
+
+#header .dropdown-menu-item:hover {
+    background-color: rgba(153, 153, 153, 0.25) !important;
+}
+
+/* Submenu Styles */
+.submenu {
+  position: relative;
+}
+
+.submenu-trigger {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75em 1em;
+  font-size: 1em;
+  transition: all 0.2s ease;
+}
+
+.submenu-trigger:hover,
+.submenu-trigger.active {
+  background-color: rgba(153, 153, 153, 0.25);
+}
+
+.submenu-dropdown {
+  position: absolute;
+  top: 0;
+  right: 100% !important;
+  min-width: 160px;
+  max-width: 180px;
+  background: #2b2b2b !important;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 0.2s ease-in-out;
+  z-index: 1001;
+  padding: 0.25em 0;
+  margin: 0 0.5em 0 0;
+  pointer-events: none;
+}
+
+.submenu-dropdown.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(0) !important;
+  pointer-events: auto !important;
+}
+
+/* Make submenu items more compact */
+.submenu-dropdown .dropdown-menu-item {
+  padding: 0.5em 0.75em !important;
+  font-size: 0.9em !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Override any conflicting styles from main.css */
+#header .submenu-dropdown {
+  display: block !important;
+  background: #2b2b2b !important;
+  color: #fff !important;
+}
+
+#header .submenu-dropdown .dropdown-menu-item {
+  color: #fff !important;
+}
+
+#header .submenu-dropdown .dropdown-menu-item:hover {
+  background-color: rgba(153, 153, 153, 0.25) !important;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 980px) {
+  .submenu-dropdown {
+    position: static !important;
+    right: auto !important;
+    transform: none !important;
+    margin: 0.5rem 0 0 1rem !important;
+    width: 100% !important;
+    min-width: auto !important;
+    max-width: none !important;
+    box-shadow: none !important;
+  }
+  
+  .submenu-dropdown .dropdown-menu-item {
+    padding: 0.75em 1em !important;
+    font-size: 1em !important;
+  }
 } 

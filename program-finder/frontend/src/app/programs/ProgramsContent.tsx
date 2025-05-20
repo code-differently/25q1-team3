@@ -1,11 +1,17 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ProgramData } from '../../interfaces/ProgramData';
-import ProgramCard from '../../components/ProgramCard';
-import SearchBar from '../../components/SearchBar';
+import { ProgramCard } from '../../components/ProgramCard';
+import { SearchBar } from '../../components/SearchBar';
 import PageLayout from '../../components/PageLayout';
+
+interface SearchFilters {
+  ageGroup: string;
+  category: string;
+  distance: string;
+}
 
 export default function ProgramsContent() {
   const searchParams = useSearchParams();
@@ -14,8 +20,8 @@ export default function ProgramsContent() {
   const [programs, setPrograms] = useState<ProgramData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState({
+
+  const [filters, setFilters] = useState<SearchFilters>({
     ageGroup: '',
     category: initialCategory,
     distance: '10',
@@ -25,24 +31,29 @@ export default function ProgramsContent() {
     fetchPrograms();
   }, [initialCategory]);
 
-  const fetchPrograms = async (zip = '', keyword = '') => {
+  const fetchPrograms = async (zip = '', searchFilters: SearchFilters = filters) => {
     setLoading(true);
+    setError(null);
     try {
       const queryParams = new URLSearchParams();
       if (zip) queryParams.append('zip', zip);
-      if (keyword) queryParams.append('keyword', encodeURIComponent(keyword));
-      if (filters.ageGroup) queryParams.append('ageGroup', filters.ageGroup);
-      if (filters.category) queryParams.append('category', filters.category);
-      if (filters.distance) queryParams.append('distance', filters.distance);
+      if (searchFilters.ageGroup) queryParams.append('ageGroup', searchFilters.ageGroup);
+      if (searchFilters.category) queryParams.append('category', searchFilters.category);
+      if (searchFilters.distance) queryParams.append('distance', searchFilters.distance);
 
       const res = await fetch(`/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`);
-      if (!res.ok) throw new Error('Failed to fetch programs');
+      if (!res.ok) {
+        throw new Error(`Failed to fetch programs: ${res.statusText}`);
+      }
 
       const data = await res.json();
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid response format');
+      }
       setPrograms(data);
     } catch (err) {
       console.error('Fetch error:', err);
-      setError('Unable to fetch programs. Please try again later.');
+      setError(err instanceof Error ? err.message : 'Unable to fetch programs. Please try again later.');
       setPrograms([]);
     } finally {
       setLoading(false);
@@ -63,8 +74,8 @@ export default function ProgramsContent() {
     fetchPrograms();
   };
 
-  const search = (zip: string, keyword: string) => {
-    fetchPrograms(zip, keyword);
+  const search = (zip: string, searchFilters: SearchFilters) => {
+    fetchPrograms(zip, searchFilters);
   };
 
   return (
@@ -77,7 +88,7 @@ export default function ProgramsContent() {
 
         <section className="box">
           <h3>Search Programs</h3>
-          <SearchBar defaultZip="" onSearch={search} />
+          <SearchBar onSearch={search} initialZip="" />
 
           <div className="filters-section">
             <button
@@ -129,6 +140,7 @@ export default function ProgramsContent() {
               </div>
             )}
           </div>
+
         </section>
 
         {loading && (
@@ -144,24 +156,20 @@ export default function ProgramsContent() {
           <div className="box">
             <div className="error-message">
               <p>{error}</p>
-              <button className="button small" onClick={() => setError(null)}>
-                Dismiss
-              </button>
             </div>
           </div>
         )}
 
-        {!loading && programs.length === 0 && !error && (
+        {!loading && !error && programs.length === 0 && (
           <div className="box">
-            <h3>No programs found</h3>
-            <p>Try adjusting your search criteria or filters</p>
+            <p>No programs found matching your criteria.</p>
           </div>
         )}
 
-        {!loading && programs.length > 0 && (
+        {!loading && !error && programs.length > 0 && (
           <div className="row">
             {programs.map((program) => (
-              <div key={program.id} className="col-4 col-12-narrower">
+              <div key={program.id} className="col-6 col-12-mobilep">
                 <ProgramCard data={program} />
               </div>
             ))}

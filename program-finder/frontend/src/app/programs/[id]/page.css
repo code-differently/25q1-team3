@@ -1,0 +1,36 @@
+.location-item {
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+}
+
+.location-item strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.clickable-address {
+  color: #0066cc;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: all 0.2s ease;
+  display: block;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  font-size: 1.1em;
+  border: 1px solid #e9ecef;
+}
+
+.clickable-address:hover {
+  color: #004499;
+  background-color: #e9ecef;
+  text-decoration: none;
+}
+
+.map-container {
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} 
