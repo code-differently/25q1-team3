@@ -3845,3 +3845,47 @@
 			}
 
 	}
+
+/* Dropdown Menu Styles */
+.dropotron {
+    display: none !important;
+}
+
+.dropotron.level-0 {
+    display: none !important;
+}
+
+/* React Dropdown Menu Styles */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 200px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease-in-out;
+    z-index: 1000;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu-item {
+    display: block;
+    padding: 12px 16px;
+    color: #5f6368;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu-item:hover {
+    background-color: #f8f9fa;
+    color: #1a73e8;
+}

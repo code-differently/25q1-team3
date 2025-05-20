@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 import './globals.css'
 
+const inter = Inter({ subsets: ['latin'] })
+
 export const metadata: Metadata = {
-  title: 'CYPHER - Program Finder',
-  description: 'Find Local Programs for Youth in Your Community',
+  title: 'Program Finder',
+  description: 'Find programs in your area',
 }
 
 export default function RootLayout({
@@ -14,11 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="/assets/css/main.css" />
         <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css" />
       </head>
-      <body className="is-preload">
+      <body className={inter.className}>
         {children}
       </body>
     </html>

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import './Header.css';
 
 interface HeaderProps {
   isLanding?: boolean;
@@ -13,6 +14,7 @@ const Header: React.FC<HeaderProps> = ({ isLanding = false }) => {
   const moreRef = useRef<HTMLLIElement>(null);
   const categoriesRef = useRef<HTMLLIElement>(null);
 
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (moreRef.current && !moreRef.current.contains(event.target as Node)) {
@@ -27,6 +29,14 @@ const Header: React.FC<HeaderProps> = ({ isLanding = false }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Prevent the HTML5 UP template's dropdown from interfering
+  useEffect(() => {
+    const nav = document.getElementById('nav');
+    if (nav) {
+      nav.classList.remove('dropotron');
+    }
+  }, []);
+
   return (
     <header id="header" className={isLanding ? "alt" : ""}>
       <h1><Link href="/">CYPHER</Link> Program Finder</h1>
@@ -38,27 +48,31 @@ const Header: React.FC<HeaderProps> = ({ isLanding = false }) => {
             <button 
               className={`dropdown-trigger ${isMoreOpen ? 'active' : ''}`}
               onClick={() => setIsMoreOpen(!isMoreOpen)}
+              aria-expanded={isMoreOpen}
+              aria-haspopup="true"
             >
               More <i className="fas fa-angle-down"></i>
             </button>
-            <ul className={`dropdown-menu ${isMoreOpen ? 'show' : ''}`}>
-              <li><Link href="/programs">Programs</Link></li>
-              <li><Link href="/bookmarks">Bookmarked Programs</Link></li>
+            <ul className={`dropdown-menu ${isMoreOpen ? 'show' : ''}`} role="menu">
+              <li><Link href="/programs" className="dropdown-menu-item">Programs</Link></li>
+              <li><Link href="/bookmarks" className="dropdown-menu-item">Bookmarked Programs</Link></li>
               <li ref={categoriesRef} className="submenu">
-                <button 
+                <button
                   className={`submenu-trigger ${isCategoriesOpen ? 'active' : ''}`}
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsCategoriesOpen(!isCategoriesOpen);
                   }}
+                  aria-expanded={isCategoriesOpen}
+                  aria-haspopup="true"
                 >
                   Categories <i className="fas fa-angle-right"></i>
                 </button>
-                <ul className={`submenu-dropdown ${isCategoriesOpen ? 'show' : ''}`}>
-                  <li><Link href="/programs?category=education">Education</Link></li>
-                  <li><Link href="/programs?category=sports">Sports</Link></li>
-                  <li><Link href="/programs?category=arts">Arts & Culture</Link></li>
-                  <li><Link href="/programs?category=stem">STEM</Link></li>
+                <ul className={`submenu-dropdown ${isCategoriesOpen ? 'show' : ''}`} role="menu">
+                  <li><Link href="/programs?category=education" className="dropdown-menu-item">Education</Link></li>
+                  <li><Link href="/programs?category=sports" className="dropdown-menu-item">Sports</Link></li>
+                  <li><Link href="/programs?category=arts" className="dropdown-menu-item">Arts & Culture</Link></li>
+                  <li><Link href="/programs?category=stem" className="dropdown-menu-item">STEM</Link></li>
                 </ul>
               </li>
             </ul>
