@@ -3099,13 +3099,13 @@
 				}
 
 /* Remove dropotron styles */
-.dropotron {
+	.dropotron {
     display: none;
-}
+			}
 
-.dropotron.level-0 {
+		.dropotron.level-0 {
     display: none;
-}
+			}
 
 /* Banner */
 
@@ -3888,4 +3888,4 @@
 .dropdown-menu-item:hover {
     background-color: #f8f9fa;
     color: #1a73e8;
-}
+	}

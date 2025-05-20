@@ -1,7 +1,3 @@
-'use client';
-
-import React from 'react';
-
 interface GoogleMapProps {
   address: string;
   width?: string;
@@ -10,20 +6,18 @@ interface GoogleMapProps {
 
 export function GoogleMap({ address, width = '100%', height = '300px' }: GoogleMapProps) {
   const encodedAddress = encodeURIComponent(address);
-  const apiKey = 'AIzaSyAcodHwg5m7AUlBiC5Spe5CcxSRjpGSZRo';
+  const apiKey = (import.meta as any).env.VITE_GOOGLE_MAPS_API_KEY as string; // Vite
+  // OR for Next.js: const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodedAddress}`;
 
   return (
-    <div style={{ width, height, margin: '1rem 0' }}>
-      <iframe
-        width="100%"
-        height="100%"
-        style={{ border: 0, borderRadius: '8px' }}
-        loading="lazy"
-        allowFullScreen
-        referrerPolicy="no-referrer-when-downgrade"
-        src={mapUrl}
-      />
-    </div>
+    <iframe
+      width={width}
+      height={height}
+      loading="lazy"
+      allowFullScreen
+      referrerPolicy="no-referrer-when-downgrade"
+      src={mapUrl}
+    ></iframe>
   );
-} 
+}

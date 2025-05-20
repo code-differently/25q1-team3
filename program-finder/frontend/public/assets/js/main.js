@@ -6,30 +6,30 @@
 
 (function() {
 	// Breakpoints.
-	breakpoints({
-		wide:      ( '1281px',  '1680px' ),
-		normal:    ( '981px',   '1280px' ),
-		narrow:    ( '737px',   '980px'  ),
-		narrower:  ( '737px',   '840px'  ),
-		mobile:    ( '481px',   '736px'  ),
-		mobilep:   ( null,      '480px'  )
-	});
+		breakpoints({
+			wide:      ( '1281px',  '1680px' ),
+			normal:    ( '981px',   '1280px' ),
+			narrow:    ( '737px',   '980px'  ),
+			narrower:  ( '737px',   '840px'  ),
+			mobile:    ( '481px',   '736px'  ),
+			mobilep:   ( null,      '480px'  )
+		});
 
 	// Play initial animations on page load.
 	window.addEventListener('load', function() {
-		window.setTimeout(function() {
+			window.setTimeout(function() {
 			document.body.classList.remove('is-preload');
-		}, 100);
-	});
+			}, 100);
+		});
 
 	// NavPanel.
-	// Button.
+		// Button.
 	const navButton = document.createElement('div');
 	navButton.id = 'navButton';
 	navButton.innerHTML = '<a href="#navPanel" class="toggle"></a>';
 	document.body.appendChild(navButton);
 
-	// Panel.
+		// Panel.
 	const navPanel = document.createElement('div');
 	navPanel.id = 'navPanel';
 	const nav = document.getElementById('nav');
