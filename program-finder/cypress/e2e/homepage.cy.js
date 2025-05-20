@@ -16,25 +16,15 @@ describe('testing on homepage', () => {
   });
 
   it('navigates to program details', () => {
-    // Visit the homepage
     cy.visit('http://localhost:3000');
-
-    // Wait for the page to load
     cy.wait(3000);
-    
-    // Hover over the "Programs" link in the navigation bar
-    const programLink = cy.get('#nav > :nth-child(1) > :nth-child(2)');
-    programLink.should('be.visible');
-    programLink.trigger('mouseover');
-
-    // Click the "All Programs" link in the dropdown
-    const allProgramsLink = cy.get('.level-0 > :nth-child(1) > a');
-    allProgramsLink.invoke('show').click({force: true});
-
+    cy.get('[data-cy="nav-more"]').click();
+    cy.get('[data-cy="nav-programs"]').should('be.visible').click();
+    cy.url().should('include', '/programs');
   });
   it('types into zip code field', () => {
     cy.visit('/')
-    cy.get('#zip').type("19801")
+    cy.get('[data-cy="zip-input"]').type("19801")
   });
   
 })

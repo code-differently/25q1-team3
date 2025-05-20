@@ -1,14 +1,13 @@
 'use client';
 
-
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
 import EmailPasswordLogin from '../../components/EmailPasswordLogin';
 import PageLayout from '../../components/PageLayout';
 import './login.css';
 
-export default function Login() {
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login, isAuthenticated } = useAuth();
@@ -58,7 +57,6 @@ export default function Login() {
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:3001/api/auth/google';
 
-
   };
 
   return (
@@ -68,7 +66,6 @@ export default function Login() {
           <h1>Welcome Back</h1>
           <p className="subtitle">Sign in to continue</p>
           
-
           <button 
             onClick={handleGoogleLogin}
             className="google-login-button"
@@ -100,5 +97,13 @@ export default function Login() {
         </div>
       </div>
     </PageLayout>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 } 
