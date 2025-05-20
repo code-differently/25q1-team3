@@ -31,4 +31,13 @@ export function RecentSearches({ searches, onSearch, onClear }: RecentSearchesPr
       </div>
     </div>
   );
-} 
+}
+
+<div style={{ textAlign: "center", marginTop: "2rem" }}>
+  <h1>
+    A Digital Movement Designed To Bridge The Gap Between<br />
+    <span style={{ display: "block", marginTop: "1.5rem" }}>
+      Underserved Youth And The Opportunities They Deserve
+    </span>
+  </h1>
+</div> 

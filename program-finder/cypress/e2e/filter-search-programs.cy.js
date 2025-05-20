@@ -24,32 +24,28 @@ describe('testing search programs feature', () => {
 
       it('types into zip code field', () => {
         cy.visit('/')
-        cy.get('#zip').type("19801");
-        
+        cy.get('[data-cy="zip-input"]').type("19801");
       });
       it('clicks the submit button', () => {
         cy.visit('/')
-        cy.get('input[value="Search"]').click();
+        cy.get('[data-cy="search-button"]').click();
       });
       
       it('types in the keyword textarea', () => {
         cy.visit('/')
-        cy.get('input#keyword').type("art");
+        cy.get('[data-cy="keyword-input"]').type("art");
       });
       
         it('should display the Find Program button', () => {
-          // Check if the Find Program button exists and is visible
           cy.visit('/');
-          cy.get('a[href="#main"]')
+          cy.get('[data-cy="find-program-btn"]')
             .should('exist')
             .should('be.visible')
             .contains('Find Program', { matchCase: false });
         });
         it('should navigate once find program button is submitted', () => {
-            // Click the Find Program button
             cy.visit('/');
-            cy.get('a[href="#main"]').click();
-             // Verify we've navigated to the programs page
-            cy.url().should('include', '/#main');
+            cy.get('[data-cy="find-program-btn"]').click();
+            cy.url().should('include', '/programs');
         });
     })
