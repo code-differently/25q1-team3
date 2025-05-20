@@ -3099,6 +3099,7 @@
 				}
 
 /* Remove dropotron styles */
+
 	.dropotron {
     display: none;
 			}
@@ -3889,3 +3890,5 @@
     background-color: #f8f9fa;
     color: #1a73e8;
 	}
+}
+

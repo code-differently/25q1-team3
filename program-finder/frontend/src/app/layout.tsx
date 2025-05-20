@@ -6,6 +6,8 @@ import { Providers } from '../components/Providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const inter = Inter({ subsets: ['latin'] })
+
 export const metadata: Metadata = {
   title: 'Program Finder',
   description: 'Find programs in your area',

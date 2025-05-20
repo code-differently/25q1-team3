@@ -20,6 +20,7 @@ export default function ProgramsContent() {
   const [programs, setPrograms] = useState<ProgramData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   const [filters, setFilters] = useState<SearchFilters>({
     ageGroup: '',
     category: initialCategory,
@@ -88,6 +89,58 @@ export default function ProgramsContent() {
         <section className="box">
           <h3>Search Programs</h3>
           <SearchBar onSearch={search} initialZip="" />
+
+          <div className="filters-section">
+            <button
+              className="button alt"
+              onClick={() => setShowFilters(!showFilters)}
+              style={{ marginTop: '1rem' }}
+            >
+              {showFilters ? 'Hide Filters' : 'Show Filters'}
+            </button>
+
+            {showFilters && (
+              <div className="filters row">
+                <div className="col-12">
+                  <h4>Filter Programs</h4>
+                  <button className="button small" onClick={clearFilters}>
+                    Clear Filters
+                  </button>
+                </div>
+                <div className="col-4 col-12-mobilep">
+                  <select name="ageGroup" value={filters.ageGroup} onChange={handleFilterChange}>
+                    <option value="">All Ages</option>
+                    <option value="children">Children (0-12)</option>
+                    <option value="teens">Teens (13-17)</option>
+                    <option value="adults">Adults (18+)</option>
+                  </select>
+                </div>
+                <div className="col-4 col-12-mobilep">
+                  <select name="category" value={filters.category} onChange={handleFilterChange}>
+                    <option value="">All Categories</option>
+                    <option value="education">Education</option>
+                    <option value="sports">Sports</option>
+                    <option value="arts">Arts & Culture</option>
+                    <option value="stem">STEM</option>
+                  </select>
+                </div>
+                <div className="col-4 col-12-mobilep">
+                  <div className="distance-filter">
+                    <label>Distance: {filters.distance} miles</label>
+                    <input
+                      type="range"
+                      name="distance"
+                      min="1"
+                      max="50"
+                      value={filters.distance}
+                      onChange={handleFilterChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
         </section>
 
         {loading && (

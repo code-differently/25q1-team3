@@ -25,7 +25,9 @@ export function ProgramCard({ data: program }: ProgramCardProps) {
   };
 
   return (
+
     <div className="program-card" onClick={handleCardClick}>
+
       <div className="program-image">
         <img src={getImageForProgram()} alt={program.organization} />
       </div>
@@ -41,6 +43,7 @@ export function ProgramCard({ data: program }: ProgramCardProps) {
           <span className="program-category">{program.type}</span>
           <span className="program-age-group">{program.ages}</span>
           {program.location && (
+
             <span className="program-location">{program.location}</span>
           )}
         </div>
@@ -87,6 +90,7 @@ export function ProgramCard({ data: program }: ProgramCardProps) {
               <span className="registration-icon">📝</span>
               <span>{program.registration_info}</span>
             </p>
+
           </div>
         )}
       </div>

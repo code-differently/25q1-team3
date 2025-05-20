@@ -6,6 +6,7 @@
 
 (function() {
 	// Breakpoints.
+
 		breakpoints({
 			wide:      ( '1281px',  '1680px' ),
 			normal:    ( '981px',   '1280px' ),
@@ -24,12 +25,14 @@
 
 	// NavPanel.
 		// Button.
+
 	const navButton = document.createElement('div');
 	navButton.id = 'navButton';
 	navButton.innerHTML = '<a href="#navPanel" class="toggle"></a>';
 	document.body.appendChild(navButton);
 
 		// Panel.
+
 	const navPanel = document.createElement('div');
 	navPanel.id = 'navPanel';
 	const nav = document.getElementById('nav');

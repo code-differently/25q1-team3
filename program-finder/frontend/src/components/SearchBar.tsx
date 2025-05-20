@@ -1,6 +1,8 @@
 'use client';
 
+
 import React, { useState, useRef, useEffect } from 'react';
+
 import './SearchBar.css';
 
 interface SearchBarProps {
@@ -25,6 +27,7 @@ export function SearchBar({ onSearch, initialZip = '' }: SearchBarProps) {
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+
     function handleClickOutside(event: MouseEvent) {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
         setShowFilters(false);
@@ -35,6 +38,7 @@ export function SearchBar({ onSearch, initialZip = '' }: SearchBarProps) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -65,12 +69,16 @@ export function SearchBar({ onSearch, initialZip = '' }: SearchBarProps) {
             onChange={(e) => setZip(e.target.value)}
             placeholder="Enter ZIP code to find programs near you"
             className="search-input"
+
+            onFocus={() => setShowFilters(true)}
+
           />
           <button type="submit" className="search-button">
             <span className="search-icon">🔍</span>
           </button>
         </div>
       </form>
+
 
       <button
         type="button"
@@ -79,6 +87,7 @@ export function SearchBar({ onSearch, initialZip = '' }: SearchBarProps) {
       >
         {showFilters ? 'Hide Filters' : 'Show Filters'}
       </button>
+
 
       {showFilters && (
         <div className="search-filters">
@@ -89,6 +98,7 @@ export function SearchBar({ onSearch, initialZip = '' }: SearchBarProps) {
             </button>
           </div>
           
+
           <div className="filters-content">
             <div className="filter-group">
               <label>Age Group</label>
@@ -133,6 +143,7 @@ export function SearchBar({ onSearch, initialZip = '' }: SearchBarProps) {
                 className="distance-slider"
               />
             </div>
+
           </div>
 
           <button 

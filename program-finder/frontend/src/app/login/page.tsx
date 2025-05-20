@@ -1,5 +1,6 @@
 'use client';
 
+
 import React, { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
@@ -30,6 +31,7 @@ export default function Login() {
 
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:3001/api/auth/google';
+
   };
 
   return (
@@ -39,6 +41,7 @@ export default function Login() {
           <h1>Welcome Back</h1>
           <p className="subtitle">Sign in to continue</p>
           
+
           <button 
             onClick={handleGoogleLogin}
             className="google-login-button"
@@ -50,12 +53,15 @@ export default function Login() {
             />
             Sign in with Google
           </button>
+
           
           <div className="divider">
             <span>or</span>
           </div>
           
+
           <EmailPasswordLogin onLogin={handleEmailLogin} />
+
           
           <p className="signup-link">
             Don't have an account? <a href="/signup">Sign up</a>
