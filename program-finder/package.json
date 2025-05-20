@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "cypress": "^14.3.3",
+    "next": "^15.3.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   }

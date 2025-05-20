@@ -32,4 +32,9 @@ describe('testing on homepage', () => {
     allProgramsLink.invoke('show').click({force: true});
 
   });
+  it('types into zip code field', () => {
+    cy.visit('/')
+    cy.get('#zip').type("19801")
+  });
+  
 })
