@@ -1,11 +1,17 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ProgramData } from '../../interfaces/ProgramData';
-import ProgramCard from '../../components/ProgramCard';
-import SearchBar from '../../components/SearchBar';
+import { ProgramCard } from '../../components/ProgramCard';
+import { SearchBar } from '../../components/SearchBar';
 import PageLayout from '../../components/PageLayout';
+
+interface SearchFilters {
+  ageGroup: string;
+  category: string;
+  distance: string;
+}
 
 export default function ProgramsContent() {
   const searchParams = useSearchParams();
@@ -14,57 +20,46 @@ export default function ProgramsContent() {
   const [programs, setPrograms] = useState<ProgramData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState({
-    ageGroup: '',
-    category: initialCategory,
-    distance: '10',
-  });
 
   useEffect(() => {
     fetchPrograms();
   }, [initialCategory]);
 
-  const fetchPrograms = async (zip = '', keyword = '') => {
+  const fetchPrograms = async (zip = '', filters: SearchFilters = {
+    ageGroup: '',
+    category: initialCategory,
+    distance: '10'
+  }) => {
     setLoading(true);
+    setError(null);
     try {
       const queryParams = new URLSearchParams();
       if (zip) queryParams.append('zip', zip);
-      if (keyword) queryParams.append('keyword', encodeURIComponent(keyword));
       if (filters.ageGroup) queryParams.append('ageGroup', filters.ageGroup);
       if (filters.category) queryParams.append('category', filters.category);
       if (filters.distance) queryParams.append('distance', filters.distance);
 
       const res = await fetch(`/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`);
-      if (!res.ok) throw new Error('Failed to fetch programs');
+      if (!res.ok) {
+        throw new Error(`Failed to fetch programs: ${res.statusText}`);
+      }
 
       const data = await res.json();
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid response format');
+      }
       setPrograms(data);
     } catch (err) {
       console.error('Fetch error:', err);
-      setError('Unable to fetch programs. Please try again later.');
+      setError(err instanceof Error ? err.message : 'Unable to fetch programs. Please try again later.');
       setPrograms([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFilters((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const clearFilters = () => {
-    setFilters({
-      ageGroup: '',
-      category: '',
-      distance: '10',
-    });
-    fetchPrograms();
-  };
-
-  const search = (zip: string, keyword: string) => {
-    fetchPrograms(zip, keyword);
+  const search = (zip: string, filters: SearchFilters) => {
+    fetchPrograms(zip, filters);
   };
 
   return (
@@ -77,58 +72,7 @@ export default function ProgramsContent() {
 
         <section className="box">
           <h3>Search Programs</h3>
-          <SearchBar defaultZip="" onSearch={search} />
-
-          <div className="filters-section">
-            <button
-              className="button alt"
-              onClick={() => setShowFilters(!showFilters)}
-              style={{ marginTop: '1rem' }}
-            >
-              {showFilters ? 'Hide Filters' : 'Show Filters'}
-            </button>
-
-            {showFilters && (
-              <div className="filters row">
-                <div className="col-12">
-                  <h4>Filter Programs</h4>
-                  <button className="button small" onClick={clearFilters}>
-                    Clear Filters
-                  </button>
-                </div>
-                <div className="col-4 col-12-mobilep">
-                  <select name="ageGroup" value={filters.ageGroup} onChange={handleFilterChange}>
-                    <option value="">All Ages</option>
-                    <option value="children">Children (0-12)</option>
-                    <option value="teens">Teens (13-17)</option>
-                    <option value="adults">Adults (18+)</option>
-                  </select>
-                </div>
-                <div className="col-4 col-12-mobilep">
-                  <select name="category" value={filters.category} onChange={handleFilterChange}>
-                    <option value="">All Categories</option>
-                    <option value="education">Education</option>
-                    <option value="sports">Sports</option>
-                    <option value="arts">Arts & Culture</option>
-                    <option value="stem">STEM</option>
-                  </select>
-                </div>
-                <div className="col-4 col-12-mobilep">
-                  <div className="distance-filter">
-                    <label>Distance: {filters.distance} miles</label>
-                    <input
-                      type="range"
-                      name="distance"
-                      min="1"
-                      max="50"
-                      value={filters.distance}
-                      onChange={handleFilterChange}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          <SearchBar onSearch={search} initialZip="" />
         </section>
 
         {loading && (

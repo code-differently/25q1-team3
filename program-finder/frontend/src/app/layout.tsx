@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import ScriptInitializer from '../components/ScriptInitializer'
 import './globals.css'
 
 // Add jQuery type declaration
@@ -28,10 +27,7 @@ export default function RootLayout({
       </head>
       <body className="is-preload">
         {children}
-        <ScriptInitializer />
       </body>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    </html> 
+    </html>
   )
 } 
