@@ -155,24 +155,20 @@ export default function ProgramsContent() {
           <div className="box">
             <div className="error-message">
               <p>{error}</p>
-              <button className="button small" onClick={() => setError(null)}>
-                Dismiss
-              </button>
             </div>
           </div>
         )}
 
-        {!loading && programs.length === 0 && !error && (
+        {!loading && !error && programs.length === 0 && (
           <div className="box">
-            <h3>No programs found</h3>
-            <p>Try adjusting your search criteria or filters</p>
+            <p>No programs found matching your criteria.</p>
           </div>
         )}
 
-        {!loading && programs.length > 0 && (
+        {!loading && !error && programs.length > 0 && (
           <div className="row">
             {programs.map((program) => (
-              <div key={program.id} className="col-4 col-12-narrower">
+              <div key={program.id} className="col-6 col-12-mobilep">
                 <ProgramCard data={program} />
               </div>
             ))}
