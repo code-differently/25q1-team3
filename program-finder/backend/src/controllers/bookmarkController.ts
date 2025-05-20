@@ -5,11 +5,14 @@ import { getDb } from '../db';
 export const getBookmarks = async (req: Request, res: Response) => {
   try {
     const db = await getDb();
-    // TODO: Replace with actual user ID from authentication
-    const userId = 1; // Temporary hardcoded user ID
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Authentication required' });
+    }
 
     const bookmarks = await db.all(`
-      SELECT p.*, b.id as bookmark_id
+      SELECT p.*
       FROM programs p
       JOIN bookmarks b ON p.id = b.program_id
       WHERE b.user_id = ?
@@ -27,8 +30,11 @@ export const addBookmark = async (req: Request, res: Response) => {
   try {
     const db = await getDb();
     const { programId } = req.params;
-    // TODO: Replace with actual user ID from authentication
-    const userId = 1; // Temporary hardcoded user ID
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Authentication required' });
+    }
 
     // Check if program exists
     const program = await db.get('SELECT id FROM programs WHERE id = ?', [programId]);
@@ -38,7 +44,7 @@ export const addBookmark = async (req: Request, res: Response) => {
 
     // Check if bookmark already exists
     const existingBookmark = await db.get(
-      'SELECT id FROM bookmarks WHERE user_id = ? AND program_id = ?',
+      'SELECT * FROM bookmarks WHERE user_id = ? AND program_id = ?',
       [userId, programId]
     );
 
@@ -64,8 +70,11 @@ export const removeBookmark = async (req: Request, res: Response) => {
   try {
     const db = await getDb();
     const { programId } = req.params;
-    // TODO: Replace with actual user ID from authentication
-    const userId = 1; // Temporary hardcoded user ID
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Authentication required' });
+    }
 
     const result = await db.run(
       'DELETE FROM bookmarks WHERE user_id = ? AND program_id = ?',
