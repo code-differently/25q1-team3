@@ -47,7 +47,7 @@ export default function SignupPage() {
         displayName: formData.name
       });
 
-      router.push('/programs');
+      router.push('/');
     } catch (err: any) {
       let errorMessage = 'Failed to create account';
       if (err.code === 'auth/email-already-in-use') {

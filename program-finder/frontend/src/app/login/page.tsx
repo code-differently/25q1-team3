@@ -1,17 +1,21 @@
 'use client';
 
+
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, provider } from '../../components/Firebase';
+
 import EmailPasswordLogin from '../../components/EmailPasswordLogin';
 import PageLayout from '../../components/PageLayout';
 import './login.css';
+
 
 export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
 
   const handleEmailLogin = async (email: string, password: string) => {
     setLoading(true);
@@ -27,7 +31,6 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
-
   const handleGoogleLogin = async () => {
     setLoading(true);
     setError('');
@@ -36,11 +39,13 @@ export default function LoginPage() {
       if (result.user) {
         router.push('/programs');
       }
+
     } catch (err: any) {
       setError(err.message || 'Failed to sign in with Google');
     } finally {
       setLoading(false);
     }
+
   };
 
   return (
@@ -50,8 +55,10 @@ export default function LoginPage() {
           <h1>Welcome Back</h1>
           <p className="subtitle">Sign in to continue</p>
           
+
           {error && <div className="error-message">{error}</div>}
           
+
           <button 
             onClick={handleGoogleLogin}
             className="google-login-button"
@@ -81,5 +88,13 @@ export default function LoginPage() {
         </div>
       </div>
     </PageLayout>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 } 

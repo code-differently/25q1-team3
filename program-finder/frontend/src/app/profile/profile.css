@@ -215,6 +215,8 @@
   color: #202124;
   font-size: 2rem;
   font-weight: 500;
+
+
 }
 
 @media screen and (max-width: 768px) {
@@ -246,6 +248,7 @@
   }
 
   .save-button {
+
     width: 100%;
   }
 } 

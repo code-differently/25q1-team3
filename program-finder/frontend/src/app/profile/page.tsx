@@ -1,8 +1,10 @@
 'use client';
 
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+
 import PageLayout from '../../components/PageLayout';
 import './profile.css';
 
@@ -64,6 +66,7 @@ export default function ProfilePage() {
   };
 
   if (!isAuthenticated) {
+
     return null;
   }
 
@@ -203,6 +206,7 @@ export default function ProfilePage() {
             <div className="stat-item">
               <h3>Programs Applied</h3>
               <p>0</p>
+
             </div>
           </div>
         </div>
