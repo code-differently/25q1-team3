@@ -50,7 +50,6 @@ function LoginContent() {
         <div className="login-container">
           <h1>Welcome Back</h1>
           <p className="subtitle">Sign in to continue</p>
-
           
           {error && <div className="error-message">{error}</div>}
           
