@@ -6,7 +6,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     baseUrl: "http://localhost:3000",
-    specPattern: '**/**.cy.js'
+    specPattern: '**/*.cy.js'
   },
 
   component: {
