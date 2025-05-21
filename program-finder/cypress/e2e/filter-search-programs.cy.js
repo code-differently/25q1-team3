@@ -65,14 +65,22 @@ describe('testing search and filter feature', () => {
   it('should allow selecting an age group from the dropdown', () => {
     cy.visit('/');
     cy.contains('Show Filters').click();
-  
     // Wait for the dropdown
     cy.get('select[name="ageGroup"]').should('exist');
-  
     // Select by value
     cy.get('select[name="ageGroup"]').select('teens');
-  
     // Assert it's selected
     cy.get('select[name="ageGroup"]').should('have.value', 'teens');
-  });  
+    
+    it('should allow selecting an age group from the dropdown', () => {
+      cy.visit('/');
+      cy.contains('Show Filters').click();
+    //Assert category is selected
+    cy.get('select[name="category"]').should('exist');
+    
+    cy.get('select[name="category"]').select('Education')
+  });
+  // Clear the selected info
+
+
 });
