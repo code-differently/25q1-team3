@@ -44,7 +44,10 @@ export default function ProgramsContent() {
       if (searchFilters.category) queryParams.append('category', searchFilters.category);
       if (searchFilters.distance) queryParams.append('distance', searchFilters.distance);
 
-      const res = await fetch(`/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`);
+      const url = `/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`;
+      console.log('Fetching programs from:', url);
+      
+      const res = await fetch(url);
       if (!res.ok) {
         throw new Error(`Failed to fetch programs: ${res.statusText}`);
       }
@@ -53,6 +56,7 @@ export default function ProgramsContent() {
       if (!Array.isArray(data)) {
         throw new Error('Invalid response format');
       }
+      console.log(`Fetched ${data.length} programs from the API`);
       setPrograms(data);
     } catch (err) {
       console.error('Fetch error:', err);
@@ -116,6 +120,12 @@ export default function ProgramsContent() {
 
         {!loading && !error && programs.length > 0 && (
           <>
+            <div className="box">
+              <div className="program-info">
+                <p>Showing {indexOfFirstProgram + 1}-{Math.min(indexOfLastProgram, programs.length)} of {programs.length} programs</p>
+              </div>
+            </div>
+            
             <div className="row">
               {currentPrograms.map((program) => (
                 <div key={program.id} className="col-6 col-12-mobilep">
