@@ -9,77 +9,214 @@
   margin: 0 auto;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: 2rem;
 }
 
-.profile-container h1 {
-  color: #202124;
-  margin-bottom: 2rem;
-  font-size: 2rem;
-  text-align: center;
-}
-
-.profile-info {
+.profile-header {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #eee;
 }
 
-.profile-section {
-  background: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 6px;
-}
-
-.profile-section h2 {
-  color: #202124;
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #e8eaed;
-}
-
-.info-item {
-  display: flex;
-  margin-bottom: 1rem;
-  padding: 0.5rem 0;
-}
-
-.info-item:last-child {
-  margin-bottom: 0;
-}
-
-.info-item label {
-  font-weight: 500;
-  color: #5f6368;
-  width: 150px;
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
-.info-item span {
-  color: #202124;
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-}
-
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #1a73e8;
+.profile-initial {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  background-color: #1a73e8;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.profile-title {
+  flex-grow: 1;
+}
+
+.profile-title h1 {
+  margin: 0 0 0.5rem 0;
+  color: #202124;
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.profile-email {
+  color: #5f6368;
+  margin: 0;
+}
+
+.edit-button {
+  padding: 0.75rem 1.5rem;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.edit-button:hover {
+  background: #1557b0;
+}
+
+.edit-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.profile-form {
+  display: grid;
+  gap: 2rem;
+}
+
+.form-section {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.form-section h2 {
+  margin: 0 0 1.5rem 0;
+  color: #202124;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #202124;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #dfe1e5;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
+.form-group input:disabled,
+.form-group textarea:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.save-button {
+  padding: 0.75rem 1.5rem;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-button:hover {
+  background: #1557b0;
+}
+
+.save-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background: #fce8e6;
+  color: #d93025;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  background: #e6f4ea;
+  color: #137333;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.stat-item h3 {
+  margin: 0 0 0.5rem 0;
+  color: #5f6368;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.stat-item p {
+  margin: 0;
+  color: #202124;
+  font-size: 2rem;
+  font-weight: 500;
+
+
 }
 
 @media screen and (max-width: 768px) {
@@ -91,12 +228,27 @@
     padding: 1.5rem;
   }
 
-  .info-item {
+  .profile-header {
     flex-direction: column;
-    gap: 0.25rem;
+    text-align: center;
+    gap: 1rem;
   }
 
-  .info-item label {
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .edit-button {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .save-button {
+
     width: 100%;
   }
 } 

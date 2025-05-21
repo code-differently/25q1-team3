@@ -1,41 +1,72 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import { auth } from '../../components/Firebase';
-import { onAuthStateChanged, User } from 'firebase/auth';
+
 import PageLayout from '../../components/PageLayout';
 import './profile.css';
 
 export default function ProfilePage() {
+  const { user, isAuthenticated } = useAuth();
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    bio: '',
+    phone: '',
+    location: '',
+    interests: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        router.push('/login');
-      }
+    if (!isAuthenticated) {
+      router.push('/login');
+    } else if (user) {
+      setFormData({
+        name: user.name || '',
+        email: user.email || '',
+        bio: user.bio || '',
+        phone: user.phone || '',
+        location: user.location || '',
+        interests: user.interests || ''
+      });
+    }
+  }, [isAuthenticated, user, router]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      // TODO: Implement profile update logic
+      // await updateUserProfile(formData);
+      setSuccess('Profile updated successfully!');
+      setIsEditing(false);
+    } catch (err: any) {
+      setError(err.message || 'Failed to update profile');
+    } finally {
       setLoading(false);
-    });
+    }
+  };
 
-    return () => unsubscribe();
-  }, [router]);
+  if (!isAuthenticated) {
 
-  if (loading) {
-    return (
-      <PageLayout>
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
-        </div>
-      </PageLayout>
-    );
-  }
-
-  if (!user) {
     return null;
   }
 
@@ -43,35 +74,139 @@ export default function ProfilePage() {
     <PageLayout>
       <div className="profile-page">
         <div className="profile-container">
-          <h1>Profile</h1>
-          
-          <div className="profile-info">
-            <div className="profile-section">
-              <h2>Account Information</h2>
-              <div className="info-item">
-                <label>Name:</label>
-                <span>{user.displayName || 'Not set'}</span>
+          <div className="profile-header">
+            <div className="profile-avatar">
+              {user?.photoURL ? (
+                <img src={user.photoURL} alt="Profile" />
+              ) : (
+                <div className="profile-initial avatar">
+                  {user?.name?.[0] || user?.email?.[0] || '?'}
+                </div>
+              )}
+            </div>
+            <div className="profile-title">
+              <h1>{user?.name || 'User Profile'}</h1>
+              <p className="profile-email">{user?.email}</p>
+            </div>
+            <button
+              className="edit-button"
+              onClick={() => setIsEditing(!isEditing)}
+              disabled={loading}
+            >
+              {isEditing ? 'Cancel' : 'Edit Profile'}
+            </button>
+          </div>
+
+          {error && <div className="error-message">{error}</div>}
+          {success && <div className="success-message">{success}</div>}
+
+          <form onSubmit={handleSubmit} className="profile-form">
+            <div className="form-section">
+              <h2>Personal Information</h2>
+              <div className="form-group">
+                <label htmlFor="name">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  disabled={!isEditing || loading}
+                  required
+                />
               </div>
-              <div className="info-item">
-                <label>Email:</label>
-                <span>{user.email}</span>
+
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  disabled={!isEditing || loading}
+                  required
+                />
               </div>
-              <div className="info-item">
-                <label>Account Created:</label>
-                <span>{user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : 'Unknown'}</span>
+
+              <div className="form-group">
+                <label htmlFor="phone">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  disabled={!isEditing || loading}
+                  placeholder="(123) 456-7890"
+                />
               </div>
-              <div className="info-item">
-                <label>Last Sign In:</label>
-                <span>{user.metadata.lastSignInTime ? new Date(user.metadata.lastSignInTime).toLocaleDateString() : 'Unknown'}</span>
+
+              <div className="form-group">
+                <label htmlFor="location">Location</label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  disabled={!isEditing || loading}
+                  placeholder="City, State"
+                />
               </div>
             </div>
 
-            <div className="profile-section">
-              <h2>Account Status</h2>
-              <div className="info-item">
-                <label>Email Verified:</label>
-                <span>{user.emailVerified ? 'Yes' : 'No'}</span>
+            <div className="form-section">
+              <h2>About</h2>
+              <div className="form-group">
+                <label htmlFor="bio">Bio</label>
+                <textarea
+                  id="bio"
+                  name="bio"
+                  value={formData.bio}
+                  onChange={handleInputChange}
+                  disabled={!isEditing || loading}
+                  placeholder="Tell us about yourself..."
+                  rows={4}
+                />
               </div>
+
+              <div className="form-group">
+                <label htmlFor="interests">Interests</label>
+                <input
+                  type="text"
+                  id="interests"
+                  name="interests"
+                  value={formData.interests}
+                  onChange={handleInputChange}
+                  disabled={!isEditing || loading}
+                  placeholder="e.g., Education, Sports, Arts"
+                />
+              </div>
+            </div>
+
+            {isEditing && (
+              <div className="form-actions">
+                <button
+                  type="submit"
+                  className="save-button"
+                  disabled={loading}
+                >
+                  {loading ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
+            )}
+          </form>
+
+          <div className="profile-stats">
+            <div className="stat-item">
+              <h3>Bookmarked Programs</h3>
+              <p>0</p>
+            </div>
+            <div className="stat-item">
+              <h3>Programs Applied</h3>
+              <p>0</p>
+
             </div>
           </div>
         </div>
