@@ -35,8 +35,6 @@ export default function Home() {
               A Digital Movement Designed To Bridge The Gap Between
               <br />
               Youth And The Opportunities They Deserve
-              <br />
-              Underserved Youth And The Opportunities They Deserve
             </h2>
             <p>The power of connection starts at CYPHER.<br />
             Where youth plug into opportunity!!!</p>
