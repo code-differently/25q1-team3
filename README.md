@@ -1,11 +1,13 @@
 # CYPHER  
 **Creating Youth Pathways for Hope, Equity, and Resources**
 
+## Description Of The App
 
+##CYPHER: Creating Youth Pathways for Hope, Equity, and Resources
+ CYPHER is a purpose-driven digital platform that empowers youth—particularly those from underserved communities—by connecting them with transformative programs, vital resources, and meaningful opportunities. Drawing inspiration from the cultural significance of a “cypher,” where individuals come together to exchange ideas and elevate collective expression, CYPHER serves as a dynamic space for connection, empowerment, and growth.
 
-## 📝 Project Overview
+##CYPHER aims to bridge gaps, elevate youth voices, and foster equitable access to resources that pave the way for brighter futures.
 
-**CYPHER** is a community-centered platform designed to connect youth, especially those in underserved communities, to life-changing programs, resources, and opportunities. Inspired by the cultural power of the **cypher**—a circle where people gather to share knowledge, creativity, and expression—our platform amplifies voices and builds bridges between youth, organizations, and communities nationwide.
 
 ---
 
@@ -33,6 +35,9 @@
 ---
 
 ## 🧑🏽‍🤝‍🧑🏽 The Team
+
+
+
 - Ezra Nyabuti – Backend Engineer
 - Darius Davis – Frontend Engineer
 - Nia Pack – Frontend Engineer
