@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { auth, provider } from '../../components/Firebase';
-
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../components/Firebase';
 import EmailPasswordLogin from '../../components/EmailPasswordLogin';
+// import GoogleLoginButton from '../../components/GoogleLoginButton';
 import PageLayout from '../../components/PageLayout';
 import './login.css';
 
@@ -29,20 +29,18 @@ function LoginContent() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const result = await signInWithPopup(auth, provider);
-      if (result.user) {
-        router.push('/programs');
-      }
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign in with Google');
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     setLoading(true);
+  //     setError('');
+  //     await signInWithPopup(auth, provider);
+  //     router.push('/programs');
+  //   } catch (err: any) {
+  //     setError(err.message || 'Failed to sign in with Google');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <PageLayout>
@@ -52,20 +50,13 @@ function LoginContent() {
           <p className="subtitle">Sign in to continue</p>
 
           {error && <div className="error-message">{error}</div>}
-
-          <button
-            onClick={handleGoogleLogin}
-            className="google-login-button"
-            disabled={loading}
-          >
-            <img src="/google-icon.svg" alt="Google" className="google-icon" />
-            {loading ? 'Signing in...' : 'Sign in with Google'}
-          </button>
-
-          <div className="divider">
+          
+          {/* <GoogleLoginButton onClick={handleGoogleLogin} disabled={loading} /> */}
+          
+          {/* <div className="divider">
             <span>or</span>
-          </div>
-
+          </div> */}
+          
           <EmailPasswordLogin onLogin={handleEmailLogin} disabled={loading} />
 
           <p className="signup-link">
