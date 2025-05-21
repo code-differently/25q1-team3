@@ -7,7 +7,7 @@ import EmailPasswordLogin from '../../components/EmailPasswordLogin';
 import PageLayout from '../../components/PageLayout';
 import './login.css';
 
-export default function Login() {
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login, isAuthenticated } = useAuth();
@@ -55,6 +55,7 @@ export default function Login() {
 
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:3001/api/auth/google';
+
   };
 
   return (
@@ -92,5 +93,13 @@ export default function Login() {
         </div>
       </div>
     </PageLayout>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 } 

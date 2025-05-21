@@ -12,7 +12,7 @@ export default function Home() {
         <h2>CYPHER</h2>
         <p style={{ color: 'white' }}>Connecting Youth to Programs, Hope, Empowerment, and Resources</p>
         <ul className="actions special">
-          <li><a href="/programs" className="button primary">Find Programs</a></li>
+          <li><a href="/programs" className="button primary" data-cy="find-program-btn">Find Programs</a></li>
           <li><a href="/about" className="button">Learn More</a></li>
         </ul>
       </section>
@@ -36,6 +36,14 @@ export default function Home() {
             <img src="/images/youngkids.jpg" alt="Neighborhood Programs" className="featured-banner" />
           </span>
         </section>
+
+        {/* No Programs Found Message */}
+        {!loading && !error && programs.length === 0 && (
+          <section className="box special">
+            <h3>No programs found</h3>
+            <p>Sorry, we couldn't find any programs matching your search criteria. Please try adjusting your filters or ZIP code.</p>
+          </section>
+        )}
 
         {/* Feature Icons */}
         <section className="box special features">
