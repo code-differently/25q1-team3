@@ -1,19 +1,43 @@
+.bookmark-container {
+  position: relative;
+  display: inline-block;
+}
+
 .bookmark-button {
   background: none;
   border: none;
-  font-size: 1.5rem;
   cursor: pointer;
-  padding: 0.25rem;
-  color: #ccc;
-  transition: color 0.2s ease;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .bookmark-button:hover {
-  color: #ffd700;
+  background-color: rgba(0, 0, 0, 0.05);
+  transform: scale(1.1);
 }
 
-.bookmark-button.saved {
-  color: #ffd700;
+.bookmark-button svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
+  stroke: #666;
+  fill: none;
+}
+
+.bookmark-button.saved svg {
+  fill: #FF6B6B !important;
+  stroke: #FF6B6B !important;
+}
+
+.bookmark-button.saved:hover svg {
+  fill: #FF5252 !important;
+  stroke: #FF5252 !important;
+  transform: scale(1.1);
 }
 
 .bookmark-button.loading {
@@ -23,5 +47,39 @@
 
 .bookmark-button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.3);
+}
+
+.login-prompt {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  margin-bottom: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.login-prompt.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.login-prompt::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
 } 

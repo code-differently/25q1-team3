@@ -12,7 +12,7 @@ export const getBookmarks = async (req: Request, res: Response) => {
     }
 
     const bookmarks = await db.all(`
-      SELECT p.*
+      SELECT DISTINCT p.*
       FROM programs p
       JOIN bookmarks b ON p.id = b.program_id
       WHERE b.user_id = ?
