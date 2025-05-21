@@ -49,7 +49,15 @@ export default function SignupPage() {
 
       router.push('/programs');
     } catch (err: any) {
-      setError(err.message || 'Failed to create account');
+      let errorMessage = 'Failed to create account';
+      if (err.code === 'auth/email-already-in-use') {
+        errorMessage = 'This email is already registered';
+      } else if (err.code === 'auth/weak-password') {
+        errorMessage = 'Password should be at least 6 characters';
+      } else if (err.code === 'auth/invalid-email') {
+        errorMessage = 'Invalid email address';
+      }
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -103,6 +111,7 @@ export default function SignupPage() {
               placeholder="Create a password"
               required
               disabled={loading}
+              minLength={6}
             />
           </div>
 
@@ -117,6 +126,7 @@ export default function SignupPage() {
               placeholder="Confirm your password"
               required
               disabled={loading}
+              minLength={6}
             />
           </div>
 

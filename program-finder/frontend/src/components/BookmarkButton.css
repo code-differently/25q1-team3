@@ -1,29 +1,43 @@
+.bookmark-container {
+  position: relative;
+  display: inline-block;
+}
+
 .bookmark-button {
   background: none;
   border: none;
-  font-size: 1.5rem;
   cursor: pointer;
-  padding: 0.25rem;
-  color: #ccc;
-  transition: all 0.2s ease;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .bookmark-button:hover {
-  color: #ffd700;
+  background-color: rgba(0, 0, 0, 0.05);
   transform: scale(1.1);
 }
 
-.bookmark-button.saved {
-  color: #ffd700;
+.bookmark-button svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
+  stroke: #666;
+  fill: none;
 }
 
-.bookmark-button[style*="color: #5480f1"] {
-  color: #ffd700 !important;
+.bookmark-button.saved svg {
+  fill: #FF6B6B !important;
+  stroke: #FF6B6B !important;
+}
+
+.bookmark-button.saved:hover svg {
+  fill: #FF5252 !important;
+  stroke: #FF5252 !important;
   transform: scale(1.1);
-}
-
-.bookmark-button[style*="color: #5480f1"]:hover {
-  color: #ffb700 !important;
 }
 
 .bookmark-button.loading {
@@ -33,49 +47,39 @@
 
 .bookmark-button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
-}
-
-.bookmark-container {
-  position: relative;
-  display: inline-block;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.3);
 }
 
 .login-prompt {
   position: absolute;
-  top: 100%;
-  right: 0;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #333;
   color: white;
   padding: 8px 12px;
   border-radius: 4px;
-  font-size: 0.9rem;
+  font-size: 14px;
   white-space: nowrap;
+  margin-bottom: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
   z-index: 1000;
-  margin-top: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.2s ease-in-out;
 }
 
-.login-prompt::before {
+.login-prompt.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.login-prompt::after {
   content: '';
   position: absolute;
-  top: -6px;
-  right: 10px;
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid #333;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
 } 

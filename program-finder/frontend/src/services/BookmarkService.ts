@@ -1,8 +1,8 @@
-import { ProgramData } from '../interfaces/ProgramData';
+import { auth } from '../components/Firebase';
 
 export class BookmarkService {
   private static instance: BookmarkService;
-  private baseUrl = '/api/bookmarks';
+  private baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
   private constructor() {}
 
@@ -13,10 +13,27 @@ export class BookmarkService {
     return BookmarkService.instance;
   }
 
-  async getBookmarks(): Promise<ProgramData[]> {
+  private async getAuthToken(): Promise<string> {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+    return user.getIdToken();
+  }
+
+  public async getBookmarks(): Promise<any[]> {
     try {
-      const response = await fetch(this.baseUrl);
-      if (!response.ok) throw new Error('Failed to fetch bookmarks');
+      const token = await this.getAuthToken();
+      const response = await fetch(`${this.baseUrl}/api/bookmarks`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch bookmarks');
+      }
+
       return await response.json();
     } catch (error) {
       console.error('Error fetching bookmarks:', error);
@@ -24,43 +41,63 @@ export class BookmarkService {
     }
   }
 
-  async toggleBookmark(programId: number): Promise<boolean> {
+  public async isBookmarked(programId: string): Promise<boolean> {
     try {
-      const response = await fetch(`${this.baseUrl}/${programId}`, {
-        method: 'POST',
+      const token = await this.getAuthToken();
+      const response = await fetch(`${this.baseUrl}/api/bookmarks/check/${programId}`, {
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Authorization': `Bearer ${token}`
+        }
       });
-      if (!response.ok) throw new Error('Failed to toggle bookmark');
-      const data = await response.json();
-      return data.isBookmarked;
-    } catch (error) {
-      console.error('Error toggling bookmark:', error);
-      throw error;
-    }
-  }
 
-  async removeBookmark(programId: number): Promise<void> {
-    try {
-      const response = await fetch(`${this.baseUrl}/${programId}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error('Failed to remove bookmark');
-    } catch (error) {
-      console.error('Error removing bookmark:', error);
-      throw error;
-    }
-  }
+      if (!response.ok) {
+        throw new Error('Failed to check bookmark status');
+      }
 
-  async isBookmarked(programId: number): Promise<boolean> {
-    try {
-      const response = await fetch(`${this.baseUrl}/${programId}`);
-      if (!response.ok) throw new Error('Failed to check bookmark status');
       const data = await response.json();
       return data.isBookmarked;
     } catch (error) {
       console.error('Error checking bookmark status:', error);
+      return false;
+    }
+  }
+
+  public async addBookmark(programId: string): Promise<void> {
+    try {
+      const token = await this.getAuthToken();
+      const response = await fetch(`${this.baseUrl}/api/bookmarks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ programId })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add bookmark');
+      }
+    } catch (error) {
+      console.error('Error adding bookmark:', error);
+      throw error;
+    }
+  }
+
+  public async removeBookmark(programId: string): Promise<void> {
+    try {
+      const token = await this.getAuthToken();
+      const response = await fetch(`${this.baseUrl}/api/bookmarks/${programId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to remove bookmark');
+      }
+    } catch (error) {
+      console.error('Error removing bookmark:', error);
       throw error;
     }
   }
