@@ -44,18 +44,10 @@ export class BookmarkService {
   public async isBookmarked(programId: string): Promise<boolean> {
     try {
       const token = await this.getAuthToken();
-      const response = await fetch(`${this.baseUrl}/api/bookmarks/check/${programId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to check bookmark status');
-      }
-
-      const data = await response.json();
-      return data.isBookmarked;
+      const bookmarks = await this.getBookmarks();
+      
+      // Check if the program is in the list of bookmarked programs
+      return bookmarks.some(program => program.id.toString() === programId);
     } catch (error) {
       console.error('Error checking bookmark status:', error);
       return false;
@@ -65,13 +57,11 @@ export class BookmarkService {
   public async addBookmark(programId: string): Promise<void> {
     try {
       const token = await this.getAuthToken();
-      const response = await fetch(`${this.baseUrl}/api/bookmarks`, {
+      const response = await fetch(`${this.baseUrl}/api/bookmarks/${programId}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ programId })
+        }
       });
 
       if (!response.ok) {
@@ -99,6 +89,16 @@ export class BookmarkService {
     } catch (error) {
       console.error('Error removing bookmark:', error);
       throw error;
+    }
+  }
+
+  public async getBookmarkCount(): Promise<number> {
+    try {
+      const bookmarks = await this.getBookmarks();
+      return bookmarks.length;
+    } catch (error) {
+      console.error('Error getting bookmark count:', error);
+      return 0;
     }
   }
 } 

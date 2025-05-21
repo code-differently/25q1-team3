@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { BookmarkService } from '../../services/BookmarkService';
 
 import PageLayout from '../../components/PageLayout';
 import './profile.css';
@@ -23,6 +24,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [bookmarkCount, setBookmarkCount] = useState(0);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -36,8 +38,18 @@ export default function ProfilePage() {
         location: user.location || '',
         interests: user.interests || ''
       });
+      fetchBookmarkCount();
     }
   }, [isAuthenticated, user, router]);
+
+  const fetchBookmarkCount = async () => {
+    try {
+      const count = await BookmarkService.getInstance().getBookmarkCount();
+      setBookmarkCount(count);
+    } catch (error) {
+      console.error('Error fetching bookmark count:', error);
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -201,7 +213,7 @@ export default function ProfilePage() {
           <div className="profile-stats">
             <div className="stat-item">
               <h3>Bookmarked Programs</h3>
-              <p>0</p>
+              <p>{bookmarkCount}</p>
             </div>
             <div className="stat-item">
               <h3>Programs Applied</h3>

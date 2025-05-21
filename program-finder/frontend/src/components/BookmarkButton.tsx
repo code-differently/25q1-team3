@@ -15,6 +15,7 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { isAuthenticated } = useAuth();
   const router = useRouter();
   const bookmarkService = BookmarkService.getInstance();
@@ -45,6 +46,8 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
     }
 
     setLoading(true);
+    setErrorMessage(null);
+    
     try {
       if (isBookmarked) {
         await bookmarkService.removeBookmark(programId);
@@ -55,6 +58,12 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
       }
     } catch (error) {
       console.error('Error toggling bookmark:', error);
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage('Failed to update bookmark');
+      }
+      setTimeout(() => setErrorMessage(null), 3000);
     } finally {
       setLoading(false);
     }
@@ -84,7 +93,11 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
           Please log in to bookmark programs
         </div>
       )}
+      {errorMessage && (
+        <div className="error-message show">
+          {errorMessage}
+        </div>
+      )}
     </div>
-
   );
 }
