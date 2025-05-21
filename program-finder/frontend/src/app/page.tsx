@@ -37,14 +37,6 @@ export default function Home() {
           </span>
         </section>
 
-        {/* No Programs Found Message */}
-        {!loading && !error && programs.length === 0 && (
-          <section className="box special">
-            <h3>No programs found</h3>
-            <p>Sorry, we couldn't find any programs matching your search criteria. Please try adjusting your filters or ZIP code.</p>
-          </section>
-        )}
-
         {/* Feature Icons */}
         <section className="box special features">
           <div className="features-row">

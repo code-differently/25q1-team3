@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
 import EmailPasswordLogin from '../../components/EmailPasswordLogin';
@@ -53,32 +53,12 @@ function LoginContent() {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:3001/api/auth/google';
-  };
-
   return (
     <PageLayout>
       <div className="login-page">
         <div className="login-container">
           <h1>Welcome Back</h1>
           <p className="subtitle">Sign in to continue</p>
-          
-          <button 
-            onClick={handleGoogleLogin}
-            className="google-login-button"
-          >
-            <img 
-              src="/google-icon.svg" 
-              alt="Google" 
-              className="google-icon"
-            />
-            Sign in with Google
-          </button>
-          
-          <div className="divider">
-            <span>or</span>
-          </div>
           
           <EmailPasswordLogin onLogin={handleEmailLogin} />
           

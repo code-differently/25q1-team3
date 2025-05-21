@@ -107,7 +107,6 @@ const Header: React.FC<HeaderProps> = ({ isLanding = false }) => {
             </ul>
           </li>
 
-          <li><Link href="/login" className="button" data-cy="nav-login">Login</Link></li>
           {user ? (
             <li ref={userMenuRef} className="dropdown">
               <button 
@@ -124,7 +123,7 @@ const Header: React.FC<HeaderProps> = ({ isLanding = false }) => {
               </ul>
             </li>
           ) : (
-            <li><Link href="/login" className="button">Login</Link></li>
+            <li><Link href="/login" className="button" data-cy="nav-login">Login</Link></li>
           )}
         </ul>
       </nav>
