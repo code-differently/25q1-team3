@@ -1,25 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import { adminAuth } from '../config/firebase';
 
-export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
-  
-  if (!authHeader) {
-    return res.status(401).json({ error: 'No token provided' });
-  }
+// Use a simplified auth middleware for development
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  // Always attach a test user for development
+  req.user = {
+    id: 'test-user-id',
+    email: 'test@example.com',
+    name: 'Test User'
+  };
+  next();
+};
 
-  const token = authHeader.split(' ')[1];
-  
-  try {
-    const decodedToken = await adminAuth.verifyIdToken(token);
-    req.user = {
-      id: decodedToken.uid,
-      email: decodedToken.email || '',
-      name: decodedToken.name || ''
-    };
-    next();
-  } catch (error) {
-    console.error('Error verifying token:', error);
-    return res.status(401).json({ error: 'Invalid token' });
-  }
-}; 
+// This middleware is maintained for backward compatibility
+export const testAuthMiddleware = authMiddleware; 
