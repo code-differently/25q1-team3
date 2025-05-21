@@ -25,6 +25,7 @@ export default function ProfilePage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [bookmarkCount, setBookmarkCount] = useState(0);
+  const [bookmarkError, setBookmarkError] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -44,10 +45,12 @@ export default function ProfilePage() {
 
   const fetchBookmarkCount = async () => {
     try {
+      setBookmarkError(false);
       const count = await BookmarkService.getInstance().getBookmarkCount();
       setBookmarkCount(count);
     } catch (error) {
       console.error('Error fetching bookmark count:', error);
+      setBookmarkError(true);
     }
   };
 
@@ -78,7 +81,6 @@ export default function ProfilePage() {
   };
 
   if (!isAuthenticated) {
-
     return null;
   }
 
@@ -213,12 +215,22 @@ export default function ProfilePage() {
           <div className="profile-stats">
             <div className="stat-item">
               <h3>Bookmarked Programs</h3>
-              <p>{bookmarkCount}</p>
+              <p>{bookmarkError ? '—' : bookmarkCount}</p>
+              {bookmarkError && (
+                <small className="error-text">Error loading bookmarks</small>
+              )}
+              {bookmarkError && (
+                <button 
+                  className="retry-button"
+                  onClick={fetchBookmarkCount}
+                >
+                  Retry
+                </button>
+              )}
             </div>
             <div className="stat-item">
               <h3>Programs Applied</h3>
               <p>0</p>
-
             </div>
           </div>
         </div>

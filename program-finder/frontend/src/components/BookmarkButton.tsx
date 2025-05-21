@@ -23,11 +23,17 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
   useEffect(() => {
     if (isAuthenticated) {
       checkBookmarkStatus();
+    } else {
+      setIsBookmarked(false);
     }
   }, [isAuthenticated, programId]);
 
   const checkBookmarkStatus = async () => {
     try {
+      if (!isAuthenticated) {
+        return;
+      }
+      
       const isSaved = await bookmarkService.isBookmarked(programId);
       setIsBookmarked(isSaved);
     } catch (error) {
@@ -61,8 +67,11 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
       if (error instanceof Error) {
         setErrorMessage(error.message);
       } else {
-        setErrorMessage('Failed to update bookmark');
+        setErrorMessage('Failed to update bookmark. Please try again later.');
       }
+      
+      setIsBookmarked(!isBookmarked);
+      
       setTimeout(() => setErrorMessage(null), 3000);
     } finally {
       setLoading(false);
