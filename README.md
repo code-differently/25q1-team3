@@ -2,10 +2,10 @@
 ![Team 3](Team%203.png)
 
 - Ezra Nyabuti – Backend Engineer
-- Darius Davis – Frontend Engineer
-- Nia Pack – Frontend Engineer
 - Chanel Hutt – Test Integration Engineer
-- Khayla Saunders – Backend Engineer
+- Nia Pack – Scrum Master
+- Darius Davis – Frontend Engineer
+- Khayla Saunders – Fullstack Engineer
 
 
 # CYPHER  
