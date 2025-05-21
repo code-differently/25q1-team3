@@ -7,7 +7,7 @@ import { BookmarkService } from '../services/BookmarkService';
 import './BookmarkButton.css';
 
 interface BookmarkButtonProps {
-  programId: string;
+  programId: string | number;
   className?: string;
 }
 
@@ -34,7 +34,7 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
         return;
       }
       
-      const isSaved = await bookmarkService.isBookmarked(programId);
+      const isSaved = await bookmarkService.isBookmarked(String(programId));
       setIsBookmarked(isSaved);
     } catch (error) {
       console.error('Error checking bookmark status:', error);
@@ -56,10 +56,10 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
     
     try {
       if (isBookmarked) {
-        await bookmarkService.removeBookmark(programId);
+        await bookmarkService.removeBookmark(String(programId));
         setIsBookmarked(false);
       } else {
-        await bookmarkService.addBookmark(programId);
+        await bookmarkService.addBookmark(String(programId));
         setIsBookmarked(true);
       }
     } catch (error) {

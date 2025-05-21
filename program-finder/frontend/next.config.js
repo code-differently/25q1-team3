@@ -5,6 +5,11 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   
+  // Environment variables that will be available in the browser
+  env: {
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: 'AIzaSyBfMtxd8CK-Zi_noMDZ3nFaxf6BTVo_hWc',
+  },
+  
   // Configure static file serving
   images: {
     domains: ['localhost'],
