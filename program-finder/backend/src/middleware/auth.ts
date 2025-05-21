@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import { User } from '../models/User';
+import { adminAuth } from '../config/firebase';
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   
   if (!authHeader) {
@@ -12,10 +11,15 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
   const token = authHeader.split(' ')[1];
   
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as User;
-    req.user = decoded;
+    const decodedToken = await adminAuth.verifyIdToken(token);
+    req.user = {
+      id: decodedToken.uid,
+      email: decodedToken.email || '',
+      name: decodedToken.name || ''
+    };
     next();
   } catch (error) {
+    console.error('Error verifying token:', error);
     return res.status(401).json({ error: 'Invalid token' });
   }
 }; 

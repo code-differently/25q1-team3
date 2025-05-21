@@ -1,98 +1,66 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
+import { auth } from '../components/Firebase';
 
 interface User {
   id: string;
   email: string;
   name: string;
+  photoURL?: string;
+  bio?: string;
+  phone?: string;
+  location?: string;
+  interests?: string;
 }
 
 interface AuthContextType {
-  isAuthenticated: boolean;
   user: User | null;
-  login: (token: string) => void;
-  logout: () => void;
+  isAuthenticated: boolean;
+  loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  isAuthenticated: false,
+  loading: true
+});
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export const useAuth = () => useContext(AuthContext);
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for existing session on mount
-    const token = localStorage.getItem('auth_token');
-    if (token) {
-      // Verify token with backend
-      fetch('/api/auth/verify', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.authenticated) {
-          setIsAuthenticated(true);
-          setUser(data.user);
-        } else {
-          // Clear invalid token
-          localStorage.removeItem('auth_token');
-          setIsAuthenticated(false);
-          setUser(null);
-        }
-      })
-      .catch(() => {
-        localStorage.removeItem('auth_token');
-        setIsAuthenticated(false);
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
+      if (firebaseUser) {
+        // Get custom claims and additional user data
+        const customClaims = (firebaseUser as any).customClaims || {};
+        
+        setUser({
+          id: firebaseUser.uid,
+          email: firebaseUser.email || '',
+          name: firebaseUser.displayName || '',
+          photoURL: firebaseUser.photoURL || undefined,
+          bio: customClaims.bio || undefined,
+          phone: firebaseUser.phoneNumber || undefined,
+          location: customClaims.location || undefined,
+          interests: customClaims.interests || undefined
+        });
+      } else {
         setUser(null);
-      });
-    }
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const login = (token: string) => {
-    localStorage.setItem('auth_token', token);
-    setIsAuthenticated(true);
-    
-    // Fetch user data
-    fetch('/api/auth/me', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.user) {
-        setUser(data.user);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching user data:', error);
-      // If we can't get user data, clear the token
-      localStorage.removeItem('auth_token');
-      setIsAuthenticated(false);
-      setUser(null);
-    });
-  };
-
-  const logout = () => {
-    localStorage.removeItem('auth_token');
-    setIsAuthenticated(false);
-    setUser(null);
-  };
-
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, loading }}>
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-} 
+}; 

@@ -1,107 +1,90 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ProgramData } from '../../interfaces/ProgramData';
-import { ProgramCard } from '../../components/ProgramCard';
 import { useAuth } from '../../contexts/AuthContext';
+import { BookmarkService } from '../../services/BookmarkService';
+import { ProgramCard } from '../../components/ProgramCard';
+import { ProgramData } from '../../interfaces/ProgramData';
 import PageLayout from '../../components/PageLayout';
+import './bookmarks.css';
 
-export default function Bookmarks() {
-  const [bookmarks, setBookmarks] = useState<ProgramData[]>([]);
+export default function BookmarksPage() {
+  const [bookmarkedPrograms, setBookmarkedPrograms] = useState<ProgramData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { isAuthenticated, user } = useAuth();
+  const [error, setError] = useState('');
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-      return;
-    }
-
-    const fetchBookmarks = async () => {
-      setLoading(true);
-      try {
-        const token = localStorage.getItem('auth_token');
-        const res = await fetch('/api/bookmarks', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        if (!res.ok) {
-          if (res.status === 401) {
-            router.push('/login');
-            return;
-          }
-          throw new Error('Failed to fetch bookmarks');
-        }
-        
-        const data = await res.json();
-        setBookmarks(data);
-      } catch (err) {
-        console.error('Fetch error:', err);
-        setError('Unable to fetch bookmarks. Please try again later.');
-        setBookmarks([]);
-      } finally {
-        setLoading(false);
+    if (!authLoading) {
+      if (!isAuthenticated) {
+        router.push('/login');
+      } else {
+        fetchBookmarks();
       }
-    };
+    }
+  }, [isAuthenticated, authLoading]);
 
-    fetchBookmarks();
-  }, [isAuthenticated, router]);
+  const fetchBookmarks = async () => {
+    try {
+      setLoading(true);
+      const bookmarks = await BookmarkService.getInstance().getBookmarks();
+      // Ensure we don't have duplicate programs by using a Map
+      const uniquePrograms = Array.from(
+        new Map(bookmarks.map(program => [program.id, program])).values()
+      );
+      setBookmarkedPrograms(uniquePrograms);
+    } catch (err) {
+      setError('Failed to load bookmarked programs');
+      console.error('Error fetching bookmarks:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  if (!isAuthenticated) {
-    return null;
+  if (authLoading || loading) {
+    return (
+      <PageLayout>
+        <div className="bookmarks-page">
+          <div className="loading">Loading...</div>
+        </div>
+      </PageLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageLayout>
+        <div className="bookmarks-page">
+          <div className="error-message">{error}</div>
+        </div>
+      </PageLayout>
+    );
   }
 
   return (
     <PageLayout>
-      <section id="main" className="container">
-        <header>
-          <h2>Bookmarked Programs</h2>
-          <p>Your saved programs for future reference</p>
-        </header>
-
-        {loading && (
-          <div className="box">
-            <div className="loading-container">
-              <div className="loading-spinner"></div>
-              <p>Loading your bookmarks...</p>
-            </div>
+      <div className="bookmarks-page">
+        <h1>My Bookmarks</h1>
+        {bookmarkedPrograms.length === 0 ? (
+          <div className="no-bookmarks">
+            <p>You haven't bookmarked any programs yet.</p>
+            <button onClick={() => router.push('/programs')} className="browse-button">
+              Browse Programs
+            </button>
           </div>
-        )}
-
-        {error && (
-          <div className="box">
-            <div className="error-message">
-              <p>{error}</p>
-              <button className="button small" onClick={() => setError(null)}>Dismiss</button>
-            </div>
-          </div>
-        )}
-
-        {!loading && bookmarks.length === 0 && !error && (
-          <div className="box">
-            <h3>No bookmarks found</h3>
-            <p>You haven't bookmarked any programs yet. Browse programs and click the bookmark icon to save them for later.</p>
-            <ul className="actions">
-              <li><a href="/programs" className="button primary">Find Programs</a></li>
-            </ul>
-          </div>
-        )}
-
-        {!loading && bookmarks.length > 0 && (
-          <div className="row">
-            {bookmarks.map(program => (
-              <div key={program.id} className="col-4 col-12-narrower">
-                <ProgramCard data={program} />
-              </div>
+        ) : (
+          <div className="bookmarks-grid">
+            {bookmarkedPrograms.map((program) => (
+              <ProgramCard
+                key={program.id}
+                data={program}
+              />
             ))}
           </div>
         )}
-      </section>
+      </div>
     </PageLayout>
   );
 } 
