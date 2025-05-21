@@ -5,15 +5,25 @@
   cursor: pointer;
   padding: 0.25rem;
   color: #ccc;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .bookmark-button:hover {
   color: #ffd700;
+  transform: scale(1.1);
 }
 
 .bookmark-button.saved {
   color: #ffd700;
+}
+
+.bookmark-button[style*="color: #5480f1"] {
+  color: #ffd700 !important;
+  transform: scale(1.1);
+}
+
+.bookmark-button[style*="color: #5480f1"]:hover {
+  color: #ffb700 !important;
 }
 
 .bookmark-button.loading {
@@ -24,4 +34,48 @@
 .bookmark-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
+}
+
+.bookmark-container {
+  position: relative;
+  display: inline-block;
+}
+
+.login-prompt {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-top: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.login-prompt::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #333;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 } 
