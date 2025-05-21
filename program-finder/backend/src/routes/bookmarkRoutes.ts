@@ -1,7 +1,8 @@
-import express from 'express';
+import express, { Response, NextFunction } from 'express';
 import { getBookmarks, addBookmark, removeBookmark } from '../controllers/bookmarkController';
 import { authMiddleware, testAuthMiddleware } from '../middleware/auth';
 import { getDb } from '../db';
+import { AuthRequest } from '../types';
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ const useTestAuth = process.env.NODE_ENV !== 'production';
 router.use(useTestAuth ? testAuthMiddleware : authMiddleware);
 
 // Define a route to check if a program is bookmarked
-router.get('/check/:programId', async (req, res, next) => {
+router.get('/check/:programId', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const { programId } = req.params;
     const userId = req.user?.id;
