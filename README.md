@@ -1,12 +1,22 @@
+# The Team
+![Team 3](Team%203.png)
+
+- Ezra Nyabuti – Backend Engineer
+- Darius Davis – Frontend Engineer
+- Nia Pack – Frontend Engineer
+- Chanel Hutt – Test Integration Engineer
+- Khayla Saunders – Backend Engineer
+
+
 # CYPHER  
 **Creating Youth Pathways for Hope, Equity, and Resources**
 
 ## Description Of The App
 
-##CYPHER: Creating Youth Pathways for Hope, Equity, and Resources
+CYPHER: Creating Youth Pathways for Hope, Equity, and Resources
  CYPHER is a purpose-driven digital platform that empowers youth—particularly those from underserved communities—by connecting them with transformative programs, vital resources, and meaningful opportunities. Drawing inspiration from the cultural significance of a “cypher,” where individuals come together to exchange ideas and elevate collective expression, CYPHER serves as a dynamic space for connection, empowerment, and growth.
 
-##CYPHER aims to bridge gaps, elevate youth voices, and foster equitable access to resources that pave the way for brighter futures.
+CYPHER aims to bridge gaps, elevate youth voices, and foster equitable access to resources that pave the way for brighter futures.
 
 
 ---
@@ -32,19 +42,11 @@
 - **APIs:** Google Maps API
 - **Deployment:** Vercel
 
----
-
-## 🧑🏽‍🤝‍🧑🏽 The Team
 
 
 
-- Ezra Nyabuti – Backend Engineer
-- Darius Davis – Frontend Engineer
-- Nia Pack – Frontend Engineer
-- Chanel Hutt – Test Integration Engineer
-- Khayla Saunders – Backend Engineer
 
----
+
 
 ## 🛠️ Installation Instructions
 1. **Clone the repository**
