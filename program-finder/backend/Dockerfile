@@ -11,7 +11,7 @@ WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV="production"
-ENV PORT=8080
+ENV PORT=3000
 
 
 # Throw-away build stage to reduce size of final image
