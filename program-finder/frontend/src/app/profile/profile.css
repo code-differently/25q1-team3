@@ -251,4 +251,26 @@
 
     width: 100%;
   }
+}
+
+.error-text {
+  color: #e74c3c;
+  display: block;
+  margin-top: 5px;
+  font-size: 0.8rem;
+}
+
+.retry-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-top: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.retry-button:hover {
+  background-color: #2980b9;
 } 

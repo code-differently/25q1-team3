@@ -7,7 +7,7 @@ import { BookmarkService } from '../services/BookmarkService';
 import './BookmarkButton.css';
 
 interface BookmarkButtonProps {
-  programId: string;
+  programId: string | number;
   className?: string;
 }
 
@@ -15,6 +15,7 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { isAuthenticated } = useAuth();
   const router = useRouter();
   const bookmarkService = BookmarkService.getInstance();
@@ -22,12 +23,18 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
   useEffect(() => {
     if (isAuthenticated) {
       checkBookmarkStatus();
+    } else {
+      setIsBookmarked(false);
     }
   }, [isAuthenticated, programId]);
 
   const checkBookmarkStatus = async () => {
     try {
-      const isSaved = await bookmarkService.isBookmarked(programId);
+      if (!isAuthenticated) {
+        return;
+      }
+      
+      const isSaved = await bookmarkService.isBookmarked(String(programId));
       setIsBookmarked(isSaved);
     } catch (error) {
       console.error('Error checking bookmark status:', error);
@@ -45,16 +52,27 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
     }
 
     setLoading(true);
+    setErrorMessage(null);
+    
     try {
       if (isBookmarked) {
-        await bookmarkService.removeBookmark(programId);
+        await bookmarkService.removeBookmark(String(programId));
         setIsBookmarked(false);
       } else {
-        await bookmarkService.addBookmark(programId);
+        await bookmarkService.addBookmark(String(programId));
         setIsBookmarked(true);
       }
     } catch (error) {
       console.error('Error toggling bookmark:', error);
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage('Failed to update bookmark. Please try again later.');
+      }
+      
+      setIsBookmarked(!isBookmarked);
+      
+      setTimeout(() => setErrorMessage(null), 3000);
     } finally {
       setLoading(false);
     }
@@ -82,6 +100,11 @@ export default function BookmarkButton({ programId, className = '' }: BookmarkBu
       {showLoginPrompt && (
         <div className="login-prompt show">
           Please log in to bookmark programs
+        </div>
+      )}
+      {errorMessage && (
+        <div className="error-message show">
+          {errorMessage}
         </div>
       )}
     </div>

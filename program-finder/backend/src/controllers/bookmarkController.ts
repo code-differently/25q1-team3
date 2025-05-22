@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { getDb } from '../db';
+import { AuthRequest } from '../types';
 
 // Get all bookmarked programs for the current user
-export const getBookmarks = async (req: Request, res: Response) => {
+export const getBookmarks = async (req: AuthRequest, res: Response) => {
   try {
     const db = await getDb();
     const userId = req.user?.id;
@@ -26,7 +27,7 @@ export const getBookmarks = async (req: Request, res: Response) => {
 };
 
 // Add a bookmark
-export const addBookmark = async (req: Request, res: Response) => {
+export const addBookmark = async (req: AuthRequest, res: Response) => {
   try {
     const db = await getDb();
     const { programId } = req.params;
@@ -66,7 +67,7 @@ export const addBookmark = async (req: Request, res: Response) => {
 };
 
 // Remove a bookmark
-export const removeBookmark = async (req: Request, res: Response) => {
+export const removeBookmark = async (req: AuthRequest, res: Response) => {
   try {
     const db = await getDb();
     const { programId } = req.params;

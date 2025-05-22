@@ -5,4 +5,7 @@ export interface Program {
   services: string;
   type: string;
   ages: string;
+  address?: string;
+  city?: string;
+  state?: string;
 }
