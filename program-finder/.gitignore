@@ -26,3 +26,5 @@ yarn-error.log*
 Thumbs.db
 .vercel
 .next
+*.sqlite3
+*.db

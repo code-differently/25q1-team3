@@ -17,6 +17,8 @@ export class ProgramService {
       params.push(`%${keyword}%`, `%${keyword}%`, `%${keyword}%`);
     }
 
+    query += ' LIMIT 20'; // Limit to 20 programs maximum
+
     return db.all(query, params);
   }
 

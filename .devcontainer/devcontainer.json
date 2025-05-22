@@ -25,8 +25,17 @@
     "80": {
       "requireLocalPort": true,
       "elevateIfNeeded": true
+    },
+    "3000": {
+      "label": "Frontend",
+      "onAutoForward": "notify"
+    },
+    "3001": {
+      "label": "Backend API",
+      "onAutoForward": "notify"
     }
   },
+  "forwardPorts": [3000, 3001],
   "customizations": {
     "vscode": {
       "extensions": [
