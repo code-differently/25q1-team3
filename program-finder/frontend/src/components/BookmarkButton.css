@@ -50,13 +50,11 @@
   box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.3);
 }
 
-.login-prompt {
+.login-prompt, .error-message {
   position: absolute;
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #333;
-  color: white;
   padding: 8px 12px;
   border-radius: 4px;
   font-size: 14px;
@@ -68,12 +66,22 @@
   z-index: 1000;
 }
 
-.login-prompt.show {
+.login-prompt {
+  background-color: #333;
+  color: white;
+}
+
+.error-message {
+  background-color: #FF6B6B;
+  color: white;
+}
+
+.login-prompt.show, .error-message.show {
   opacity: 1;
   visibility: visible;
 }
 
-.login-prompt::after {
+.login-prompt::after, .error-message::after {
   content: '';
   position: absolute;
   top: 100%;
@@ -81,5 +89,12 @@
   transform: translateX(-50%);
   border-width: 6px;
   border-style: solid;
+}
+
+.login-prompt::after {
   border-color: #333 transparent transparent transparent;
+}
+
+.error-message::after {
+  border-color: #FF6B6B transparent transparent transparent;
 } 

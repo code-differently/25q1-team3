@@ -20,7 +20,8 @@ export default function ProgramsContent() {
   const [programs, setPrograms] = useState<ProgramData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showFilters, setShowFilters] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const programsPerPage = 6;
 
   const [filters, setFilters] = useState<SearchFilters>({
     ageGroup: '',
@@ -35,6 +36,7 @@ export default function ProgramsContent() {
   const fetchPrograms = async (zip = '', searchFilters: SearchFilters = filters) => {
     setLoading(true);
     setError(null);
+    setCurrentPage(1); // Reset to first page when searching
     try {
       const queryParams = new URLSearchParams();
       if (zip) queryParams.append('zip', zip);
@@ -42,7 +44,10 @@ export default function ProgramsContent() {
       if (searchFilters.category) queryParams.append('category', searchFilters.category);
       if (searchFilters.distance) queryParams.append('distance', searchFilters.distance);
 
-      const res = await fetch(`/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`);
+      const url = `/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`;
+      console.log('Fetching programs from:', url);
+      
+      const res = await fetch(url);
       if (!res.ok) {
         throw new Error(`Failed to fetch programs: ${res.statusText}`);
       }
@@ -51,6 +56,7 @@ export default function ProgramsContent() {
       if (!Array.isArray(data)) {
         throw new Error('Invalid response format');
       }
+      console.log(`Fetched ${data.length} programs from the API`);
       setPrograms(data);
     } catch (err) {
       console.error('Fetch error:', err);
@@ -61,22 +67,19 @@ export default function ProgramsContent() {
     }
   };
 
-  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFilters((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const clearFilters = () => {
-    setFilters({
-      ageGroup: '',
-      category: '',
-      distance: '10',
-    });
-    fetchPrograms();
-  };
-
   const search = (zip: string, searchFilters: SearchFilters) => {
     fetchPrograms(zip, searchFilters);
+  };
+
+  // Get current programs for pagination
+  const indexOfLastProgram = currentPage * programsPerPage;
+  const indexOfFirstProgram = indexOfLastProgram - programsPerPage;
+  const currentPrograms = programs.slice(indexOfFirstProgram, indexOfLastProgram);
+  const totalPages = Math.ceil(programs.length / programsPerPage);
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -90,58 +93,6 @@ export default function ProgramsContent() {
         <section className="box">
           <h3>Search Programs</h3>
           <SearchBar onSearch={search} initialZip="" />
-
-          <div className="filters-section">
-            <button
-              className="button alt"
-              onClick={() => setShowFilters(!showFilters)}
-              style={{ marginTop: '1rem' }}
-            >
-              {showFilters ? 'Hide Filters' : 'Show Filters'}
-            </button>
-
-            {showFilters && (
-              <div className="filters row">
-                <div className="col-12">
-                  <h4>Filter Programs</h4>
-                  <button className="button small" onClick={clearFilters}>
-                    Clear Filters
-                  </button>
-                </div>
-                <div className="col-4 col-12-mobilep">
-                  <select name="ageGroup" value={filters.ageGroup} onChange={handleFilterChange}>
-                    <option value="">All Ages</option>
-                    <option value="children">Children (0-12)</option>
-                    <option value="teens">Teens (13-17)</option>
-                    <option value="adults">Adults (18+)</option>
-                  </select>
-                </div>
-                <div className="col-4 col-12-mobilep">
-                  <select name="category" value={filters.category} onChange={handleFilterChange}>
-                    <option value="">All Categories</option>
-                    <option value="education">Education</option>
-                    <option value="sports">Sports</option>
-                    <option value="arts">Arts & Culture</option>
-                    <option value="stem">STEM</option>
-                  </select>
-                </div>
-                <div className="col-4 col-12-mobilep">
-                  <div className="distance-filter">
-                    <label>Distance: {filters.distance} miles</label>
-                    <input
-                      type="range"
-                      name="distance"
-                      min="1"
-                      max="50"
-                      value={filters.distance}
-                      onChange={handleFilterChange}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
         </section>
 
         {loading && (
@@ -168,13 +119,56 @@ export default function ProgramsContent() {
         )}
 
         {!loading && !error && programs.length > 0 && (
-          <div className="row">
-            {programs.map((program) => (
-              <div key={program.id} className="col-6 col-12-mobilep">
-                <ProgramCard data={program} />
+          <>
+            <div className="box">
+              <div className="program-info">
+                <p>Showing {indexOfFirstProgram + 1}-{Math.min(indexOfLastProgram, programs.length)} of {programs.length} programs</p>
               </div>
-            ))}
-          </div>
+            </div>
+            
+            <div className="row">
+              {currentPrograms.map((program) => (
+                <div key={program.id} className="col-6 col-12-mobilep">
+                  <ProgramCard data={program} />
+                </div>
+              ))}
+            </div>
+            
+            {totalPages > 1 && (
+              <div className="pagination">
+                <ul className="actions special">
+                  <li>
+                    <button
+                      onClick={() => paginate(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="button alt small"
+                    >
+                      Previous
+                    </button>
+                  </li>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
+                    <li key={number}>
+                      <button
+                        onClick={() => paginate(number)}
+                        className={`button ${currentPage === number ? 'primary' : 'alt'} small`}
+                      >
+                        {number}
+                      </button>
+                    </li>
+                  ))}
+                  <li>
+                    <button
+                      onClick={() => paginate(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="button alt small"
+                    >
+                      Next
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </>
         )}
       </section>
     </PageLayout>

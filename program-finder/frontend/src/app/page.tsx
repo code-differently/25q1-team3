@@ -1,28 +1,18 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { SearchBar } from '../components/SearchBar';
-import { RecentSearches } from '../components/RecentSearches';
 import PageLayout from '../components/PageLayout';
 import { usePrograms } from '../hooks/usePrograms';
 import { useRecentSearches } from '../hooks/useRecentSearches';
-import { SearchFilters } from '../services/ProgramService';
 import './Home.css';
 
 export default function Home() {
-  const { programs, loading, error, fetchAllPrograms, searchPrograms } = usePrograms();
+  const { programs, loading, error, fetchAllPrograms } = usePrograms();
   const { recentSearches, saveSearch, clearSearches } = useRecentSearches();
 
   useEffect(() => {
     fetchAllPrograms();
   }, [fetchAllPrograms]);
-
-  const handleSearch = async (zip: string, filters: SearchFilters) => {
-    if (zip) {
-      saveSearch(zip);
-    }
-    await searchPrograms(zip, filters);
-  };
 
   return (
     <PageLayout isLanding={true}>
@@ -30,14 +20,6 @@ export default function Home() {
       <section id="banner">
         <h2>CYPHER</h2>
         <p style={{ color: 'white' }}>Connecting Youth to Programs, Hope, Empowerment, and Resources</p>
-        <div className="search-section">
-          <SearchBar onSearch={handleSearch} />
-          <RecentSearches
-            searches={recentSearches}
-            onSearch={handleSearch}
-            onClear={clearSearches}
-          />
-        </div>
         <ul className="actions special">
           <li><a href="/programs" className="button primary" data-cy="find-program-btn">Find Programs</a></li>
           <li><a href="/about" className="button">Learn More</a></li>
@@ -53,8 +35,6 @@ export default function Home() {
               A Digital Movement Designed To Bridge The Gap Between
               <br />
               Youth And The Opportunities They Deserve
-              <br />
-              Underserved Youth And The Opportunities They Deserve
             </h2>
             <p>The power of connection starts at CYPHER.<br />
             Where youth plug into opportunity!!!</p>

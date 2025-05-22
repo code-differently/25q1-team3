@@ -3,7 +3,7 @@ import { ProgramService } from '../services/ProgramService';
 
 export class ProgramController {
   static async searchPrograms(req: Request, res: Response, next: NextFunction) {
-    const { zip = '19801', keyword = '' } = req.query;
+    const { zip = '', keyword = '' } = req.query;
     try {
       const programs = await ProgramService.findByLocationAndKeyword(zip as string, keyword as string);
       res.json(programs);
