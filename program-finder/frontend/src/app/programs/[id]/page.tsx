@@ -34,10 +34,10 @@ export default function ProgramDetail({ params }: { params: { id: string } }) {
 
   // Determine which image to use based on category or default to generic
   const getImageForProgram = (program: ProgramData) => {
-    if (program.type?.toLowerCase().includes('education')) return '/images/pic02.jpg';
-    if (program.type?.toLowerCase().includes('sports')) return '/images/pic03.jpg';
-    if (program.type?.toLowerCase().includes('art')) return '/images/pic01.jpg';
-    return '/images/pic02.jpg'; // Default image
+    if (program.type?.toLowerCase().includes('education')) return '/images/education.png';
+    if (program.type?.toLowerCase().includes('sports')) return '/images/sports.png';
+    if (program.type?.toLowerCase().includes('art')) return '/images/arts.png';
+    return '/images/SDefault.png'; // Default image
   };
 
   const handleBackClick = () => {
