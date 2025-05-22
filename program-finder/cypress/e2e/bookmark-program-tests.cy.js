@@ -36,5 +36,6 @@ describe('test for bookmarking programs', () => {
         cy.wait(5000)
         cy.get('.profile-initial').click()
         cy.get('.dropdown-menu > :nth-child(4) > .dropdown-menu-item').click()
+       
     });
 });

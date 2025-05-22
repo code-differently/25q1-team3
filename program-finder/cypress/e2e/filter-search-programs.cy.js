@@ -71,16 +71,26 @@ describe('testing search and filter feature', () => {
     cy.get('select[name="ageGroup"]').select('teens');
     // Assert it's selected
     cy.get('select[name="ageGroup"]').should('have.value', 'teens');
-    
-    it('should allow selecting an age group from the dropdown', () => {
-      cy.visit('/');
-      cy.contains('Show Filters').click();
     //Assert category is selected
     cy.get('select[name="category"]').should('exist');
-    
     cy.get('select[name="category"]').select('Education')
   });
-  // Clear the selected info
+  // Clear the selected info to reset the filters
+  it('should clear filter fields once "Clear all" is clicked', () => {
+    cy.visit('/');
+    cy.contains('Show Filters').click();
 
+    // Select filters first
+    cy.get('select[name="ageGroup"]').select('teens');
+    cy.get('select[name="category"]').select('education');
 
+    // Click the clear button
+    cy.contains('button', 'Clear all').click();
+
+    // Assert that the dropdowns reset to default (usually first option or empty)
+    // After clicking "Clear all"
+    cy.get('select[name="ageGroup"]').should('have.value', '');
+    cy.get('select[name="category"]').should('have.value', '');
+
+  });
 });
