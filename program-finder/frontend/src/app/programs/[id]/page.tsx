@@ -16,6 +16,11 @@ export default function ProgramDetail({ params }: { params: { id: string } }) {
   const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
+    // Log environment variable status for debugging
+    console.log('Environment Variables Check:');
+    console.log('NEXT_PUBLIC_GOOGLE_API_KEY exists:', !!process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
+    console.log('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY exists:', !!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+    
     setLoading(true);
     fetch(`/api/programs/${id}`)
       .then(r => r.json())
