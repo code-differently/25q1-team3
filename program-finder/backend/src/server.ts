@@ -1,7 +1,7 @@
 import app from './app';
 import { initializeDb } from './db';
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Initialize the database before starting the server
 initializeDb().then(() => {
