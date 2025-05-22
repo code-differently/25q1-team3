@@ -43,7 +43,7 @@ export function FilterSection({ filters, onFilterChange, onClear }: FilterSectio
             >
               <option value="" disabled>Select Age Group</option>
               <option value="children">Children (0-12)</option>
-              <option value="teens">Teens (13-17)</option>
+              <option value="teens">Teens (13–17)</option>
               <option value="adults">Adults (18+)</option>
             </select>
           </div>
