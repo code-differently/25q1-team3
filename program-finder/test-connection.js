@@ -3,7 +3,7 @@
 async function testBackendConnection() {
   try {
     console.log('Testing connection to backend server...');
-    const response = await fetch('http://localhost:3001/api/health');
+    const response = await fetch((process.env.NEXT_PUBLIC_API_BASE_URL + '/api/health') || 'http://localhost:3001/api/health');
     
     if (!response.ok) {
       throw new Error(`Failed with status: ${response.status}`);
@@ -22,7 +22,7 @@ async function testBackendConnection() {
 async function testBookmarksEndpoint() {
   try {
     console.log('\nTesting connection to bookmarks endpoint...');
-    const response = await fetch('http://localhost:3001/api/bookmarks', {
+    const response = await fetch((process.env.NEXT_PUBLIC_FRONTEND_URL + '/api/bookmarks') || 'http://localhost:3001/api/bookmarks', {
       headers: {
         'Authorization': 'Bearer test-token'
       }

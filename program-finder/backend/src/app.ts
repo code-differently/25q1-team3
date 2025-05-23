@@ -7,7 +7,10 @@ const app = express();
 
 // Configure CORS
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: [
+    'http://localhost:3000',
+    'https://25q1-team3-sand.vercel.app'
+  ],
   credentials: true
 }));
 

@@ -15,7 +15,7 @@ const devConfig: Config = {
 const prodConfig: Config = {
   // These will be replaced in production by environment variables
   googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyBfMtxd8CK-Zi_noMDZ3nFaxf6BTVo_hWc',
-  apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001/api',
+  apiBaseUrl: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api` || 'https://program-finder.fly.dev/api',
 };
 
 // Use production config when NODE_ENV is 'production', otherwise use development config
