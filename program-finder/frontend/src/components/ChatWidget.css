@@ -1,0 +1,302 @@
+/* Aya Chatbot Styles - Cypher Branding Final Version */
+
+.chatTitle {
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.025em;
+    color: white;
+  }
+  
+  .chatTitle .subtitle {
+    font-weight: 400;
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-left: 0.25rem;
+  }
+  .chatContainer {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 9999;
+  }
+  
+  .chatButton {
+    background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
+    color: white;
+    padding: 1.25rem;
+    border-radius: 9999px;
+    box-shadow: 0 10px 25px -5px rgba(219, 39, 119, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .chatButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(219, 39, 119, 0.5);
+  }
+  
+  .chatBox {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    width: 28rem;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(219, 39, 119, 0.2);
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .chatHeader {
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
+    color: white;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .chatHeader h3 {
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.025em;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .closeButton {
+    padding: 0.5rem;
+    border-radius: 9999px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .closeButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+  }
+  
+  .messagesContainer {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: linear-gradient(180deg, #fdf4ff 0%, #f0f0ff 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: #db2777 #fdf4ff;
+  }
+  
+  .messagesContainer::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .messagesContainer::-webkit-scrollbar-track {
+    background: #fdf4ff;
+  }
+  
+  .messagesContainer::-webkit-scrollbar-thumb {
+    background-color: #db2777;
+    border-radius: 3px;
+  }
+  
+  .userMessage,
+  .botMessage {
+    max-width: 85%;
+    border-radius: 1.25rem;
+    padding: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .userMessage {
+    background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
+    color: white;
+    border-bottom-right-radius: 0.25rem;
+    align-self: flex-end;
+    box-shadow: 0 4px 12px rgba(219, 39, 119, 0.2);
+  }
+  
+  .botMessage {
+    background: white;
+    color: #1f2937;
+    border-bottom-left-radius: 0.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    align-self: flex-start;
+    border: 1px solid rgba(219, 39, 119, 0.1);
+  }
+  
+  .timestamp {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    opacity: 0.8;
+    font-weight: 500;
+  }
+  
+  .typingIndicator {
+    background: white;
+    color: #1f2937;
+    border-radius: 1.25rem;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    align-self: flex-start;
+    border: 1px solid rgba(219, 39, 119, 0.1);
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
+    border-radius: 9999px;
+    animation: bounce 1.4s infinite ease-in-out;
+  }
+  
+  .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-0.25rem);
+    }
+  }
+  
+  .chatForm {
+    padding: 1.25rem;
+    background: white;
+    border-top: 1px solid rgba(219, 39, 119, 0.1);
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+  }
+  
+  .inputField {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    padding-right: 3.5rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    background: #f9fafb;
+    height: 2.75rem;
+  }
+  
+  .inputField:focus {
+    border-color: #db2777;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(219, 39, 119, 0.1);
+  }
+  
+  .inputField::placeholder {
+    color: #9ca3af;
+  }
+  
+  .sendButton {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.65rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
+    box-shadow: 0 6px 12px rgba(219, 39, 119, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+  
+  .sendButton svg,
+  .sendButton img {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: white;
+  }
+  
+  .sendButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(219, 39, 119, 0.2);
+  }
+  
+  .sendButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 640px) {
+    .chatBox {
+      width: calc(100vw - 2rem);
+      height: calc(100vh - 4rem);
+      margin: 1rem;
+      border-radius: 1rem;
+    }
+  
+    .chatHeader {
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+    }
+  
+    .chatForm {
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+    }
+  }
+
+/* Example for left highlight */
+.menu-item.active,
+.menu-item:focus,
+.menu-item:hover {
+  border-left: 4px solid #db2777;
+  background: rgba(219, 39, 119, 0.08);
+  border-right: none;
+  padding-left: 1.5rem;
+}

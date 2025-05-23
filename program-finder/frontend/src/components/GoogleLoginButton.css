@@ -32,4 +32,13 @@
   .google-login-button {
     max-width: 100%;
   }
+}
+
+.google-login.disabled,
+.google-login[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+  background: #e5e7eb !important;
+  color: #9ca3af !important;
+  cursor: not-allowed;
 } 
