@@ -1,10 +1,5 @@
-import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
+import app from './app';
 import { initializeDb } from './db';
-import authRoutes from './routes/auth';
-import programRoutes from './routes/programRoutes';
-import bookmarkRoutes from './routes/bookmarkRoutes';
 
 const app = express();
 
@@ -34,13 +29,6 @@ app.use('/api/bookmarks', bookmarkRoutes);
 const PORT = 3001;
 
 // Initialize the database before starting the server
-initializeDb().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Backend API listening on port ${PORT}`);
-  });
-}).catch(err => {
-  console.error('Failed to initialize database:', err);
-  process.exit(1);
+app.listen(PORT, () => {
+  console.log(`Backend API listening on port ${PORT}`);
 });
-
-export default app;
