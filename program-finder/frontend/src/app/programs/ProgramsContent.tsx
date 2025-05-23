@@ -6,6 +6,7 @@ import { ProgramData } from '../../interfaces/ProgramData';
 import { ProgramCard } from '../../components/ProgramCard';
 import { SearchBar } from '../../components/SearchBar';
 import PageLayout from '../../components/PageLayout';
+import config from '@/config';
 
 interface SearchFilters {
   ageGroup: string;
@@ -31,45 +32,51 @@ export default function ProgramsContent() {
 
   useEffect(() => {
     fetchPrograms();
-  }, [initialCategory]);
+  }, [searchParams]);
 
-  const fetchPrograms = async (zip = '', searchFilters: SearchFilters = filters) => {
+  const fetchPrograms = async () => {
     setLoading(true);
     setError(null);
-    setCurrentPage(1); // Reset to first page when searching
     try {
       const queryParams = new URLSearchParams();
-      if (zip) queryParams.append('zip', zip);
-      if (searchFilters.ageGroup) queryParams.append('ageGroup', searchFilters.ageGroup);
-      if (searchFilters.category) queryParams.append('category', searchFilters.category);
-      if (searchFilters.distance) queryParams.append('distance', searchFilters.distance);
+      const zip = searchParams?.get('zip');
+      const keyword = searchParams?.get('keyword');
+      const distance = searchParams?.get('distance');
 
-      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
-      const url = apiUrl + `/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`;
+      if (zip) queryParams.append('zip', zip);
+      if (keyword) queryParams.append('keyword', keyword);
+      if (distance) queryParams.append('distance', distance);
+
+      const url = `${config.apiBaseUrl}/programs${queryParams.toString() ? `?${queryParams}` : ''}`;
       console.log('Fetching programs from:', url);
       
       const res = await fetch(url);
       if (!res.ok) {
-        throw new Error(`Failed to fetch programs: ${res.statusText}`);
+        throw new Error('Failed to fetch programs');
       }
-
       const data = await res.json();
-      if (!Array.isArray(data)) {
-        throw new Error('Invalid response format');
-      }
-      console.log(`Fetched ${data.length} programs from the API`);
       setPrograms(data);
-    } catch (err) {
-      console.error('Fetch error:', err);
-      setError(err instanceof Error ? err.message : 'Unable to fetch programs. Please try again later.');
-      setPrograms([]);
+    } catch (error) {
+      console.error('Error fetching programs:', error);
+      setError('Failed to load programs. Please try again later.');
     } finally {
       setLoading(false);
     }
   };
 
   const search = (zip: string, searchFilters: SearchFilters) => {
-    fetchPrograms(zip, searchFilters);
+    setFilters(searchFilters);
+    // Update URL with new search parameters
+    const params = new URLSearchParams();
+    if (zip) params.set('zip', zip);
+    if (searchFilters.category) params.set('category', searchFilters.category);
+    if (searchFilters.distance) params.set('distance', searchFilters.distance);
+    
+    // Update URL without page reload
+    window.history.pushState({}, '', `?${params.toString()}`);
+    
+    // Fetch programs with new parameters
+    fetchPrograms();
   };
 
   // Get current programs for pagination
@@ -93,7 +100,7 @@ export default function ProgramsContent() {
 
         <section className="box">
           <h3>Search Programs</h3>
-          <SearchBar onSearch={search} initialZip="" />
+          <SearchBar onSearch={search} initialZip={searchParams?.get('zip') || ''} />
         </section>
 
         {loading && (
