@@ -5,7 +5,7 @@ import path from 'path';
 
 export const getDb = async () => {
   return open({
-    filename: path.join(__dirname, '../../dev.sqlite3'),
+    filename: path.join(__dirname, '../dev.sqlite3'),
     driver: sqlite3.Database
   });
 };
