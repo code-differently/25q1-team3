@@ -3,7 +3,7 @@
 async function testNextJsBookmarksApi() {
   try {
     console.log('Testing connection to Next.js bookmarks API...');
-    const response = await fetch('http://localhost:3000/api/bookmarks', {
+    const response = await fetch((process.env.NEXT_PUBLIC_FRONTEND_URL + '/api/bookmarks') || 'http://localhost:3000/api/bookmarks', {
       headers: {
         'Authorization': 'Bearer test-token'
       }

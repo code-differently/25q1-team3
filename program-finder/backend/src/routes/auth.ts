@@ -52,10 +52,10 @@ router.get('/google/callback', async (req, res) => {
     );
 
     // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?token=${token}`);
+    res.redirect(`${process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000'}/login?token=${token}`);
   } catch (error) {
     console.error('Google OAuth error:', error);
-    res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);
+    res.redirect(`${process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000'}/login?error=auth_failed`);
   }
 });
 
