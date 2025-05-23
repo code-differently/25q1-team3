@@ -44,7 +44,8 @@ export default function ProgramsContent() {
       if (searchFilters.category) queryParams.append('category', searchFilters.category);
       if (searchFilters.distance) queryParams.append('distance', searchFilters.distance);
 
-      const url = `/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`;
+      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
+      const url = apiUrl + `/api/programs${queryParams.toString() ? `?${queryParams}` : ''}`;
       console.log('Fetching programs from:', url);
       
       const res = await fetch(url);
