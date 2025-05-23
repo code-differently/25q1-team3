@@ -28,3 +28,7 @@ Thumbs.db
 .next
 *.sqlite3
 *.db
+
+# Firebase service account
+cypher-e096b-9167588ee222.json
+

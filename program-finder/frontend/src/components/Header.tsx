@@ -81,26 +81,6 @@ const Header: React.FC<HeaderProps> = ({ isLanding = false }) => {
             <ul className={`dropdown-menu ${isMoreOpen ? 'show' : ''}`} role="menu">
               <li><Link href="/programs" className="dropdown-menu-item" data-cy="nav-programs">Programs</Link></li>
               <li><Link href="/bookmarks" className="dropdown-menu-item" data-cy="nav-bookmarks">Bookmarked Programs</Link></li>
-              <li ref={categoriesRef} className="submenu">
-                <button
-                  className={`submenu-trigger ${isCategoriesOpen ? 'active' : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsCategoriesOpen(!isCategoriesOpen);
-                  }}
-                  aria-expanded={isCategoriesOpen}
-                  aria-haspopup="true"
-                  data-cy="nav-categories"
-                >
-                  Categories <i className="fas fa-angle-right"></i>
-                </button>
-                <ul className={`submenu-dropdown ${isCategoriesOpen ? 'show' : ''}`} role="menu">
-                  <li><Link href="/programs?category=education" className="dropdown-menu-item" data-cy="nav-education">Education</Link></li>
-                  <li><Link href="/programs?category=sports" className="dropdown-menu-item" data-cy="nav-sports">Sports</Link></li>
-                  <li><Link href="/programs?category=arts" className="dropdown-menu-item" data-cy="nav-arts">Arts & Culture</Link></li>
-                  <li><Link href="/programs?category=stem" className="dropdown-menu-item" data-cy="nav-stem">STEM</Link></li>
-                </ul>
-              </li>
             </ul>
           </li>
           {isAuthenticated ? (
