@@ -28,21 +28,19 @@ function LoginContent() {
       setLoading(false);
     }
   };
-  
-  const handleGoogleLogin = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const result = await signInWithPopup(auth, provider);
-      if (result.user) {
-        router.push('/programs');
-      }
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign in with Google');
-    } finally {
-      setLoading(false);
-    }
-  };
+
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     setLoading(true);
+  //     setError('');
+  //     await signInWithPopup(auth, provider);
+  //     router.push('/programs');
+  //   } catch (err: any) {
+  //     setError(err.message || 'Failed to sign in with Google');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <PageLayout>
@@ -53,16 +51,9 @@ function LoginContent() {
           
           {error && <div className="error-message">{error}</div>}
           
-          <button 
-            onClick={handleGoogleLogin}
-            className="google-login-button"
-            disabled={loading}
-          >
-            <img src="/google-icon.svg" alt="Google" className="google-icon" />
-            {loading ? 'Signing in...' : 'Sign in with Google'}
-          </button>
-
-          <div className="divider">
+          {/* <GoogleLoginButton onClick={handleGoogleLogin} disabled={loading} /> */}
+          
+          {/* <div className="divider">
             <span>or</span>
           </div> */}
           
